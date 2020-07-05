@@ -18,3 +18,18 @@
 
 10. 插入自定义视图（图片、视频、网盘）
 
+
+=================
+
+自定义绝对字体的大小
+AbsoluteSizeSpan 
+
+
+=================
+
+应该继承自EditText类
+
+// 两种混合方式
+editText.getEditableText().setSpan(new MyBoldStyleSpan(),0 , length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+editText.getEditableText().setSpan(new MyItalicStyleSpan(),0 , length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
