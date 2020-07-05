@@ -12,6 +12,8 @@ import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 @SuppressLint("AppCompatCustomView")
 public class WRichEditor extends EditText implements IRichCellView {
 
+    private WRichEditorView mWRichEditorView;
+
     private IRichCellData mRichCellData;
 
     public WRichEditor(Context context) {
@@ -26,6 +28,16 @@ public class WRichEditor extends EditText implements IRichCellView {
         super(context, attrs, defStyleAttr);
     }
 
+    // TODO 由此触发setSpan函数
+    @Override
+    protected void onSelectionChanged(int selStart, int selEnd) {
+        super.onSelectionChanged(selStart, selEnd);
+    }
+
+    @Override
+    public void setWRichEditorView(WRichEditorView wRichEditorView) {
+        mWRichEditorView = wRichEditorView;
+    }
 
     @Override
     public View getView() {

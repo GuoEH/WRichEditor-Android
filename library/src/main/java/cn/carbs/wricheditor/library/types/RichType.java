@@ -1,6 +1,8 @@
 package cn.carbs.wricheditor.library.types;
 
-public enum SpanType {
+public enum RichType {
+
+    NONE,
 
     BOLD,
 

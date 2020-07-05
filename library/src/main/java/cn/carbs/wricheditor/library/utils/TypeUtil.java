@@ -1,17 +1,17 @@
 package cn.carbs.wricheditor.library.utils;
 
-import cn.carbs.wricheditor.library.types.SpanType;
+import cn.carbs.wricheditor.library.types.RichType;
 
 public class TypeUtil {
 
     /**
      * 判断一种类型是否为富文本类型（粗体、斜体）
-     * @param spanType
+     * @param richType
      * @return
      */
-    public static boolean isSpanTypeRichText(SpanType spanType) {
-        if (spanType == SpanType.BOLD
-                || spanType == SpanType.ITALIC) {
+    public static boolean isSpanTypeRichText(RichType richType) {
+        if (richType == RichType.BOLD
+                || richType == RichType.ITALIC) {
             return true;
         }
         return false;
@@ -19,14 +19,14 @@ public class TypeUtil {
 
     /**
      * 判断一种类型是否为多媒体资源类型（图片、视频、网盘）
-     * @param spanType
+     * @param richType
      * @return
      */
-    public static boolean isSpanTypeRichResource(SpanType spanType) {
-        if (spanType == SpanType.IMAGE
-                || spanType == SpanType.VIDEO
-                || spanType == SpanType.MUSIC
-                || spanType == SpanType.NETDISK) {
+    public static boolean isSpanTypeRichResource(RichType richType) {
+        if (richType == RichType.IMAGE
+                || richType == RichType.VIDEO
+                || richType == RichType.MUSIC
+                || richType == RichType.NETDISK) {
             return true;
         }
         return false;

@@ -9,11 +9,14 @@ import android.widget.RelativeLayout;
 import androidx.annotation.Nullable;
 
 import cn.carbs.wricheditor.library.R;
+import cn.carbs.wricheditor.library.WRichEditorView;
 import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 
 // TODO 抽象出来 provider 针对glide等
 public class RichImageView extends RelativeLayout implements IRichCellView {
+
+    private WRichEditorView mWRichEditorView;
 
     private ImageView mImageView;
 
@@ -44,6 +47,11 @@ public class RichImageView extends RelativeLayout implements IRichCellView {
     @Override
     public View getView() {
         return this;
+    }
+
+    @Override
+    public void setWRichEditorView(WRichEditorView wRichEditorView) {
+        mWRichEditorView = wRichEditorView;
     }
 
     @Override
