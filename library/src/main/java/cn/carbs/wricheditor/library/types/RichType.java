@@ -10,6 +10,8 @@ public enum RichType {
 
     ITALIC,
 
+    STRIKE_THROUGH,
+
     // 多媒体类型，采用自定义view
     IMAGE,
 

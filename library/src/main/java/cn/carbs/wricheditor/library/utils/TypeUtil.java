@@ -5,6 +5,7 @@ import java.util.Set;
 import cn.carbs.wricheditor.library.interfaces.IRichSpan;
 import cn.carbs.wricheditor.library.spannables.BoldStyleSpan;
 import cn.carbs.wricheditor.library.spannables.ItalicStyleSpan;
+import cn.carbs.wricheditor.library.spannables.StrikeThroughStyleSpan;
 import cn.carbs.wricheditor.library.types.RichType;
 
 public class TypeUtil {
@@ -71,26 +72,14 @@ public class TypeUtil {
         return true;
     }
 
-    // todo 无效
-    public static RichType getOppositeRichType(RichType richType) {
-        RichType retRichType = null;
-        switch (richType) {
-            case BOLD:
-                retRichType = RichType.NORMAL;
-                break;
-            case ITALIC:
-                retRichType = RichType.NORMAL;
-                break;
-        }
-        return retRichType;
-    }
-
     public static IRichSpan getSpanByType(RichType richType) {
         switch (richType) {
             case BOLD:
                 return new BoldStyleSpan();
             case ITALIC:
                 return new ItalicStyleSpan();
+            case STRIKE_THROUGH:
+                return new StrikeThroughStyleSpan();
         }
         return null;
     }
