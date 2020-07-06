@@ -46,7 +46,21 @@ public class SpanUtil {
                 }
             }
         }
+    }
 
+    // 后面添加
+    public static void setSpan(Set<RichType> richTypes, Editable editable, int spanStart, int spanEnd) {
+        if (editable == null || spanStart < 0 || spanEnd < 0 || spanStart >= spanEnd) {
+            return;
+        }
+
+        if (richTypes == null || richTypes.size() == 0) {
+            return;
+        }
+
+        for (RichType richType : richTypes) {
+            editable.setSpan(TypeUtil.getSpanByType(richType), spanStart, spanEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        }
     }
 
 }

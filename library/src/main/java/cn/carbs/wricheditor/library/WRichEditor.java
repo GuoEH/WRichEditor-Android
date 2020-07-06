@@ -55,6 +55,12 @@ public class WRichEditor extends EditText implements IRichCellView {
     protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
         super.onTextChanged(text, start, lengthBefore, lengthAfter);
         Log.d("fff", "editor onTextChanged start : " + start + " lengthBefore : " + lengthBefore + " lengthAfter : " + lengthAfter);
+//        getEditableText().setSpan();
+        // Set<RichType> richTypes, Editable editable, int spanStart, int spanEnd
+        if (mWRichEditorView == null) {
+            return;
+        }
+        SpanUtil.setSpan(mWRichEditorView.mRichTypes, getEditableText(), start, start + lengthAfter);
     }
 
     // TODO 由此触发setSpan函数
