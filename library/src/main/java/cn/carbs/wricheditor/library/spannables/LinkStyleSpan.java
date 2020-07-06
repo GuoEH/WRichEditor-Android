@@ -9,8 +9,8 @@ import cn.carbs.wricheditor.library.types.RichType;
 
 public class LinkStyleSpan extends URLSpan implements IRichSpan {
 
-    private int linkColor = 0;
-    private boolean linkUnderline = true;
+    private int linkColor;
+    private boolean linkUnderline;
 
     private RichType type;
 

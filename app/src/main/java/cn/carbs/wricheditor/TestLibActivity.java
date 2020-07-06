@@ -89,11 +89,9 @@ public class TestLibActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void onInsertLinkClicked() {
-        // todo
         setButtonTextColor(mBtnLink, true);
         WRichEditor wRichEditor = mWRichEditorView.findCurrentOrRecentFocusedRichEditor();
         if (wRichEditor == null) {
-            Log.d("xxx", "onInsertLinkClicked() wRichEditor == null");
             return;
         }
         final int start = wRichEditor.getSelectionStart();

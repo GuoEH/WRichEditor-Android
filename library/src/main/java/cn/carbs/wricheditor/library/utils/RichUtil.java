@@ -29,6 +29,8 @@ public class RichUtil {
     }
 
     // TODO 需要先保证 atomicDataList 中所有的item数据都不能为空
+    // TODO
+    // TODO 系统是向后依靠，所以需要向后依靠
     // 格式向前依靠，返回以前的data
     public static RichAtomicData getCursorLocationData(ArrayList<RichAtomicData> atomicDataList, Editable editable, int location, int[] locationInAtomicDataList) {
 

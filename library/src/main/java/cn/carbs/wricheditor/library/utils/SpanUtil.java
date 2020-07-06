@@ -6,6 +6,7 @@ import android.text.style.StyleSpan;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -62,5 +63,36 @@ public class SpanUtil {
             editable.setSpan(TypeUtil.getSpanByType(richType, object), spanStart, spanEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
     }
+
+    // 此函数纯粹返回当前上下文的格式，在使用此函数之前，应该先判断location的位置，如果location的位置是最后一个，则按照当前的主动设置来执行
+    // 此函数返回的格式，只能作为默认
+    public static Set<RichType> getSpanTypesForCursorLocation(Editable editable, int cursorLocation) {
+        Set<RichType> retRichTypes = new HashSet<>();
+        if (editable == null || cursorLocation < 0) {
+            return retRichTypes;
+        }
+
+        int editableLength = editable.toString().length();
+
+        // location 超出范围
+        if (editableLength < cursorLocation) {
+            return retRichTypes;
+        }
+        // 光标位于最后
+        if (cursorLocation == editableLength) {
+            return retRichTypes;
+        }
+
+        IRichSpan[] spans = editable.getSpans(cursorLocation, cursorLocation + 1, IRichSpan.class);
+        for (IRichSpan span : spans) {
+            RichType richType = span.getRichType();
+            if (richType != null) {
+                retRichTypes.add(richType);
+            }
+        }
+        Log.d("qqq", "richTypes size : " + retRichTypes.size());
+        return retRichTypes;
+    }
+
 
 }

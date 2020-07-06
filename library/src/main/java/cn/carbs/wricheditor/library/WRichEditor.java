@@ -76,7 +76,11 @@ public class WRichEditor extends EditText implements IRichCellView {
     protected void onSelectionChanged(int selStart, int selEnd) {
         super.onSelectionChanged(selStart, selEnd);
         // 打字时，每次回调此函数都会 selStart == selEnd
-        Log.d("fff", "editor onSelectionChanged selStart : " + selStart + " selEnd : " + selEnd);
+        Log.d("qqq", "editor onSelectionChanged selStart : " + selStart + " selEnd : " + selEnd);
+        if (selStart == selEnd) {
+            // TODO test
+            SpanUtil.getSpanTypesForCursorLocation(getEditableText(), selEnd);
+        }
         if (mWRichEditorView == null) {
             return;
         }
