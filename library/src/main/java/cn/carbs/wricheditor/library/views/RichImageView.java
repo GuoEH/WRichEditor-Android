@@ -10,8 +10,10 @@ import androidx.annotation.Nullable;
 
 import cn.carbs.wricheditor.library.R;
 import cn.carbs.wricheditor.library.WRichEditorView;
+import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
 import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
+import cn.carbs.wricheditor.library.types.RichType;
 
 // TODO 抽象出来 provider 针对glide等
 public class RichImageView extends RelativeLayout implements IRichCellView {
@@ -21,6 +23,8 @@ public class RichImageView extends RelativeLayout implements IRichCellView {
     private ImageView mImageView;
 
     private IRichCellData mRichCellData;
+
+    private OnEditorFocusChangedListener mOnEditorFocusChangedListener;
 
     public RichImageView(Context context) {
         super(context);
@@ -62,5 +66,15 @@ public class RichImageView extends RelativeLayout implements IRichCellView {
     @Override
     public IRichCellData getCellData() {
         return mRichCellData;
+    }
+
+    @Override
+    public RichType getRichType() {
+        return RichType.IMAGE;
+    }
+
+    @Override
+    public void setEditorFocusChangedListener(OnEditorFocusChangedListener listener) {
+        mOnEditorFocusChangedListener = listener;
     }
 }

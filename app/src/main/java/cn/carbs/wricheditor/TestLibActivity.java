@@ -2,6 +2,7 @@ package cn.carbs.wricheditor;
 
 import android.os.Bundle;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +11,12 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Set;
+
 import cn.carbs.wricheditor.library.WRichEditor;
 import cn.carbs.wricheditor.library.WRichEditorView;
+import cn.carbs.wricheditor.library.types.RichType;
+import cn.carbs.wricheditor.library.utils.TypeUtil;
 import cn.carbs.wricheditor.library.views.RichImageView;
 
 public class TestLibActivity extends AppCompatActivity {
@@ -39,11 +44,42 @@ public class TestLibActivity extends AppCompatActivity {
         findViewById(R.id.button_2).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                Log.d("ppp", "activity before new WRichEditor");
                 WRichEditor editText = new WRichEditor(TestLibActivity.this);
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 editText.setBackgroundColor(0x22222222);
+                Log.d("ppp", "activity new WRichEditor");
                 wrich_editor_view.addRichCell(editText, lp);
             }
         });
+
+
+        findViewById(R.id.button_bold).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                onBoldClicked();
+            }
+        });
+
+        findViewById(R.id.button_italic).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                onItalicClicked();
+            }
+        });
+
     }
+
+    private void onBoldClicked() {
+        Set<RichType> richTypes = wrich_editor_view.getRichTypes();
+        TypeUtil.toggleCertainRichType(richTypes, RichType.BOLD);
+        wrich_editor_view.updateTextByRichTypeChanged();
+    }
+
+    private void onItalicClicked() {
+        Set<RichType> richTypes = wrich_editor_view.getRichTypes();
+        TypeUtil.toggleCertainRichType(richTypes, RichType.BOLD);
+        wrich_editor_view.updateTextByRichTypeChanged();
+    }
+
 }

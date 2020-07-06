@@ -5,24 +5,55 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <HorizontalScrollView
+        android:id="@+id/h_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bold"
+                android:textAllCaps="false"
+                android:textColor="#000000" />
+
+            <Button
+                android:id="@+id/button_italic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Italic"
+                android:textAllCaps="false"
+                android:textColor="#000000" />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
     <cn.carbs.wricheditor.library.WRichEditorView
         android:id="@+id/wrich_editor_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@id/h_scroll" />
 
     <Button
         android:id="@+id/button_1"
-        android:text="添加图片"
-        android:layout_alignParentBottom="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="添加图片" />
 
     <Button
         android:id="@+id/button_2"
-        android:text="添加EditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@id/button_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:text="添加EditText" />
 
 </RelativeLayout>
