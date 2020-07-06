@@ -5,6 +5,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,10 +21,10 @@ import cn.carbs.wricheditor.library.views.RichImageView;
 public class TestLibActivity extends AppCompatActivity implements View.OnClickListener{
 
     private WRichEditorView mWRichEditorView;
-    private Button mBtnBold;
-    private Button mBtnItalic;
-    private Button mBtnStrikeThrough;
-    private Button mBtnUnderLine;
+    private ImageButton mBtnBold;
+    private ImageButton mBtnItalic;
+    private ImageButton mBtnStrikeThrough;
+    private ImageButton mBtnUnderLine;
 
     private Button mBtnAddImage;
     private Button mBtnAddEditor;
@@ -113,13 +114,12 @@ public class TestLibActivity extends AppCompatActivity implements View.OnClickLi
         mWRichEditorView.addRichCell(editText, lp);
     }
 
-    private void setButtonTextColor(Button button, boolean open) {
+    private void setButtonTextColor(ImageButton button, boolean open) {
         if (open) {
-            button.setTextColor(0xffff0000);
+            button.setBackgroundColor(0x806200EE);
         } else {
-            button.setTextColor(0xff000000);
+            button.setBackgroundColor(0x80000000);
         }
     }
-
 
 }
