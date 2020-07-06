@@ -78,7 +78,7 @@ public class TestLibActivity extends AppCompatActivity {
 
     private void onItalicClicked() {
         Set<RichType> richTypes = wrich_editor_view.getRichTypes();
-        TypeUtil.toggleCertainRichType(richTypes, RichType.BOLD);
+        TypeUtil.toggleCertainRichType(richTypes, RichType.ITALIC);
         wrich_editor_view.updateTextByRichTypeChanged();
     }
 

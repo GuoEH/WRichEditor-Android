@@ -6,13 +6,13 @@ import android.text.style.StyleSpan;
 import cn.carbs.wricheditor.library.interfaces.IRichSpan;
 import cn.carbs.wricheditor.library.types.RichType;
 
-
-public class BoldStyleSpan extends StyleSpan implements IRichSpan {
+// 这个没什么用
+public class NormalStyleSpan extends StyleSpan implements IRichSpan {
 
     private RichType type;
 
-    public BoldStyleSpan() {
-        super(Typeface.BOLD);
+    public NormalStyleSpan() {
+        super(Typeface.NORMAL);
         type = RichType.BOLD;
     }
 

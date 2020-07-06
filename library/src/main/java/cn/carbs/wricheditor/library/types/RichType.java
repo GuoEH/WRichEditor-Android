@@ -4,6 +4,8 @@ public enum RichType {
 
     NONE,
 
+    NORMAL,
+
     BOLD,
 
     ITALIC,

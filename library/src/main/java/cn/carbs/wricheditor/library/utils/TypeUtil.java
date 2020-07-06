@@ -2,6 +2,9 @@ package cn.carbs.wricheditor.library.utils;
 
 import java.util.Set;
 
+import cn.carbs.wricheditor.library.interfaces.IRichSpan;
+import cn.carbs.wricheditor.library.spannables.BoldStyleSpan;
+import cn.carbs.wricheditor.library.spannables.ItalicStyleSpan;
 import cn.carbs.wricheditor.library.types.RichType;
 
 public class TypeUtil {
@@ -48,6 +51,48 @@ public class TypeUtil {
             richTypes.add(richType);
             return true;
         }
+    }
+
+    public static boolean checkIfRichTypesSetSame(Set<RichType> richTypesA, Set<RichType> richTypesB) {
+        int sizeA = richTypesA == null ? 0 : richTypesA.size();
+        int sizeB = richTypesB == null ? 0 : richTypesB.size();
+
+        if (sizeA != sizeB) {
+            return false;
+        }
+
+        // 两者数量相同，则检查A集合中的每个元素 B 集合都有
+        for (RichType itemInA : richTypesA) {
+            if (richTypesB.contains(itemInA)) {
+                continue;
+            }
+            return false;
+        }
+        return true;
+    }
+
+    // todo 无效
+    public static RichType getOppositeRichType(RichType richType) {
+        RichType retRichType = null;
+        switch (richType) {
+            case BOLD:
+                retRichType = RichType.NORMAL;
+                break;
+            case ITALIC:
+                retRichType = RichType.NORMAL;
+                break;
+        }
+        return retRichType;
+    }
+
+    public static IRichSpan getSpanByType(RichType richType) {
+        switch (richType) {
+            case BOLD:
+                return new BoldStyleSpan();
+            case ITALIC:
+                return new ItalicStyleSpan();
+        }
+        return null;
     }
 
 
