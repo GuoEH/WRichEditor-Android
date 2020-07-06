@@ -14,4 +14,9 @@ public class StrikeThroughStyleSpan extends StrikethroughSpan implements IRichSp
         type = RichType.STRIKE_THROUGH;
     }
 
+    @Override
+    public RichType getRichType() {
+        return type;
+    }
+
 }

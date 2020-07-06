@@ -12,6 +12,8 @@ public enum RichType {
 
     STRIKE_THROUGH,
 
+    UNDER_LINE,
+
     // 多媒体类型，采用自定义view
     IMAGE,
 

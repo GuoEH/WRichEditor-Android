@@ -23,6 +23,7 @@ public class TestLibActivity extends AppCompatActivity implements View.OnClickLi
     private Button mBtnBold;
     private Button mBtnItalic;
     private Button mBtnStrikeThrough;
+    private Button mBtnUnderLine;
 
     private Button mBtnAddImage;
     private Button mBtnAddEditor;
@@ -41,12 +42,12 @@ public class TestLibActivity extends AppCompatActivity implements View.OnClickLi
 
         mBtnBold = findViewById(R.id.button_bold);
         mBtnBold.setOnClickListener(this);
-
         mBtnItalic = findViewById(R.id.button_italic);
         mBtnItalic.setOnClickListener(this);
-
         mBtnStrikeThrough = findViewById(R.id.button_strike_through);
         mBtnStrikeThrough.setOnClickListener(this);
+        mBtnUnderLine = findViewById(R.id.button_under_line);
+        mBtnUnderLine.setOnClickListener(this);
     }
 
     private void onBoldClicked() {
@@ -70,6 +71,13 @@ public class TestLibActivity extends AppCompatActivity implements View.OnClickLi
         setButtonTextColor(mBtnStrikeThrough, open);
     }
 
+    private void onUnderLineClicked() {
+        Set<RichType> richTypes = mWRichEditorView.getRichTypes();
+        boolean open = TypeUtil.toggleCertainRichType(richTypes, RichType.UNDER_LINE);
+        mWRichEditorView.updateTextByRichTypeChanged(RichType.UNDER_LINE, open);
+        setButtonTextColor(mBtnUnderLine, open);
+    }
+
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -80,6 +88,8 @@ public class TestLibActivity extends AppCompatActivity implements View.OnClickLi
             onItalicClicked();
         } else if (id == R.id.button_strike_through) {
             onStrikeThroughClicked();
+        } else if (id == R.id.button_under_line) {
+            onUnderLineClicked();
         }
         // 底部测试button
         if (id == R.id.button_1) {

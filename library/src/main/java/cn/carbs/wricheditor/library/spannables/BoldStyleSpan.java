@@ -16,4 +16,9 @@ public class BoldStyleSpan extends StyleSpan implements IRichSpan {
         type = RichType.BOLD;
     }
 
+    @Override
+    public RichType getRichType() {
+        return type;
+    }
+
 }

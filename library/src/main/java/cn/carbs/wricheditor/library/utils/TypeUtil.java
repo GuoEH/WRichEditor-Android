@@ -6,6 +6,7 @@ import cn.carbs.wricheditor.library.interfaces.IRichSpan;
 import cn.carbs.wricheditor.library.spannables.BoldStyleSpan;
 import cn.carbs.wricheditor.library.spannables.ItalicStyleSpan;
 import cn.carbs.wricheditor.library.spannables.StrikeThroughStyleSpan;
+import cn.carbs.wricheditor.library.spannables.UnderlineStyleSpan;
 import cn.carbs.wricheditor.library.types.RichType;
 
 public class TypeUtil {
@@ -80,6 +81,8 @@ public class TypeUtil {
                 return new ItalicStyleSpan();
             case STRIKE_THROUGH:
                 return new StrikeThroughStyleSpan();
+            case UNDER_LINE:
+                return new UnderlineStyleSpan();
         }
         return null;
     }
