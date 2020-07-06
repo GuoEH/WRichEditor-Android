@@ -27,6 +27,9 @@ public class WRichEditor extends EditText implements IRichCellView {
 
     private OnEditorFocusChangedListener mOnEditorFocusChangedListener;
 
+    // todo
+    // 1. 如果不使用数据呢？
+    // 2. 这种思路是以文字推进的角度来进行的，另一种思路是按照指定的span类型，按照整行的方式获取所有的span，参考knife 标记wangwang
     private ArrayList<RichAtomicData> mRichAtomicDataList = new ArrayList<>();
 
     public WRichEditor(Context context) {
@@ -109,7 +112,7 @@ public class WRichEditor extends EditText implements IRichCellView {
     }
 
     // TODO 外部主动更改了字体样式，不涉及数据插入
-    public void updateTextByRichTypeChanged() {
+    public void updateTextByRichTypeChanged(RichType richType, boolean open) {
         int selectionStart = getSelectionStart();
         int selectionEnd = getSelectionEnd();
         if (selectionStart < 0 || selectionEnd < 0) {
@@ -125,18 +128,20 @@ public class WRichEditor extends EditText implements IRichCellView {
             }
 
             // 将选中的部分进行更新，同时更新此View对应的
-            updateSpanUI(selectionStart, selectionEnd, mWRichEditorView.getRichTypes());
+            updateSpanUI(richType, open, selectionStart, selectionEnd, mWRichEditorView.getRichTypes());
+            // 是不是想的太复杂了？
+
             // TODO [难点] 切割data
             updateSpanData(selectionStart, selectionEnd, mWRichEditorView.getRichTypes());
         }
     }
 
     // TODO 插入数据时，应该修改data
-    private void updateSpanUI(int start, int end, Set<RichType> richTypes) {
+    private void updateSpanUI(RichType richType, boolean open, int start, int end, Set<RichType> richTypes) {
         if (start < 0 || end < 0) {
             return;
         }
-        SpanUtil.setSpan(getEditableText(), richTypes, start, end);
+        SpanUtil.setSpan(richType, open, mRichAtomicDataList, getEditableText(), richTypes, start, end);
     }
 
     // TODO 插入数据时，应该修改data

@@ -72,14 +72,14 @@ public class TestLibActivity extends AppCompatActivity {
 
     private void onBoldClicked() {
         Set<RichType> richTypes = wrich_editor_view.getRichTypes();
-        TypeUtil.toggleCertainRichType(richTypes, RichType.BOLD);
-        wrich_editor_view.updateTextByRichTypeChanged();
+        boolean open = TypeUtil.toggleCertainRichType(richTypes, RichType.BOLD);
+        wrich_editor_view.updateTextByRichTypeChanged(RichType.BOLD, open);
     }
 
     private void onItalicClicked() {
         Set<RichType> richTypes = wrich_editor_view.getRichTypes();
-        TypeUtil.toggleCertainRichType(richTypes, RichType.ITALIC);
-        wrich_editor_view.updateTextByRichTypeChanged();
+        boolean open = TypeUtil.toggleCertainRichType(richTypes, RichType.ITALIC);
+        wrich_editor_view.updateTextByRichTypeChanged(RichType.ITALIC, open);
     }
 
 }

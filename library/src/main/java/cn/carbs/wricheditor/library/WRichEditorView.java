@@ -89,7 +89,7 @@ public class WRichEditorView extends ScrollView implements OnEditorFocusChangedL
     }
 
     // TODO 考虑 richType 此api的设计，是否将toggle放到此类中
-    public void updateTextByRichTypeChanged() {
+    public void updateTextByRichTypeChanged(RichType richType, boolean open) {
 
         // 1. 循环内部子View，找到焦点所在的EditView
         WRichEditor focusedWRichEditor = null;
@@ -115,7 +115,7 @@ public class WRichEditorView extends ScrollView implements OnEditorFocusChangedL
             return;
         }
         // 2. 交给某个单元Cell去更新
-        focusedWRichEditor.updateTextByRichTypeChanged();
+        focusedWRichEditor.updateTextByRichTypeChanged(richType, open);
     }
 
     // TODO 考虑此API的设计
