@@ -1,12 +1,18 @@
 package cn.carbs.wricheditor;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,6 +31,7 @@ public class TestLibActivity extends AppCompatActivity implements View.OnClickLi
     private ImageButton mBtnItalic;
     private ImageButton mBtnStrikeThrough;
     private ImageButton mBtnUnderLine;
+    private ImageButton mBtnLink;
 
     private Button mBtnAddImage;
     private Button mBtnAddEditor;
@@ -49,34 +56,84 @@ public class TestLibActivity extends AppCompatActivity implements View.OnClickLi
         mBtnStrikeThrough.setOnClickListener(this);
         mBtnUnderLine = findViewById(R.id.button_under_line);
         mBtnUnderLine.setOnClickListener(this);
+        mBtnLink = findViewById(R.id.button_link);
+        mBtnLink.setOnClickListener(this);
     }
 
     private void onBoldClicked() {
         Set<RichType> richTypes = mWRichEditorView.getRichTypes();
         boolean open = TypeUtil.toggleCertainRichType(richTypes, RichType.BOLD);
-        mWRichEditorView.updateTextByRichTypeChanged(RichType.BOLD, open);
+        mWRichEditorView.updateTextByRichTypeChanged(RichType.BOLD, open, null);
         setButtonTextColor(mBtnBold, open);
     }
 
     private void onItalicClicked() {
         Set<RichType> richTypes = mWRichEditorView.getRichTypes();
         boolean open = TypeUtil.toggleCertainRichType(richTypes, RichType.ITALIC);
-        mWRichEditorView.updateTextByRichTypeChanged(RichType.ITALIC, open);
+        mWRichEditorView.updateTextByRichTypeChanged(RichType.ITALIC, open, null);
         setButtonTextColor(mBtnItalic, open);
     }
 
     private void onStrikeThroughClicked() {
         Set<RichType> richTypes = mWRichEditorView.getRichTypes();
         boolean open = TypeUtil.toggleCertainRichType(richTypes, RichType.STRIKE_THROUGH);
-        mWRichEditorView.updateTextByRichTypeChanged(RichType.STRIKE_THROUGH, open);
+        mWRichEditorView.updateTextByRichTypeChanged(RichType.STRIKE_THROUGH, open, null);
         setButtonTextColor(mBtnStrikeThrough, open);
     }
 
     private void onUnderLineClicked() {
         Set<RichType> richTypes = mWRichEditorView.getRichTypes();
         boolean open = TypeUtil.toggleCertainRichType(richTypes, RichType.UNDER_LINE);
-        mWRichEditorView.updateTextByRichTypeChanged(RichType.UNDER_LINE, open);
+        mWRichEditorView.updateTextByRichTypeChanged(RichType.UNDER_LINE, open, null);
         setButtonTextColor(mBtnUnderLine, open);
+    }
+
+    private void onInsertLinkClicked() {
+        // todo
+        setButtonTextColor(mBtnLink, true);
+        WRichEditor wRichEditor = mWRichEditorView.findCurrentOrRecentFocusedRichEditor();
+        if (wRichEditor == null) {
+            Log.d("xxx", "onInsertLinkClicked() wRichEditor == null");
+            return;
+        }
+        final int start = wRichEditor.getSelectionStart();
+        final int end = wRichEditor.getSelectionEnd();
+        if (start == end) {
+            Toast.makeText(this, "请先选择要添加链接的文字", Toast.LENGTH_LONG).show();
+            setButtonTextColor(mBtnLink, false);
+            return;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+
+        View view = getLayoutInflater().inflate(R.layout.dialog_link, null, false);
+        final EditText editText = (EditText) view.findViewById(R.id.edit);
+        builder.setView(view);
+        builder.setTitle("请输入链接");
+
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String link = editText.getText().toString().trim();
+                if (TextUtils.isEmpty(link)) {
+                    return;
+                }
+                setButtonTextColor(mBtnLink, false);
+                Set<RichType> richTypes = mWRichEditorView.getRichTypes();
+                TypeUtil.removeCertainRichType(richTypes, RichType.LINK);
+                mWRichEditorView.updateTextByRichTypeChanged(RichType.LINK, true, null);
+                setButtonTextColor(mBtnUnderLine, false);
+            }
+        });
+
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                setButtonTextColor(mBtnLink, false);
+            }
+        });
+        builder.create().show();
     }
 
     @Override
@@ -91,6 +148,8 @@ public class TestLibActivity extends AppCompatActivity implements View.OnClickLi
             onStrikeThroughClicked();
         } else if (id == R.id.button_under_line) {
             onUnderLineClicked();
+        } else if (id == R.id.button_link) {
+            onInsertLinkClicked();
         }
         // 底部测试button
         if (id == R.id.button_1) {
@@ -116,7 +175,7 @@ public class TestLibActivity extends AppCompatActivity implements View.OnClickLi
 
     private void setButtonTextColor(ImageButton button, boolean open) {
         if (open) {
-            button.setBackgroundColor(0x806200EE);
+            button.setBackgroundColor(0xb06200EE);
         } else {
             button.setBackgroundColor(0x80000000);
         }

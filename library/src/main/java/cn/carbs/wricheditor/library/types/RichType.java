@@ -14,6 +14,8 @@ public enum RichType {
 
     UNDER_LINE,
 
+    LINK,
+
     // 多媒体类型，采用自定义view
     IMAGE,
 

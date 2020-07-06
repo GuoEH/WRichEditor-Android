@@ -14,9 +14,15 @@ import java.util.Set;
 import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
 import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
+import cn.carbs.wricheditor.library.interfaces.IRichSpan;
 import cn.carbs.wricheditor.library.models.RichAtomicData;
 import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.SpanUtil;
+import cn.carbs.wricheditor.library.utils.TypeUtil;
+
+// 注意，此方法是不会合并的
+// getEditableText().getSpans(0, getEditableText().toString().length(), richSpan.getClass());
+// 因此最后导出的时候，是否需要合并？如何转换数据是个问题
 
 @SuppressLint("AppCompatCustomView")
 public class WRichEditor extends EditText implements IRichCellView {
@@ -54,13 +60,15 @@ public class WRichEditor extends EditText implements IRichCellView {
     @Override
     protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
         super.onTextChanged(text, start, lengthBefore, lengthAfter);
-        Log.d("fff", "editor onTextChanged start : " + start + " lengthBefore : " + lengthBefore + " lengthAfter : " + lengthAfter);
+        Log.d("fff", "editor onTextChanged text : " + text + " start : " + start + " lengthBefore : " + lengthBefore + " lengthAfter : " + lengthAfter);
 //        getEditableText().setSpan();
         // Set<RichType> richTypes, Editable editable, int spanStart, int spanEnd
         if (mWRichEditorView == null) {
             return;
         }
-        SpanUtil.setSpan(mWRichEditorView.mRichTypes, getEditableText(), start, start + lengthAfter);
+        // TODO
+        SpanUtil.setSpan(mWRichEditorView.mRichTypes, text, getEditableText(), start, start + lengthAfter);
+
     }
 
     // TODO 由此触发setSpan函数
@@ -118,7 +126,7 @@ public class WRichEditor extends EditText implements IRichCellView {
     }
 
     // TODO 外部主动更改了字体样式，不涉及数据插入
-    public void updateTextByRichTypeChanged(RichType richType, boolean open) {
+    public void updateTextByRichTypeChanged(RichType richType, boolean open, Object object) {
         int selectionStart = getSelectionStart();
         int selectionEnd = getSelectionEnd();
         if (selectionStart < 0 || selectionEnd < 0) {
@@ -134,7 +142,7 @@ public class WRichEditor extends EditText implements IRichCellView {
             }
 
             // 将选中的部分进行更新，同时更新此View对应的
-            updateSpanUI(richType, open, selectionStart, selectionEnd, mWRichEditorView.getRichTypes());
+            updateSpanUI(richType, open, object, selectionStart, selectionEnd, mWRichEditorView.getRichTypes());
             // 是不是想的太复杂了？
 
             // TODO [难点] 切割data
@@ -143,11 +151,11 @@ public class WRichEditor extends EditText implements IRichCellView {
     }
 
     // TODO 插入数据时，应该修改data
-    private void updateSpanUI(RichType richType, boolean open, int start, int end, Set<RichType> richTypes) {
+    private void updateSpanUI(RichType richType, boolean open, Object object, int start, int end, Set<RichType> richTypes) {
         if (start < 0 || end < 0) {
             return;
         }
-        SpanUtil.setSpan(richType, open, mRichAtomicDataList, getEditableText(), richTypes, start, end);
+        SpanUtil.setSpan(richType, open, object, mRichAtomicDataList, getEditableText(), richTypes, start, end);
     }
 
     // TODO 插入数据时，应该修改data

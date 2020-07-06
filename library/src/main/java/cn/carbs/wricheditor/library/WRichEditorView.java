@@ -1,6 +1,7 @@
 package cn.carbs.wricheditor.library;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.LinearLayout;
@@ -12,6 +13,7 @@ import java.util.Set;
 
 import cn.carbs.wricheditor.library.callbacks.OnDataTransportListener;
 import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
+import cn.carbs.wricheditor.library.configures.RichEditorConfig;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.types.RichType;
 
@@ -37,16 +39,25 @@ public class WRichEditorView extends ScrollView implements OnEditorFocusChangedL
     public WRichEditorView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
+        initAttrs(attrs);
     }
 
     public WRichEditorView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
+        initAttrs(attrs);
     }
 
     private void init(Context context) {
         inflate(context, R.layout.wricheditor_layout_main_view, this);
         mLinearLayout = findViewById(R.id.wricheditor_main_view_container);
+    }
+
+    private void initAttrs(AttributeSet attrs) {
+        TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.WRichEditorView);
+        RichEditorConfig.sLinkColor = array.getColor(R.styleable.WRichEditorView_linkColor, 0xFF2196F3);
+        RichEditorConfig.sLinkUnderline = array.getBoolean(R.styleable.WRichEditorView_linkUnderline, true);
+        array.recycle();
     }
 
     public void addRichCell(IRichCellView richCell, LinearLayout.LayoutParams layoutParams) {
@@ -89,9 +100,38 @@ public class WRichEditorView extends ScrollView implements OnEditorFocusChangedL
     }
 
     // TODO 考虑 richType 此api的设计，是否将toggle放到此类中
-    public void updateTextByRichTypeChanged(RichType richType, boolean open) {
+    // object 中存储 link 等信息
+    public void updateTextByRichTypeChanged(RichType richType, boolean open, Object object) {
 
         // 1. 循环内部子View，找到焦点所在的EditView
+        /*WRichEditor focusedWRichEditor = null;
+        int cellViewSize = mRichCellViewList.size();
+        for (int i = 0; i < cellViewSize; i++) {
+            IRichCellView cellView = mRichCellViewList.get(i);
+            if (cellView != null && cellView.getView() != null) {
+                if (cellView.getRichType() == RichType.NONE) {
+                    // 具有 EditText 的 cell
+                    WRichEditor wRichEditor = ((WRichEditor) cellView.getView());
+                    Log.d("uuu", "updateTextByRichTypeChanged() i : " + i + "wRichEditor.hasFocus() ？ " + wRichEditor.hasFocus());
+                    if (wRichEditor.hasFocus()) {
+                        focusedWRichEditor = wRichEditor;
+                        break;
+                    }
+                } else {
+
+                }
+            }
+        }*/
+        WRichEditor focusedWRichEditor = findCurrentFocusedRichEditor();
+        if (focusedWRichEditor == null) {
+            // TODO 暂时返回，针对富文本格式
+            return;
+        }
+        // 2. 交给某个单元Cell去更新
+        focusedWRichEditor.updateTextByRichTypeChanged(richType, open, object);
+    }
+
+    public WRichEditor findCurrentFocusedRichEditor() {
         WRichEditor focusedWRichEditor = null;
         int cellViewSize = mRichCellViewList.size();
         for (int i = 0; i < cellViewSize; i++) {
@@ -110,12 +150,19 @@ public class WRichEditorView extends ScrollView implements OnEditorFocusChangedL
                 }
             }
         }
-        if (focusedWRichEditor == null) {
-            // TODO 暂时返回，针对富文本格式
-            return;
+        return focusedWRichEditor;
+    }
+
+    public WRichEditor findCurrentOrRecentFocusedRichEditor() {
+        WRichEditor retWRichEditor = findCurrentFocusedRichEditor();
+        Log.d("xxx", "findCurrentFocusedRichEditor() null ? : " + (retWRichEditor == null));
+        if (retWRichEditor != null) {
+            return retWRichEditor;
         }
-        // 2. 交给某个单元Cell去更新
-        focusedWRichEditor.updateTextByRichTypeChanged(richType, open);
+        if(mLastFocusedRichCellView instanceof WRichEditor) {
+            return (WRichEditor) mLastFocusedRichCellView;
+        }
+        return null;
     }
 
     // TODO 考虑此API的设计
@@ -129,8 +176,12 @@ public class WRichEditorView extends ScrollView implements OnEditorFocusChangedL
         }
     }
 
+    IRichCellView mLastFocusedRichCellView;
     @Override
     public void onEditorFocusChanged(IRichCellView iRichCellView, boolean focused) {
         Log.d("eee", "onEditorFocusChanged focused : " + focused);
+        if (focused) {
+            mLastFocusedRichCellView = iRichCellView;
+        }
     }
 }

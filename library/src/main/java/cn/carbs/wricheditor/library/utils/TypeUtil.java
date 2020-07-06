@@ -2,9 +2,11 @@ package cn.carbs.wricheditor.library.utils;
 
 import java.util.Set;
 
+import cn.carbs.wricheditor.library.configures.RichEditorConfig;
 import cn.carbs.wricheditor.library.interfaces.IRichSpan;
 import cn.carbs.wricheditor.library.spannables.BoldStyleSpan;
 import cn.carbs.wricheditor.library.spannables.ItalicStyleSpan;
+import cn.carbs.wricheditor.library.spannables.LinkStyleSpan;
 import cn.carbs.wricheditor.library.spannables.StrikeThroughStyleSpan;
 import cn.carbs.wricheditor.library.spannables.UnderlineStyleSpan;
 import cn.carbs.wricheditor.library.types.RichType;
@@ -55,6 +57,12 @@ public class TypeUtil {
         }
     }
 
+    public static void removeCertainRichType(Set<RichType> richTypes, RichType richType) {
+        if (richTypes.contains(richType)) {
+            richTypes.remove(richType);
+        }
+    }
+
     public static boolean checkIfRichTypesSetSame(Set<RichType> richTypesA, Set<RichType> richTypesB) {
         int sizeA = richTypesA == null ? 0 : richTypesA.size();
         int sizeB = richTypesB == null ? 0 : richTypesB.size();
@@ -73,7 +81,7 @@ public class TypeUtil {
         return true;
     }
 
-    public static IRichSpan getSpanByType(RichType richType) {
+    public static IRichSpan getSpanByType(RichType richType, Object extra) {
         switch (richType) {
             case BOLD:
                 return new BoldStyleSpan();
@@ -83,6 +91,8 @@ public class TypeUtil {
                 return new StrikeThroughStyleSpan();
             case UNDER_LINE:
                 return new UnderlineStyleSpan();
+            case LINK:
+                return new LinkStyleSpan((String)extra, RichEditorConfig.sLinkColor, RichEditorConfig.sLinkUnderline);
         }
         return null;
     }

@@ -17,15 +17,15 @@ import cn.carbs.wricheditor.library.types.RichType;
 public class SpanUtil {
 
     // SPAN_INCLUSIVE_EXCLUSIVE
-    public static void setSpan(RichType richType, boolean open, ArrayList<RichAtomicData> richAtomicDataList, Editable editable, Set<RichType> richTypes, int spanStart, int spanEnd) {
+    public static void setSpan(RichType richType, boolean open, Object object, ArrayList<RichAtomicData> richAtomicDataList, Editable editable, Set<RichType> richTypes, int spanStart, int spanEnd) {
         if (editable == null || spanStart < 0 || spanEnd < 0 || spanStart >= spanEnd) {
             return;
         }
 
         if (open) {
-            editable.setSpan(TypeUtil.getSpanByType(richType), spanStart, spanEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            editable.setSpan(TypeUtil.getSpanByType(richType, object), spanStart, spanEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         } else {
-            IRichSpan richSpan = TypeUtil.getSpanByType(richType);
+            IRichSpan richSpan = TypeUtil.getSpanByType(richType, object);
             IRichSpan[] spans = editable.getSpans(spanStart, spanEnd, richSpan.getClass());
 
             List<SpanPart> list = new ArrayList<>();
@@ -37,11 +37,11 @@ public class SpanUtil {
             for (SpanPart part : list) {
                 if (part.isValid()) {
                     if (part.getStart() < spanStart) {
-                        editable.setSpan(TypeUtil.getSpanByType(richType), part.getStart(), spanStart, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                        editable.setSpan(TypeUtil.getSpanByType(richType, object), part.getStart(), spanStart, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     }
 
                     if (part.getEnd() > spanEnd) {
-                        editable.setSpan(TypeUtil.getSpanByType(richType), spanEnd, part.getEnd(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                        editable.setSpan(TypeUtil.getSpanByType(richType, object), spanEnd, part.getEnd(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     }
                 }
             }
@@ -49,7 +49,7 @@ public class SpanUtil {
     }
 
     // 后面添加
-    public static void setSpan(Set<RichType> richTypes, Editable editable, int spanStart, int spanEnd) {
+    public static void setSpan(Set<RichType> richTypes, Object object, Editable editable, int spanStart, int spanEnd) {
         if (editable == null || spanStart < 0 || spanEnd < 0 || spanStart >= spanEnd) {
             return;
         }
@@ -59,7 +59,7 @@ public class SpanUtil {
         }
 
         for (RichType richType : richTypes) {
-            editable.setSpan(TypeUtil.getSpanByType(richType), spanStart, spanEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            editable.setSpan(TypeUtil.getSpanByType(richType, object), spanStart, spanEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
     }
 
