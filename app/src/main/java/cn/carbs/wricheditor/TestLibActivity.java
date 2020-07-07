@@ -16,15 +16,19 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import cn.carbs.wricheditor.library.WRichEditor;
 import cn.carbs.wricheditor.library.WRichEditorView;
+import cn.carbs.wricheditor.library.callbacks.OnRichTypeChangedListener;
 import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.TypeUtil;
 import cn.carbs.wricheditor.library.views.RichImageView;
 
-public class TestLibActivity extends AppCompatActivity implements View.OnClickListener{
+public class TestLibActivity extends AppCompatActivity implements View.OnClickListener, OnRichTypeChangedListener {
 
     private WRichEditorView mWRichEditorView;
     private ImageButton mBtnBold;
@@ -37,12 +41,15 @@ public class TestLibActivity extends AppCompatActivity implements View.OnClickLi
     private Button mBtnAddImage;
     private Button mBtnAddEditor;
 
+    private HashMap<RichType, ImageButton> mImageButtonMap = new HashMap<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_lib);
 
         mWRichEditorView = findViewById(R.id.wrich_editor_view);
+        mWRichEditorView.setOnRichTypeChangedListener(this);
 
         mBtnAddImage = findViewById(R.id.button_1);
         mBtnAddImage.setOnClickListener(this);
@@ -61,6 +68,14 @@ public class TestLibActivity extends AppCompatActivity implements View.OnClickLi
         mBtnHeadline.setOnClickListener(this);
         mBtnLink = findViewById(R.id.button_link);
         mBtnLink.setOnClickListener(this);
+
+        mImageButtonMap.put(RichType.BOLD, mBtnBold);
+        mImageButtonMap.put(RichType.ITALIC, mBtnItalic);
+        mImageButtonMap.put(RichType.STRIKE_THROUGH, mBtnStrikeThrough);
+        mImageButtonMap.put(RichType.UNDER_LINE, mBtnUnderLine);
+        mImageButtonMap.put(RichType.HEADLINE, mBtnHeadline);
+        mImageButtonMap.put(RichType.LINK, mBtnLink);
+
     }
 
     private void onBoldClicked() {
@@ -185,10 +200,25 @@ public class TestLibActivity extends AppCompatActivity implements View.OnClickLi
 
     private void setButtonTextColor(ImageButton button, boolean open) {
         if (open) {
-            button.setBackgroundColor(0xb06200EE);
+            button.setBackgroundColor(0xb06000E0);
         } else {
-            button.setBackgroundColor(0x80000000);
+            button.setBackgroundColor(0xb0000000);
         }
     }
 
+    @Override
+    public void onRichTypeChanged(Set<RichType> oldTypes, Set<RichType> newTypes) {
+        Log.d("wangwang", "onRichTypeChanged");
+
+        if (newTypes == null) {
+            newTypes = new HashSet<>();
+        }
+        for (Map.Entry<RichType, ImageButton> entry : mImageButtonMap.entrySet()) {
+            if (newTypes.contains(entry.getKey())) {
+                setButtonTextColor(entry.getValue(), true);
+            } else {
+                setButtonTextColor(entry.getValue(), false);
+            }
+        }
+    }
 }

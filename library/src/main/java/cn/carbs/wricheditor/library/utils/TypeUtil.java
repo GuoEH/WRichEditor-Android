@@ -1,5 +1,6 @@
 package cn.carbs.wricheditor.library.utils;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import cn.carbs.wricheditor.library.configures.RichEditorConfig;
@@ -58,10 +59,33 @@ public class TypeUtil {
         }
     }
 
-    public static void removeCertainRichType(Set<RichType> richTypes, RichType richType) {
+    /**
+     * 返回集合是否有变化
+     * @param richTypes
+     * @param richType
+     * @return 是否改变了
+     */
+    public static boolean removeCertainRichType(Set<RichType> richTypes, RichType richType) {
         if (richTypes.contains(richType)) {
             richTypes.remove(richType);
+            return true;
         }
+        return false;
+    }
+
+    public static Set<RichType> assembleRichTypes(Set<RichType> richTypeSet, RichType... richTypes) {
+        Set<RichType> ret = new HashSet<>();
+        if (richTypeSet != null) {
+            ret.addAll(richTypeSet);
+        }
+        if (richTypes != null) {
+            for (RichType item : richTypes) {
+                if (item != null) {
+                    ret.add(item);
+                }
+            }
+        }
+        return ret;
     }
 
     public static boolean checkIfRichTypesSetSame(Set<RichType> richTypesA, Set<RichType> richTypesB) {

@@ -13,6 +13,7 @@ import java.util.Set;
 
 import cn.carbs.wricheditor.library.callbacks.OnDataTransportListener;
 import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
+import cn.carbs.wricheditor.library.callbacks.OnRichTypeChangedListener;
 import cn.carbs.wricheditor.library.configures.RichEditorConfig;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.types.RichType;
@@ -32,6 +33,8 @@ public class WRichEditorView extends ScrollView implements OnEditorFocusChangedL
     private LinearLayout mLinearLayout;
 
     private OnDataTransportListener mOnDataTransportListener;
+
+    private OnRichTypeChangedListener mOnRichTypeChangedListener;
 
     public WRichEditorView(Context context) {
         super(context);
@@ -189,5 +192,14 @@ public class WRichEditorView extends ScrollView implements OnEditorFocusChangedL
         if (focused) {
             mLastFocusedRichCellView = iRichCellView;
         }
+    }
+
+
+    public void setOnRichTypeChangedListener(OnRichTypeChangedListener listener) {
+        mOnRichTypeChangedListener = listener;
+    }
+
+    public OnRichTypeChangedListener getOnRichTypeChangedListener() {
+        return mOnRichTypeChangedListener;
     }
 }

@@ -6,6 +6,7 @@ import android.graphics.Rect;
 import android.text.Editable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
+import cn.carbs.wricheditor.library.callbacks.OnRichTypeChangedListener;
 import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.interfaces.IRichSpan;
@@ -100,11 +102,6 @@ public class WRichEditor extends EditText implements IRichCellView {
 //                StrategyUtil.sStrongSet = false;
             }
         }
-        if (mWRichEditorView == null) {
-            return;
-        }
-        mWRichEditorView.getRichTypes();
-
     }
 
     // 有效，在focus更改时，
@@ -115,6 +112,30 @@ public class WRichEditor extends EditText implements IRichCellView {
         if (mOnEditorFocusChangedListener != null) {
             mOnEditorFocusChangedListener.onEditorFocusChanged(this, focused);
         }
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_ENTER) {
+            // 响应 keycode，如果有 headline 类型的 RichType
+            Log.d("key", "keyCode : " + keyCode);
+            if (mWRichEditorView != null) {
+                Set<RichType> richTypes = mWRichEditorView.getRichTypes();
+                if (richTypes != null) {
+                    // TODO
+                    boolean changed = TypeUtil.removeCertainRichType(richTypes, RichType.HEADLINE);
+                    if (changed) {
+                        OnRichTypeChangedListener typeChangedListener = mWRichEditorView.getOnRichTypeChangedListener();
+                        if (typeChangedListener != null) {
+                            // TODO api设计是否需要优化？考虑到光标移动的情况，应该不需要
+                            typeChangedListener.onRichTypeChanged(TypeUtil.assembleRichTypes(richTypes, RichType.HEADLINE), richTypes);
+                        }
+                    }
+                }
+            }
+        }
+
+        return super.onKeyUp(keyCode, event);
     }
 
     @Override
