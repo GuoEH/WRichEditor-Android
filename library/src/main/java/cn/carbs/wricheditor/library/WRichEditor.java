@@ -3,6 +3,7 @@ package cn.carbs.wricheditor.library;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Rect;
+import android.text.Editable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -17,7 +18,9 @@ import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.interfaces.IRichSpan;
 import cn.carbs.wricheditor.library.models.RichAtomicData;
 import cn.carbs.wricheditor.library.types.RichType;
+import cn.carbs.wricheditor.library.utils.CursorUtil;
 import cn.carbs.wricheditor.library.utils.SpanUtil;
+import cn.carbs.wricheditor.library.utils.StrategyUtil;
 import cn.carbs.wricheditor.library.utils.TypeUtil;
 
 // 注意，此方法是不会合并的
@@ -71,6 +74,7 @@ public class WRichEditor extends EditText implements IRichCellView {
 
     }
 
+
     // TODO 由此触发setSpan函数
     @Override
     protected void onSelectionChanged(int selStart, int selEnd) {
@@ -79,7 +83,22 @@ public class WRichEditor extends EditText implements IRichCellView {
         Log.d("qqq", "editor onSelectionChanged selStart : " + selStart + " selEnd : " + selEnd);
         if (selStart == selEnd) {
             // TODO test
-            SpanUtil.getSpanTypesForCursorLocation(getEditableText(), selEnd);
+            Editable editableText = getEditableText();
+            int editableLength = editableText.length();
+            SpanUtil.getSpanTypesForCursorLocation(editableText, selEnd);
+
+            boolean isCursorAutoChange = CursorUtil.isCursorChangedAutomaticallyByTextChange(editableLength, selStart);
+            CursorUtil.markLastTextLength(editableLength);
+            CursorUtil.markLastCursorLocation(selStart);
+            Log.d("qqq", "getEditableText().length() : " + getEditableText().length() + "  isCursorAutoChange : " + isCursorAutoChange);
+            // 怎样区分是手动滑动了cursor，还是跟随输入汉字？通过比较 lastTextLength 与 lastCursorLocation，同时，应该注意不同的editor之间的判断
+            if (getEditableText().length() == selStart) {
+                // 光标在末尾
+//                if ()
+            } else {
+                // 光标不在末尾，将用户强设置置为false ?
+//                StrategyUtil.sStrongSet = false;
+            }
         }
         if (mWRichEditorView == null) {
             return;

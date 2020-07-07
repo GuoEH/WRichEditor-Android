@@ -16,6 +16,7 @@ import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
 import cn.carbs.wricheditor.library.configures.RichEditorConfig;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.types.RichType;
+import cn.carbs.wricheditor.library.utils.StrategyUtil;
 
 /**
  * 主视图，继承自ScrollView，富文本通过向其中不断添加子View实现
@@ -102,6 +103,7 @@ public class WRichEditorView extends ScrollView implements OnEditorFocusChangedL
     // TODO 考虑 richType 此api的设计，是否将toggle放到此类中
     // object 中存储 link 等信息
     public void updateTextByRichTypeChanged(RichType richType, boolean open, Object object) {
+        StrategyUtil.sStrongSet = true;
 
         // 1. 循环内部子View，找到焦点所在的EditView
         /*WRichEditor focusedWRichEditor = null;
