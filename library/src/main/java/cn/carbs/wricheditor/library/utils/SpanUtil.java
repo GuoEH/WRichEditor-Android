@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import cn.carbs.wricheditor.library.constants.CharConstant;
 import cn.carbs.wricheditor.library.interfaces.IRichSpan;
 import cn.carbs.wricheditor.library.models.RichAtomicData;
 import cn.carbs.wricheditor.library.models.SpanPart;
@@ -19,7 +20,36 @@ public class SpanUtil {
 
     // SPAN_INCLUSIVE_EXCLUSIVE
     public static void setSpan(RichType richType, boolean open, Object object, ArrayList<RichAtomicData> richAtomicDataList, Editable editable, Set<RichType> richTypes, int spanStart, int spanEnd) {
-        if (editable == null || spanStart < 0 || spanEnd < 0 || spanStart >= spanEnd) {
+        Log.d("kkk", "setSpan 000");
+        if (editable == null || spanStart < 0 || spanEnd < 0 || spanStart > spanEnd) {
+            Log.d("kkk", "setSpan 0");
+            return;
+        }
+        if (spanStart == spanEnd) {
+            Log.d("kkk", "setSpan 1");
+            // 没有选中，分情况：
+            // 如果是 HeadLine 类型，则将整行都置为大号字体
+            // TODO
+            if (richType == RichType.HEADLINE) {
+                Log.d("kkk", "setSpan 3 spanEnd : " + spanEnd);
+                // TODO 应该是整行都变
+                if (spanEnd == 0) {
+                    Log.d("kkk", "setSpan 4");
+                    return;
+                }
+                String editableStr = editable.toString();
+                int lastLineBreak = 0;
+                for (int i = spanEnd - 1; i >= 0; i--) {
+                    Log.d("kkk", "setSpan 5 for i : " + i);
+                    char ic = editableStr.charAt(i);
+                    if (ic == CharConstant.LINE_BREAK_CHAR) {
+                        lastLineBreak = i;
+                        break;
+                    }
+                }
+                Log.d("kkk", "setSpan 6 lastLineBreak : " + lastLineBreak);
+                editable.setSpan(TypeUtil.getSpanByType(richType, object), lastLineBreak, spanEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            }
             return;
         }
 

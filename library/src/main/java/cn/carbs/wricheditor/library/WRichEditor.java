@@ -179,6 +179,9 @@ public class WRichEditor extends EditText implements IRichCellView {
         if (selectionStart == selectionEnd) {
             // TODO 后面输入的字体将按照对应的设定字体进行
             // 当前没有选中字体
+            if (richType == RichType.HEADLINE) {
+                updateSpanUI(richType, open, object, selectionStart, selectionEnd, mWRichEditorView.getRichTypes());
+            }
             return;
         } else {
             if (mWRichEditorView == null) {
