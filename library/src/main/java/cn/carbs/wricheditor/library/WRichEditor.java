@@ -5,6 +5,9 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.text.Editable;
 import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -14,13 +17,16 @@ import android.view.ViewParent;
 import android.widget.EditText;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
 import cn.carbs.wricheditor.library.callbacks.OnRichTypeChangedListener;
 import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
+import cn.carbs.wricheditor.library.interfaces.IRichSpan;
 import cn.carbs.wricheditor.library.models.RichAtomicData;
+import cn.carbs.wricheditor.library.models.SpanPart;
 import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.CursorUtil;
 import cn.carbs.wricheditor.library.utils.SpanUtil;
@@ -63,6 +69,8 @@ public class WRichEditor extends EditText implements IRichCellView {
     //    因为 onSelectionChanged 对应的是光标的位置，当一次输入多个字符时，onSelectionChanged 并不能体现出文字的更改，因为 selStart : n selEnd : n
     //    相反 onTextChanged 的回调返回的数据为 start: 起始位置，如6， lengthBefore: 0, lengthAfter: 新增字符串长度
     //    当选中其中两个文字，并将其替换为3个文字时， onTextChanged 的回调时 ： start : 2 lengthBefore : 2 lengthAfter : 3
+
+
     @Override
     protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
         super.onTextChanged(text, start, lengthBefore, lengthAfter);
@@ -70,11 +78,17 @@ public class WRichEditor extends EditText implements IRichCellView {
         if (mWRichEditorView == null) {
             return;
         }
-        Log.d("lll", "hint : " + getHint() + " , has parent : " + (getParent() != null)  + " , editor onTextChanged text : " + text + " start : " + start + " lengthBefore : " + lengthBefore + " lengthAfter : " + lengthAfter);
-        SpanUtil.setSpan(mWRichEditorView.mRichTypes, text, getEditableText(), start, start + lengthAfter);
-
-
-
+        Log.d("xxx", "hint : " + getHint()
+                + " , has parent : " + (getParent() != null)
+                + " , editor onTextChanged text : " + text
+                + " , editor getEditableText() : " + getEditableText().toString()
+                + " , start : " + start
+                + " , lengthBefore : " + lengthBefore
+                + " , lengthAfter : " + lengthAfter);
+        // 回调返回的 text 和 getEditableText() 不一定一致，SpannableStringBuilder中的textWatcher的内置问题
+        if (getParent() != null && getEditableText().toString().equals(text.toString())) {
+            SpanUtil.setSpan(mWRichEditorView.mRichTypes, text, getEditableText(), start, start + lengthAfter);
+        }
     }
 
 
@@ -167,6 +181,7 @@ public class WRichEditor extends EditText implements IRichCellView {
 //                                Log.d("nnn", "removeView");
 //                                mWRichEditorView.mRichCellViewList.remove(this);
 //                            }
+
                             ((WRichEditor)iRichCellView).addExtraEditable(editable);
 
                             ((WRichEditor)iRichCellView).requestFocusAndPutCursorToTail();
@@ -270,15 +285,48 @@ public class WRichEditor extends EditText implements IRichCellView {
 
     }
 
+    // SpannableStringBuilder
     public void addExtraEditable(Editable extraEditable) {
-        Log.d("xxx", "addExtraEditable 0");
+        Log.d("xxx", "hint : " + getHint() + " , addExtraEditable 0 " +  extraEditable.getClass().getName());
         if (extraEditable != null) {
+
+//            SpannableStringBuilder spannableStringBuilder = (SpannableStringBuilder) extraEditable;
+//            TextWatcher[] watchers = spannableStringBuilder.getSpans(0, extraEditable.length(),TextWatcher.class);
+                // android.text.DynamicLayout$ChangeWatcher
+                // android.widget.TextView$ChangeWatcher
+
             Editable originalEditable = getEditableText();
-            // TODO 这个地方待验证
-//            originalEditable.append(extraEditable, originalLength, originalLength + extraLength);
-            originalEditable.append(extraEditable);
-            Log.d("nnn", "addExtraEditable 1 originalEditable now length : " + originalEditable.length());
-//            setText(originalEditable);
+
+            // 当append是有格式的String时，即，Editable，已经remove的EditText会继续响应onTextChanged函数
+            // originalEditable.append(extraEditable);
+
+            // 当append是没有格式的String时，已经remove的EditText不会继续响应onTextChanged函数
+            // originalEditable.append(extraEditable.toString());
+
+            IRichSpan[] spans = extraEditable.getSpans(0, extraEditable.length(), IRichSpan.class);
+
+            List<SpanPart> list = new ArrayList<>();
+            for (IRichSpan span : spans) {
+                list.add(new SpanPart(extraEditable.getSpanStart(span), extraEditable.getSpanEnd(span), span));
+                extraEditable.removeSpan(span);
+            }
+            int originalLength = originalEditable.length();
+            // 先添加无格式的文字
+            originalEditable.append(extraEditable.toString());
+            // 循环将格式赋给添加的这一段
+            for (SpanPart part : list) {
+                if (part.isValid()) {
+//                    if (part.getStart() < spanStart) {
+//                        editable.setSpan(TypeUtil.getSpanByType(richType, object), part.getStart(), spanStart, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+//                    }
+
+//                    if (part.getEnd() > spanEnd) {
+//                        editable.setSpan(TypeUtil.getSpanByType(richType, object), spanEnd, part.getEnd(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+//                    }
+                    originalEditable.setSpan(part.getRichSpan(), originalLength + part.getStart(), originalLength + part.getEnd(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                }
+            }
+
         }
     }
 

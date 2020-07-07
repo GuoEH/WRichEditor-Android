@@ -65,8 +65,8 @@ com.smartisanos.notes.rtf.RichEditTextView
 
 
 
-功能最多：纯纯写作
-
+// 这个功能有坑
+originalEditable.append(extraEditable);
 
 
 
