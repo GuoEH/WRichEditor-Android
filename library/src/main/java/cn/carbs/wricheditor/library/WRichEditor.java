@@ -116,6 +116,7 @@ public class WRichEditor extends EditText implements IRichCellView {
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
+        Log.d("key", "00 keyCode : " + keyCode);
         if (keyCode == KeyEvent.KEYCODE_ENTER) {
             // 响应 keycode，如果有 headline 类型的 RichType
             Log.d("key", "keyCode : " + keyCode);
@@ -134,8 +135,40 @@ public class WRichEditor extends EditText implements IRichCellView {
                 }
             }
         }
-
         return super.onKeyUp(keyCode, event);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_DEL) {
+            // TODO 删除后
+//            if (getEditableText().length() == 0) {
+            int selectionStart = getSelectionStart();
+            int selectionEnd = getSelectionEnd();
+            if (selectionStart == selectionEnd && selectionStart == 0) {
+                if (mWRichEditorView != null && mWRichEditorView.mRichCellViewList != null) {
+                    int index = mWRichEditorView.mRichCellViewList.indexOf(this);
+                    Log.d("iii", "WRichEditor index in mWRichEditorView is : " + index);
+                    if (index > 0) {
+                        // 查看上一个是不是WRichEditor，
+                        IRichCellView iRichCellView = mWRichEditorView.mRichCellViewList.get(index - 1);
+
+                        if (iRichCellView instanceof WRichEditor) {
+                            // 1. 如果是，则将光标调整到上一个WRichEditor的最后，同时将此WRichEditor删除
+                            ((WRichEditor)iRichCellView).requestFocusAndPutCursorToTail();
+                        } else {
+
+                        }
+
+                        // 2. 如果不是，则将焦点至于image、video、等资源上
+
+                    }
+                }
+            }
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
@@ -212,6 +245,12 @@ public class WRichEditor extends EditText implements IRichCellView {
         // 从 mRichAtomicDataList 找到end所在的位置
 
 
+    }
+
+    public void requestFocusAndPutCursorToTail() {
+        requestFocus();
+        setSelection(getEditableText().toString().length());
+        Log.d("iii", "requestFocusAndPutCursorToTail()");
     }
 
 }

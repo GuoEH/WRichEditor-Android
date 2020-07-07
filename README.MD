@@ -8,7 +8,7 @@
 
 4. U    下划线             OK
 
-5. H    标题      [知乎]
+5. H    标题      [知乎]    OK
 
 6. Q    引用      [知乎]
 
@@ -56,5 +56,35 @@ editText.getEditableText().setSpan(new MyItalicStyleSpan(),0 , length, Spanned.S
 3. 文字背景颜色
 
 4. MD
+
+反编译多个市场上的app发现：
+
+知乎采用H5的方案
+com.zhihu.android.app.mercury.web.WebViewS
+支持的格式：
+粗体、斜体、标题、引用、有序列、无序列、图片（支持gif播放）、视频、网盘、链接、分割线、at符
+
+
+小米便签采用 H5方案
+com.miui.notes.editor.RichEditView$RichEditScrollView
+支持的格式：
+粗体、斜体、下划线、列、居中、右对齐、添加图片
+
+
+锤子便签采用 Native(不确定) + 列表 方案
+com.smartisanos.notes.rtf.RichEditTextView
+支持的格式有：
+标题、居中、列、粗体、引用、待办事项、添加图片、图片按住缩放并重置插入位置
+
+
+
+
+功能最多：纯纯写作
+
+
+
+
+
+
 
 
