@@ -240,6 +240,16 @@ public class WRichEditor extends EditText implements IRichCellView {
         return RichType.NONE;
     }
 
+    @Override
+    public void setSelectMode(boolean selectMode) {
+
+    }
+
+    @Override
+    public boolean getSelectMode() {
+        return false;
+    }
+
     // TODO 外部主动更改了字体样式，不涉及数据插入
     public void updateTextByRichTypeChanged(RichType richType, boolean open, Object object) {
         int selectionStart = getSelectionStart();

@@ -2,8 +2,10 @@ package cn.carbs.wricheditor.library.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
@@ -16,38 +18,41 @@ import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.types.RichType;
 
 // TODO 抽象出来 provider 针对glide等
-public class RichImageView extends RelativeLayout implements IRichCellView {
+public class RichLineView extends RelativeLayout implements IRichCellView, View.OnClickListener {
 
     private boolean mSelectMode;
 
     private WRichEditorView mWRichEditorView;
 
-    private ImageView mImageView;
-
     private IRichCellData mRichCellData;
+
 
     private OnEditorFocusChangedListener mOnEditorFocusChangedListener;
 
-    public RichImageView(Context context) {
+    private View mVLine;
+
+    private View mVDelete;
+
+    public RichLineView(Context context) {
         super(context);
         init(context);
     }
 
-    public RichImageView(Context context, @Nullable AttributeSet attrs) {
+    public RichLineView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public RichImageView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public RichLineView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
 
     private void init(Context context) {
-        inflate(context, R.layout.wricheditor_layout_rich_image_view, this);
-        mImageView = findViewById(R.id.image_view);
-        // TODO
-        mImageView.setImageResource(R.drawable.image_farmers);
+        inflate(context, R.layout.wricheditor_layout_rich_line_view, this);
+        mVLine = findViewById(R.id.v_line);
+        mVDelete = findViewById(R.id.iv_delete);
+        mVDelete.setOnClickListener(this);
     }
 
     @Override
@@ -88,5 +93,21 @@ public class RichImageView extends RelativeLayout implements IRichCellView {
     @Override
     public void setEditorFocusChangedListener(OnEditorFocusChangedListener listener) {
         mOnEditorFocusChangedListener = listener;
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        if (id == R.id.iv_delete) {
+            // TODO merge
+            if (mWRichEditorView != null && mWRichEditorView.mRichCellViewList != null) {
+                ViewParent parent = getParent();
+                if (parent != null && parent instanceof ViewGroup) {
+                    clearFocus();
+                    ((ViewGroup) parent).removeView(this);
+                    mWRichEditorView.mRichCellViewList.remove(this);
+                }
+            }
+        }
     }
 }

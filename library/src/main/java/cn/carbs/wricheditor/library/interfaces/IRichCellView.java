@@ -23,4 +23,8 @@ public interface IRichCellView {
 
     RichType getRichType();
 
+    void setSelectMode(boolean selectMode);
+
+    boolean getSelectMode();
+
 }

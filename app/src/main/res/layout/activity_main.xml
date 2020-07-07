@@ -73,6 +73,26 @@
                 android:padding="8dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_insert_link" />
+            
+            <ImageButton
+                android:id="@+id/button_line"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="#b0000000"
+                android:padding="8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_insert_line" />
+
+            <ImageButton
+                android:id="@+id/button_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="#b0000000"
+                android:padding="8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_insert_picture" />
 
         </LinearLayout>
 
@@ -101,15 +121,8 @@
                 android:id="@+id/button_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/button_1"
                 android:text="添加 EditText"
                 android:textAllCaps="false" />
-
-            <Button
-                android:id="@+id/button_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="添加图片" />
 
         </LinearLayout>
 

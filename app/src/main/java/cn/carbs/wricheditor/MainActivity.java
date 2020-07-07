@@ -27,6 +27,7 @@ import cn.carbs.wricheditor.library.callbacks.OnRichTypeChangedListener;
 import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.TypeUtil;
 import cn.carbs.wricheditor.library.views.RichImageView;
+import cn.carbs.wricheditor.library.views.RichLineView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnRichTypeChangedListener {
 
@@ -37,8 +38,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton mBtnUnderLine;
     private ImageButton mBtnHeadline;
     private ImageButton mBtnLink;
+    private ImageButton mBtnInsertImage;
+    private ImageButton mBtnInsertLine;
 
-    private Button mBtnAddImage;
     private Button mBtnAddEditor;
 
     private HashMap<RichType, ImageButton> mImageButtonMap = new HashMap<>();
@@ -51,8 +53,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mWRichEditorView = findViewById(R.id.wrich_editor_view);
         mWRichEditorView.setOnRichTypeChangedListener(this);
 
-        mBtnAddImage = findViewById(R.id.button_1);
-        mBtnAddImage.setOnClickListener(this);
+        mBtnInsertImage = findViewById(R.id.button_image);
+        mBtnInsertImage.setOnClickListener(this);
         mBtnAddEditor = findViewById(R.id.button_2);
         mBtnAddEditor.setOnClickListener(this);
 
@@ -64,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnStrikeThrough.setOnClickListener(this);
         mBtnUnderLine = findViewById(R.id.button_under_line);
         mBtnUnderLine.setOnClickListener(this);
+        mBtnInsertLine = findViewById(R.id.button_line);
+        mBtnInsertLine.setOnClickListener(this);
         mBtnHeadline = findViewById(R.id.button_headline);
         mBtnHeadline.setOnClickListener(this);
         mBtnLink = findViewById(R.id.button_link);
@@ -159,6 +163,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         builder.create().show();
     }
 
+    private void onInsertLineClicked() {
+        RichLineView richLineView = new RichLineView(MainActivity.this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.gravity = Gravity.CENTER_HORIZONTAL;
+        mWRichEditorView.addRichCell(richLineView, lp);
+    }
+
+    private void onInsertImageClicked() {
+        RichImageView richImageView = new RichImageView(MainActivity.this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.gravity = Gravity.CENTER_HORIZONTAL;
+        mWRichEditorView.addRichCell(richImageView, lp);
+    }
+
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -175,20 +193,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             onHeadLineClicked();
         } else if (id == R.id.button_link) {
             onInsertLinkClicked();
-        }
-        // 底部测试button
-        if (id == R.id.button_1) {
-            button1Clicked();
+        } else if (id == R.id.button_line) {
+            onInsertLineClicked();
+        } else if (id == R.id.button_image) {
+            onInsertImageClicked();
         } else if (id == R.id.button_2) {
             button2Clicked();
         }
-    }
-
-    private void button1Clicked() {
-        RichImageView richImageView = new RichImageView(MainActivity.this);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.gravity = Gravity.CENTER_HORIZONTAL;
-        mWRichEditorView.addRichCell(richImageView, lp);
     }
 
     private void button2Clicked() {

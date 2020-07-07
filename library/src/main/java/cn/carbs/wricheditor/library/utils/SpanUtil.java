@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 import cn.carbs.wricheditor.library.constants.CharConstant;
+import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.interfaces.IRichSpan;
 import cn.carbs.wricheditor.library.models.RichAtomicData;
 import cn.carbs.wricheditor.library.models.SpanPart;
@@ -116,6 +117,21 @@ public class SpanUtil {
         Log.d("qqq", "richTypes size : " + retRichTypes.size());
         return retRichTypes;
     }
+
+    // todo
+    // 删除其中一个cell时，检查是否能够merge
+    public static void mergeTwoRichCellView() {
+
+    }
+
+    public static boolean checkIfTwoRichCellViewCanMerge(IRichCellView cellViewA, IRichCellView cellViewB) {
+        if (cellViewA == null || cellViewB == null) {
+            return false;
+        }
+        return cellViewA.getClass().getName().equals(cellViewB.getClass().getName());
+    }
+
+
 
 
 }
