@@ -331,7 +331,7 @@
 07-07 15:13:34.654 D/HwFrameworkSecurityPartsFactory(26109): HwFrameworkSecurityPartsFactory in.
 07-07 15:13:34.655 I/HwFrameworkSecurityPartsFactory(26109): add HwFrameworkSecurityPartsFactory to memory.
 07-07 15:13:34.658 I/ActivityTaskManager( 1429): START u0 {hwFlg=0x10 cmp=cn.carbs.wricheditor/.TestLibActivity} from uid 11189
-07-07 15:13:34.659 I/ActivityTaskManager( 1429): ActivityRecord info: ActivityInfo{a4465ab cn.carbs.wricheditor.TestLibActivity}
+07-07 15:13:34.659 I/ActivityTaskManager( 1429): ActivityRecord info: ActivityInfo{a4465ab cn.carbs.wricheditor.MainActivity}
 07-07 15:13:34.659 D/ActivityTaskManager( 1429): TaskLaunchParamsModifier:task=null activity=ActivityRecord{a449d59 u0 cn.carbs.wricheditor/.TestLibActivity t-1} display-from-source=0 display-id=0 display-windowing-mode=1
 07-07 15:13:34.660 D/ActivityTaskManager( 1429): TaskLaunchParamsModifier:task=null activity=ActivityRecord{a449d59 u0 cn.carbs.wricheditor/.TestLibActivity t-1} display-from-source=0 display-id=0 display-windowing-mode=1 activity-options-fullscreen=Rect(0, 0 - 0, 0) non-freeform-display maximized-bounds
 07-07 15:13:34.660 V/ActivityTaskManager( 1429): positionChild stackId=917 to top.
@@ -361,9 +361,9 @@
 07-07 15:13:34.684 W/ActivityThread(26109): handleWindowVisibility: no activity for token android.os.BinderProxy@7cf2dc4
 07-07 15:13:34.685 D/ZrHung.AppEyeUiProbe(26109): restart watching
 07-07 15:13:34.690 V/ActivityThread(26109): callActivityOnCreate
-07-07 15:13:34.719 D/ActivityThread(26109): add activity client record, r= ActivityRecord{95a9fbb token=android.os.BinderProxy@7cf2dc4 {cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity}} token= android.os.BinderProxy@7cf2dc4
-07-07 15:13:34.725 V/WindowManager( 1429): addWindow: Window{a0b1009 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity}
-07-07 15:13:34.726 I/HwAudioServiceEx( 1429): ComponentInfo : className = cn.carbs.wricheditor.TestLibActivity, flag=onResume, isHomeActivity=, isTop=true
+07-07 15:13:34.719 D/ActivityThread(26109): add activity client record, r= ActivityRecord{95a9fbb token=android.os.BinderProxy@7cf2dc4 {cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity}} token= android.os.BinderProxy@7cf2dc4
+07-07 15:13:34.725 V/WindowManager( 1429): addWindow: Window{a0b1009 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity}
+07-07 15:13:34.726 I/HwAudioServiceEx( 1429): ComponentInfo : className = cn.carbs.wricheditor.MainActivity, flag=onResume, isHomeActivity=, isTop=true
 07-07 15:13:34.726 W/SecurityProfileService( 1429): Activity life state callback extras get package null!
 07-07 15:13:34.727 I/OPCollectLog( 2784): AppChangeImpl:call onAppChange.
 07-07 15:13:34.727 I/OPCollectLog( 2784): HwForegroundAppAction:handleMessage 
@@ -373,12 +373,12 @@
 07-07 15:13:34.727 D/OPCollectLog( 2784): OdmfCollectScheduler:handleMessage msg: 4
 07-07 15:13:34.727 I/OPCollectLog( 2784): OdmfHelper:opcollectCache 1
 07-07 15:13:34.727 I/OPCollectLog( 2784): OdmfHelper:opcollectCache curTime: 1943596868, interval: 8937
-07-07 15:13:34.728 D/DollieActivityManagerAdapter( 2840): [Resumed] bg:false pid:26109 uid:11189 ComponentInfo{cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity}
-07-07 15:13:34.728 E/DollieAdapterService( 2840): notifyActivityState pkg:cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity state:2 fg:true mUid:11189
+07-07 15:13:34.728 D/DollieActivityManagerAdapter( 2840): [Resumed] bg:false pid:26109 uid:11189 ComponentInfo{cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity}
+07-07 15:13:34.728 E/DollieAdapterService( 2840): notifyActivityState pkg:cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity state:2 fg:true mUid:11189
 07-07 15:13:34.730 I/OPCollectLog( 2784): OdmfHelper:isCharging: true
 07-07 15:13:34.731 D/HiTouch_PressGestureDetector(26109): onAttached, package=cn.carbs.wricheditor, windowType=1, mHiTouchRestricted=false
 07-07 15:13:34.736 D/ZrHung.AppEyeFocusWindow( 1429): FocusWindowErrorScene cancelCheckFreezeScreen
-07-07 15:13:34.736 I/StatusBarDisable( 1429): setFlags what=0 which=1 pkg=Window{a0b1009 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity}
+07-07 15:13:34.736 I/StatusBarDisable( 1429): setFlags what=0 which=1 pkg=Window{a0b1009 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity}
 07-07 15:13:34.736 D/ZrHung.AppEyeTransparentWindow( 1429): TransparentWindow mHungConfigStatus = 0,mHungConfigEnable = 1
 07-07 15:13:34.737 I/OPCollectLog( 2784): OdmfHelper:insert database success 
 07-07 15:13:34.737 I/OPCollectLog( 2784): OdmfHelper:opcollectCache size: 1
@@ -397,7 +397,7 @@
 07-07 15:13:34.759 I/HwWindowManagerServiceEx( 1429): closing apps count = 1
 07-07 15:13:34.760 D/HwWindowManagerServiceEx( 1429): is app exit to launcher info: transit = 6, app = AppWindowToken{a3bd009 token=Token{a501227 ActivityRecord{a4e7559 u0 cn.carbs.wricheditor/.MainActivity t913}}}, window = Window{a5518e1 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity}, mClosingApps = {AppWindowToken{a3bd009 token=Token{a501227 ActivityRecord{a4e7559 u0 cn.carbs.wricheditor/.MainActivity t913}}}}, topOpeningApp = AppWindowToken{a3bd06d token=Token{a1df490 ActivityRecord{a449d59 u0 cn.carbs.wricheditor/.TestLibActivity t913}}}, mExitIconBitmap = null, mExitIconHeight = -1, mExitIconWidth = -1
 07-07 15:13:34.760 E/WindowManager( 1429): icon is null!!
-07-07 15:13:34.762 D/HwWindowManagerServiceEx( 1429): is app exit to launcher info: transit = 6, app = AppWindowToken{a3bd06d token=Token{a1df490 ActivityRecord{a449d59 u0 cn.carbs.wricheditor/.TestLibActivity t913}}}, window = Window{a0b1009 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity}, mClosingApps = {AppWindowToken{a3bd009 token=Token{a501227 ActivityRecord{a4e7559 u0 cn.carbs.wricheditor/.MainActivity t913}}}}, topOpeningApp = AppWindowToken{a3bd06d token=Token{a1df490 ActivityRecord{a449d59 u0 cn.carbs.wricheditor/.TestLibActivity t913}}}, mExitIconBitmap = null, mExitIconHeight = -1, mExitIconWidth = -1
+07-07 15:13:34.762 D/HwWindowManagerServiceEx( 1429): is app exit to launcher info: transit = 6, app = AppWindowToken{a3bd06d token=Token{a1df490 ActivityRecord{a449d59 u0 cn.carbs.wricheditor/.TestLibActivity t913}}}, window = Window{a0b1009 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity}, mClosingApps = {AppWindowToken{a3bd009 token=Token{a501227 ActivityRecord{a4e7559 u0 cn.carbs.wricheditor/.MainActivity t913}}}}, topOpeningApp = AppWindowToken{a3bd06d token=Token{a1df490 ActivityRecord{a449d59 u0 cn.carbs.wricheditor/.TestLibActivity t913}}}, mExitIconBitmap = null, mExitIconHeight = -1, mExitIconWidth = -1
 07-07 15:13:34.762 E/WindowManager( 1429): icon is null!!
 07-07 15:13:34.779 D/ScreemCommon(  921): <LOGMGR> <complete_pm> [Entry]
 07-07 15:13:34.839 D/ScreemCommon(  921): <LOGMGR> <complete_pm> [Entry]
@@ -534,10 +534,10 @@
 07-07 15:13:36.682 V/WindowManager( 1429): notifyAppResumed: wasStopped=true AppWindowToken{a258cd1 token=Token{a04853a ActivityRecord{a3cbf91 u0 com.huawei.android.launcher/.unihome.UniHomeLauncher t3}}}
 07-07 15:13:36.686 D/ScreemCommon(  921): <LOGMGR> <SceneStart> [Entry]
 07-07 15:13:36.686 D/ScreemCommon(  921): <LOGMGR> <SceneStart> [logId update 496572551 when new scene come after 8]
-07-07 15:13:36.688 I/HwAudioServiceEx( 1429): ComponentInfo : className = cn.carbs.wricheditor.TestLibActivity, flag=onPause, isHomeActivity=, isTop=false
+07-07 15:13:36.688 I/HwAudioServiceEx( 1429): ComponentInfo : className = cn.carbs.wricheditor.MainActivity, flag=onPause, isHomeActivity=, isTop=false
 07-07 15:13:36.688 W/SecurityProfileService( 1429): Activity life state callback extras get package null!
 07-07 15:13:36.689 D/ZrHung.AppEyeUiProbe(26109): not watching, wait.
-07-07 15:13:36.689 D/DollieActivityManagerAdapter( 2840): [Paused] pid:26109 uid:11189 ComponentInfo{cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity} uidState:2
+07-07 15:13:36.689 D/DollieActivityManagerAdapter( 2840): [Paused] pid:26109 uid:11189 ComponentInfo{cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity} uidState:2
 07-07 15:13:36.693 D/mali_winsys(16138): EGLint new_window_surface(egl_winsys_display *, void *, EGLSurface, EGLConfig, egl_winsys_surface **, EGLBoolean) returns 0x3000
 07-07 15:13:36.694 W/        ( 1429): Failed to UpdateQosForCgroupInner, tid=0, policy=10
 07-07 15:13:36.697 I/BoosterSwitchP( 2840): notifyUidState do nothing
@@ -650,7 +650,7 @@
 07-07 15:13:37.114 D/RemoteAnimationController( 1429): app-onAnimationFinished(): mOuter=com.android.server.wm.RemoteAnimationController@a62af6b
 07-07 15:13:37.114 D/RemoteAnimationController( 1429): onAnimationFinished(): Notify animation finished:
 07-07 15:13:37.121 D/DollieActivityManagerAdapter( 2840): [UidStateChanged]  uid:11189 uidState:16
-07-07 15:13:37.121 E/DollieAdapterService( 2840): notifyActivityState pkg:cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity state:16 fg:false mUid:11189
+07-07 15:13:37.121 E/DollieAdapterService( 2840): notifyActivityState pkg:cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity state:16 fg:false mUid:11189
 07-07 15:13:37.121 I/HidataAppQoeP( 2840): foregroundUidRemove uid: 11189 name: cn.carbs.wricheditor
 07-07 15:13:37.122 I/HwPacketFilterBypass( 2840): handleActivityUidStateChanged uid:11189 -1 foreground:0
 07-07 15:13:37.122 I/HwPacketFilterBypass( 2840): isAllowSendSmartCureToChr false, no exceptions occur, dropCnt:0
@@ -664,10 +664,10 @@
 07-07 15:13:37.124 D/SmartDualCardSM( 2840): IdleState:got msg.what=EVENT_APP_MOVE_BACKGROUND
 07-07 15:13:37.124 I/DollieChr( 2840): handleForegroundAppUpdateMsg,mAppState=2,scenes=1,mForegroundAppName=cn.carbs.wricheditor
 07-07 15:13:37.124 D/SmartDualCardSM( 2840): startAppBackgroundTimer
-07-07 15:13:37.141 E/BufferQueueProducer(  696): [cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity#0]:1338: disconnect: not connected (req=1)
+07-07 15:13:37.141 E/BufferQueueProducer(  696): [cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity#0]:1338: disconnect: not connected (req=1)
 07-07 15:13:37.141 W/libEGL  (26109): EGLNativeWindowType 0x7243423890 disconnect failed
 07-07 15:13:37.171 V/WindowManager( 1429): notifyAppStopped: AppWindowToken{a3bd06d token=Token{a1df490 ActivityRecord{a449d59 u0 cn.carbs.wricheditor/.TestLibActivity t913}}}
-07-07 15:13:37.171 E/WindowManager( 1429): win=Window{a0b1009 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity} destroySurfaces: appStopped=true win.mWindowRemovalAllowed=false win.mRemoveOnExit=false
+07-07 15:13:37.171 E/WindowManager( 1429): win=Window{a0b1009 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity} destroySurfaces: appStopped=true win.mWindowRemovalAllowed=false win.mRemoveOnExit=false
 07-07 15:13:37.174 I/BoosterSwitchP( 2840): notifyUidState do nothing
 07-07 15:13:37.174 I/DeepNoDisturbP( 2840): notifyUidState
 07-07 15:13:37.174 I/BrowserChrP( 2840): notifyUidState
@@ -705,9 +705,9 @@
 07-07 15:13:37.766 I/HwPowerManagerService( 1429): appdie release wakelock, pid = 26109, uid = 11189
 07-07 15:13:37.766 W/ActivityTaskManager( 1429): Force removing ActivityRecord{a449d59 u0 cn.carbs.wricheditor/.TestLibActivity t913 f}: app died, no saved state
 07-07 15:13:37.766 V/WindowManager( 1429): removeAppToken: AppWindowToken{a3bd06d token=Token{a1df490 ActivityRecord{a449d59 u0 cn.carbs.wricheditor/.TestLibActivity t913}}} delayed=false Callers=com.android.server.wm.DisplayContent.removeAppToken:8163868 com.android.server.wm.ActivityRecord.removeWindowContainer:8165540 com.android.server.wm.ActivityStack.removeActivityFromHistoryLocked:8162968 com.android.server.wm.ActivityStack.removeHistoryRecordsForAppLocked:6808492 
-07-07 15:13:37.767 V/WindowManager( 1429): removeIfPossible: Window{a0b1009 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity} callers=com.android.server.wm.WindowState.removeIfPossible:5505060 com.android.server.wm.WindowToken.removeAllWindowsIfPossible:8228824 com.android.server.wm.AppWindowToken.removeIfPossible:8192868 com.android.server.wm.AppWindowToken.onRemovedFromDisplay:8228164 com.android.server.wm.DisplayContent.removeAppToken:8163868 
-07-07 15:13:37.767 V/WindowManager( 1429): postWindowRemoveCleanupLocked: Window{a0b1009 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity}
-07-07 15:13:37.767 V/WindowManager( 1429): Removing Window{a0b1009 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity} from AppWindowToken{a3bd06d token=Token{a1df490 ActivityRecord{a449d59 u0 cn.carbs.wricheditor/.TestLibActivity t913}}}
+07-07 15:13:37.767 V/WindowManager( 1429): removeIfPossible: Window{a0b1009 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity} callers=com.android.server.wm.WindowState.removeIfPossible:5505060 com.android.server.wm.WindowToken.removeAllWindowsIfPossible:8228824 com.android.server.wm.AppWindowToken.removeIfPossible:8192868 com.android.server.wm.AppWindowToken.onRemovedFromDisplay:8228164 com.android.server.wm.DisplayContent.removeAppToken:8163868
+07-07 15:13:37.767 V/WindowManager( 1429): postWindowRemoveCleanupLocked: Window{a0b1009 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity}
+07-07 15:13:37.767 V/WindowManager( 1429): Removing Window{a0b1009 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity} from AppWindowToken{a3bd06d token=Token{a1df490 ActivityRecord{a449d59 u0 cn.carbs.wricheditor/.TestLibActivity t913}}}
 07-07 15:13:37.770 W/ActivityTaskManager( 1429): Force removing ActivityRecord{a4e7559 u0 cn.carbs.wricheditor/.MainActivity t913 f}: app died, no saved state
 07-07 15:13:37.770 V/WindowManager( 1429): removeAppToken: AppWindowToken{a3bd009 token=Token{a501227 ActivityRecord{a4e7559 u0 cn.carbs.wricheditor/.MainActivity t913}}} delayed=false Callers=com.android.server.wm.DisplayContent.removeAppToken:8163868 com.android.server.wm.ActivityRecord.removeWindowContainer:8165540 com.android.server.wm.ActivityStack.removeActivityFromHistoryLocked:8162968 com.android.server.wm.ActivityStack.removeHistoryRecordsForAppLocked:6808492 
 07-07 15:13:37.771 V/WindowManager( 1429): removeIfPossible: Window{a5518e1 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity} callers=com.android.server.wm.WindowState.removeIfPossible:5505060 com.android.server.wm.WindowToken.removeAllWindowsIfPossible:8228824 com.android.server.wm.AppWindowToken.removeIfPossible:8192868 com.android.server.wm.AppWindowToken.onRemovedFromDisplay:8228164 com.android.server.wm.DisplayContent.removeAppToken:8163868 
@@ -1370,7 +1370,7 @@
 07-07 15:13:44.032 D/HwFrameworkSecurityPartsFactory(26243): HwFrameworkSecurityPartsFactory in.
 07-07 15:13:44.032 I/HwFrameworkSecurityPartsFactory(26243): add HwFrameworkSecurityPartsFactory to memory.
 07-07 15:13:44.033 I/ActivityTaskManager( 1429): START u0 {hwFlg=0x10 cmp=cn.carbs.wricheditor/.TestLibActivity} from uid 11189
-07-07 15:13:44.033 I/ActivityTaskManager( 1429): ActivityRecord info: ActivityInfo{a4465ab cn.carbs.wricheditor.TestLibActivity}
+07-07 15:13:44.033 I/ActivityTaskManager( 1429): ActivityRecord info: ActivityInfo{a4465ab cn.carbs.wricheditor.MainActivity}
 07-07 15:13:44.033 D/ActivityTaskManager( 1429): TaskLaunchParamsModifier:task=null activity=ActivityRecord{a4b6879 u0 cn.carbs.wricheditor/.TestLibActivity t-1} display-from-source=0 display-id=0 display-windowing-mode=1
 07-07 15:13:44.033 D/ActivityTaskManager( 1429): TaskLaunchParamsModifier:task=null activity=ActivityRecord{a4b6879 u0 cn.carbs.wricheditor/.TestLibActivity t-1} display-from-source=0 display-id=0 display-windowing-mode=1 activity-options-fullscreen=Rect(0, 0 - 0, 0) non-freeform-display maximized-bounds
 07-07 15:13:44.033 V/ActivityTaskManager( 1429): positionChild stackId=918 to top.
@@ -1393,18 +1393,18 @@
 07-07 15:13:44.043 D/AwareLog(  877): iawared: WorkingsetStart cn.carbs.wricheditor/.TestLibActivity in monitor0
 07-07 15:13:44.044 W/ActivityThread(26243): handleWindowVisibility: no activity for token android.os.BinderProxy@32b9ea9
 07-07 15:13:44.049 V/ActivityThread(26243): callActivityOnCreate
-07-07 15:13:44.069 D/ActivityThread(26243): add activity client record, r= ActivityRecord{8741831 token=android.os.BinderProxy@32b9ea9 {cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity}} token= android.os.BinderProxy@32b9ea9
-07-07 15:13:44.074 V/WindowManager( 1429): addWindow: Window{9e18409 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity}
-07-07 15:13:44.076 I/HwAudioServiceEx( 1429): ComponentInfo : className = cn.carbs.wricheditor.TestLibActivity, flag=onResume, isHomeActivity=, isTop=true
+07-07 15:13:44.069 D/ActivityThread(26243): add activity client record, r= ActivityRecord{8741831 token=android.os.BinderProxy@32b9ea9 {cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity}} token= android.os.BinderProxy@32b9ea9
+07-07 15:13:44.074 V/WindowManager( 1429): addWindow: Window{9e18409 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity}
+07-07 15:13:44.076 I/HwAudioServiceEx( 1429): ComponentInfo : className = cn.carbs.wricheditor.MainActivity, flag=onResume, isHomeActivity=, isTop=true
 07-07 15:13:44.076 W/SecurityProfileService( 1429): Activity life state callback extras get package null!
 07-07 15:13:44.076 I/OPCollectLog( 2784): AppChangeImpl:call onAppChange.
 07-07 15:13:44.076 I/OPCollectLog( 2784): HwForegroundAppAction:handleMessage 
 07-07 15:13:44.076 D/OPCollectLog( 2784): HwForegroundAppAction:FG executeWithArgs
 07-07 15:13:44.076 I/OPCollectLog( 2784): OPCollectUtils:ODMF Api Version:2.14.1
 07-07 15:13:44.077 I/OPCollectLog( 2784): Action:HwForegroundAppAction executed successfully
-07-07 15:13:44.077 D/DollieActivityManagerAdapter( 2840): [Resumed] bg:false pid:26243 uid:11189 ComponentInfo{cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity}
+07-07 15:13:44.077 D/DollieActivityManagerAdapter( 2840): [Resumed] bg:false pid:26243 uid:11189 ComponentInfo{cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity}
 07-07 15:13:44.077 D/OPCollectLog( 2784): OdmfCollectScheduler:handleMessage msg: 4
-07-07 15:13:44.077 E/DollieAdapterService( 2840): notifyActivityState pkg:cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity state:2 fg:true mUid:11189
+07-07 15:13:44.077 E/DollieAdapterService( 2840): notifyActivityState pkg:cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity state:2 fg:true mUid:11189
 07-07 15:13:44.077 I/OPCollectLog( 2784): OdmfHelper:opcollectCache 1
 07-07 15:13:44.077 I/OPCollectLog( 2784): OdmfHelper:opcollectCache curTime: 1943606217, interval: 803
 07-07 15:13:44.077 I/OPCollectLog( 2784): OdmfHelper:isCharging: true
@@ -1414,7 +1414,7 @@
 07-07 15:13:44.080 I/OPCollectLog( 2784): OdmfHelper:opcollectCache lastTime: 1943606221
 07-07 15:13:44.084 D/ZrHung.AppEyeFocusWindow( 1429): FocusWindowErrorScene cancelCheckFreezeScreen
 07-07 15:13:44.084 D/ZrHung.AppEyeTransparentWindow( 1429): TransparentWindow mHungConfigStatus = 0,mHungConfigEnable = 1
-07-07 15:13:44.084 I/StatusBarDisable( 1429): setFlags what=0 which=1 pkg=Window{9e18409 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity}
+07-07 15:13:44.084 I/StatusBarDisable( 1429): setFlags what=0 which=1 pkg=Window{9e18409 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity}
 07-07 15:13:44.085 D/mali_winsys(26243): EGLint new_window_surface(egl_winsys_display *, void *, EGLSurface, EGLConfig, egl_winsys_surface **, EGLBoolean) returns 0x3000
 07-07 15:13:44.091 I/GRALLOC (  657): getCallingPid=696, shrFd=11,fmt=0x1,intFmt=0x200000001,btStrd=4352,size=10399744,pid=657 
 07-07 15:13:44.091 I/GRALLOC (  657): 	 yuv=2,w=1080,h=2340,Stride u=0 v=0,offset u=0 v=0 
@@ -1429,7 +1429,7 @@
 07-07 15:13:44.103 I/HwWindowManagerServiceEx( 1429): closing apps count = 1
 07-07 15:13:44.105 D/HwWindowManagerServiceEx( 1429): is app exit to launcher info: transit = 6, app = AppWindowToken{a38aed1 token=Token{a51d27c ActivityRecord{a4b69c9 u0 cn.carbs.wricheditor/.MainActivity t914}}}, window = Window{a5518e1 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity}, mClosingApps = {AppWindowToken{a38aed1 token=Token{a51d27c ActivityRecord{a4b69c9 u0 cn.carbs.wricheditor/.MainActivity t914}}}}, topOpeningApp = AppWindowToken{a3e8cd1 token=Token{a57fe4f ActivityRecord{a4b6879 u0 cn.carbs.wricheditor/.TestLibActivity t914}}}, mExitIconBitmap = null, mExitIconHeight = -1, mExitIconWidth = -1
 07-07 15:13:44.105 E/WindowManager( 1429): icon is null!!
-07-07 15:13:44.107 D/HwWindowManagerServiceEx( 1429): is app exit to launcher info: transit = 6, app = AppWindowToken{a3e8cd1 token=Token{a57fe4f ActivityRecord{a4b6879 u0 cn.carbs.wricheditor/.TestLibActivity t914}}}, window = Window{9e18409 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity}, mClosingApps = {AppWindowToken{a38aed1 token=Token{a51d27c ActivityRecord{a4b69c9 u0 cn.carbs.wricheditor/.MainActivity t914}}}}, topOpeningApp = AppWindowToken{a3e8cd1 token=Token{a57fe4f ActivityRecord{a4b6879 u0 cn.carbs.wricheditor/.TestLibActivity t914}}}, mExitIconBitmap = null, mExitIconHeight = -1, mExitIconWidth = -1
+07-07 15:13:44.107 D/HwWindowManagerServiceEx( 1429): is app exit to launcher info: transit = 6, app = AppWindowToken{a3e8cd1 token=Token{a57fe4f ActivityRecord{a4b6879 u0 cn.carbs.wricheditor/.TestLibActivity t914}}}, window = Window{9e18409 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity}, mClosingApps = {AppWindowToken{a38aed1 token=Token{a51d27c ActivityRecord{a4b69c9 u0 cn.carbs.wricheditor/.MainActivity t914}}}}, topOpeningApp = AppWindowToken{a3e8cd1 token=Token{a57fe4f ActivityRecord{a4b6879 u0 cn.carbs.wricheditor/.TestLibActivity t914}}}, mExitIconBitmap = null, mExitIconHeight = -1, mExitIconWidth = -1
 07-07 15:13:44.107 E/WindowManager( 1429): icon is null!!
 07-07 15:13:44.120 D/ScreemCommon(  921): <LOGMGR> <complete_pm> [Entry]
 07-07 15:13:44.178 D/ScreemCommon(  921): <LOGMGR> <complete_pm> [Entry]
@@ -1573,7 +1573,7 @@
 07-07 15:13:47.077 I/HwInputMethodManagerServiceEx( 1429): --- show navigation bar status: isEnableNavBar = true ,isGestureNavigation = false
 07-07 15:13:47.081 D/mali_winsys( 7479): EGLint new_window_surface(egl_winsys_display *, void *, EGLSurface, EGLConfig, egl_winsys_surface **, EGLBoolean) returns 0x3000
 07-07 15:13:47.082 I/WindowManager( 1429): navColorWin was set to default navbar color so should add SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR 8018
-07-07 15:13:47.082 I/StatusBarDisable( 1429): setFlags what=0 which=1 pkg=Window{9e18409 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity}
+07-07 15:13:47.082 I/StatusBarDisable( 1429): setFlags what=0 which=1 pkg=Window{9e18409 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity}
 07-07 15:13:47.090 I/GRALLOC (  657): getCallingPid=696, shrFd=11,fmt=0x1,intFmt=0x200000001,btStrd=4352,size=10043392,pid=657 
 07-07 15:13:47.090 I/GRALLOC (  657): 	 yuv=2,w=1080,h=2268,Stride u=0 v=0,offset u=0 v=0 
 07-07 15:13:47.090 I/GRALLOC (  657): 	 iova_size=10043392,conUsg=0xb00,proUsg=0xb00,	 strd=1088,[afbc]HdrStrd=1088 PyldStrd=69632 Scrmbl=2,ionhnd = 0 
@@ -1891,7 +1891,7 @@
 07-07 15:13:53.765 D/qqq     (26243): getEditableText().length() : 4  isCursorAutoChange : false
 07-07 15:13:53.775 D/HwAutofillHelper(26243): recordCurrentInfo:0
 07-07 15:13:53.775 D/HwAutofillHelper(26243): inputType = 131073
-07-07 15:13:53.781 V/WindowManager( 1429): Adding Window{a4af9b9 u0 PopupWindow:7583f36} to Window{9e18409 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity}
+07-07 15:13:53.781 V/WindowManager( 1429): Adding Window{a4af9b9 u0 PopupWindow:7583f36} to Window{9e18409 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity}
 07-07 15:13:53.782 V/WindowManager( 1429): addWindow: Window{a4af9b9 u0 PopupWindow:7583f36}
 07-07 15:13:53.785 I/HwViewRootImpl(26243): removeInvalidNode all the node in jank list is out of time
 07-07 15:13:53.788 D/OpenGLRenderer(26243): disableOutlineDraw is true
@@ -2097,12 +2097,12 @@
 07-07 15:13:54.986 I/iMonitor(  921): send: 901001004
 07-07 15:13:54.986 E/iMonitor(  921): FaultDetect: DumptoolPrintf return.
 07-07 15:13:54.986 E/iMonitor(  921): FaultDetect: DumptoolPrintf return.
-07-07 15:13:54.987 W/InputDispatcher( 1429): channel '9e18409 cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity (server)' ~ Consumer closed input channel or an error occurred.  events=0x9
-07-07 15:13:54.987 E/InputDispatcher( 1429): channel '9e18409 cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity (server)' ~ Channel is unrecoverably broken and will be disposed!
-07-07 15:13:54.987 I/WindowManager( 1429): WINDOW DIED Window{9e18409 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity}
-07-07 15:13:54.987 V/WindowManager( 1429): removeIfPossible: Window{9e18409 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity} callers=com.android.server.wm.WindowState.removeIfPossible:5505060 com.android.server.wm.InputManagerCallback.notifyInputChannelBroken:16360660 com.android.server.input.InputManagerService.notifyInputChannelBroken:18536052 <bottom of call stack> <bottom of call stack> 
-07-07 15:13:54.987 W/InputDispatcher( 1429): Attempted to unregister already unregistered input channel '9e18409 cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity (server)'
-07-07 15:13:54.987 V/WindowManager( 1429): Not removing Window{9e18409 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity EXITING} due to exit animation 
+07-07 15:13:54.987 W/InputDispatcher( 1429): channel '9e18409 cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity (server)' ~ Consumer closed input channel or an error occurred.  events=0x9
+07-07 15:13:54.987 E/InputDispatcher( 1429): channel '9e18409 cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity (server)' ~ Channel is unrecoverably broken and will be disposed!
+07-07 15:13:54.987 I/WindowManager( 1429): WINDOW DIED Window{9e18409 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity}
+07-07 15:13:54.987 V/WindowManager( 1429): removeIfPossible: Window{9e18409 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity} callers=com.android.server.wm.WindowState.removeIfPossible:5505060 com.android.server.wm.InputManagerCallback.notifyInputChannelBroken:16360660 com.android.server.input.InputManagerService.notifyInputChannelBroken:18536052 <bottom of call stack> <bottom of call stack>
+07-07 15:13:54.987 W/InputDispatcher( 1429): Attempted to unregister already unregistered input channel '9e18409 cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity (server)'
+07-07 15:13:54.987 V/WindowManager( 1429): Not removing Window{9e18409 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity EXITING} due to exit animation
 07-07 15:13:54.987 I/WindowManager( 1429): navColorWin was set to default navbar color so should add SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR 8018
 07-07 15:13:54.988 D/ZrHung.AppEyeFocusWindow( 1429): FocusWindowErrorScene CheckFreezeScreen
 07-07 15:13:54.989 E/iMonitor(  921): FaultDetect: FaultEngineTracePrintf return.
@@ -2123,9 +2123,9 @@
 07-07 15:13:54.995 I/libprocessgroup( 1429): Successfully killed process cgroup uid 11189 pid 26243 in 0ms
 07-07 15:13:54.995 D/ActivityManager( 1429): cleanUpApplicationRecord app: ProcessRecord{a280451 26243:cn.carbs.wricheditor/u0a1189}, app.bad: false, restarting: false, allowRestart: true
 07-07 15:13:54.995 I/HwPowerManagerService( 1429): appdie release wakelock, pid = 26243, uid = 11189
-07-07 15:13:54.995 I/WindowManager( 1429): WIN DEATH: Window{9e18409 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity EXITING}
-07-07 15:13:54.995 V/WindowManager( 1429): removeIfPossible: Window{9e18409 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity EXITING} callers=com.android.server.wm.WindowState$DeathRecipient.binderDied:7857444 android.os.BinderProxy.sendDeathNotice:7373044 <bottom of call stack> <bottom of call stack> <bottom of call stack> 
-07-07 15:13:54.995 V/WindowManager( 1429): Not removing Window{9e18409 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity EXITING} due to exit animation 
+07-07 15:13:54.995 I/WindowManager( 1429): WIN DEATH: Window{9e18409 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity EXITING}
+07-07 15:13:54.995 V/WindowManager( 1429): removeIfPossible: Window{9e18409 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity EXITING} callers=com.android.server.wm.WindowState$DeathRecipient.binderDied:7857444 android.os.BinderProxy.sendDeathNotice:7373044 <bottom of call stack> <bottom of call stack> <bottom of call stack>
+07-07 15:13:54.995 V/WindowManager( 1429): Not removing Window{9e18409 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity EXITING} due to exit animation
 07-07 15:13:54.996 I/WindowManager( 1429): navColorWin was set to default navbar color so should add SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR 8018
 07-07 15:13:54.997 D/HicomMonitor( 2840): notifyAppDied: uid = 11189
 07-07 15:13:54.997 D/subscribe(  921): start run callback for subscriber Jank
@@ -2157,10 +2157,10 @@
 07-07 15:13:54.998 I/MediaProcessHandler( 2840): processOp opType: 1, uid: 11189, pid: 26243
 07-07 15:13:54.998 W/MediaProcessHandler( 2840): remove target not exist, maybe the UI process: uid: 11189, pid: 26243
 07-07 15:13:54.998 I/MediaProcessHandler( 2840): executedCallBack opType: 1 mMediaStatusObservers.size=0
-07-07 15:13:54.999 V/WindowManager( 1429): Exit animation finished in Window{9e18409 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity EXITING}: remove=true
-07-07 15:13:54.999 E/WindowManager( 1429): win=Window{9e18409 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity EXITING} destroySurfaces: appStopped=false win.mWindowRemovalAllowed=true win.mRemoveOnExit=true
-07-07 15:13:54.999 V/WindowManager( 1429): postWindowRemoveCleanupLocked: Window{9e18409 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity}
-07-07 15:13:54.999 V/WindowManager( 1429): Removing Window{9e18409 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity} from AppWindowToken{a3e8cd1 token=Token{a57fe4f ActivityRecord{a4b6879 u0 cn.carbs.wricheditor/.TestLibActivity t914}}}
+07-07 15:13:54.999 V/WindowManager( 1429): Exit animation finished in Window{9e18409 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity EXITING}: remove=true
+07-07 15:13:54.999 E/WindowManager( 1429): win=Window{9e18409 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity EXITING} destroySurfaces: appStopped=false win.mWindowRemovalAllowed=true win.mRemoveOnExit=true
+07-07 15:13:54.999 V/WindowManager( 1429): postWindowRemoveCleanupLocked: Window{9e18409 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity}
+07-07 15:13:54.999 V/WindowManager( 1429): Removing Window{9e18409 u0 cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity} from AppWindowToken{a3e8cd1 token=Token{a57fe4f ActivityRecord{a4b6879 u0 cn.carbs.wricheditor/.TestLibActivity t914}}}
 07-07 15:13:55.001 V/WindowManager( 1429): removeAppToken: AppWindowToken{a3e8cd1 token=Token{a57fe4f ActivityRecord{a4b6879 u0 cn.carbs.wricheditor/.TestLibActivity t914}}} delayed=true Callers=com.android.server.wm.DisplayContent.removeAppToken:8163868 com.android.server.wm.ActivityRecord.removeWindowContainer:8165540 com.android.server.wm.ActivityStack.removeActivityFromHistoryLocked:8162968 com.android.server.wm.ActivityStack.removeHistoryRecordsForAppLocked:6808492 
 07-07 15:13:55.003 I/HwAudioServiceEx( 1429): ComponentInfo : className = cn.carbs.wricheditor.MainActivity, flag=showStartingWindow, isHomeActivity=, isTop=false
 07-07 15:13:55.003 W/SecurityProfileService( 1429): Activity life state callback extras get package null!
@@ -2180,7 +2180,7 @@
 07-07 15:13:55.009 D/ScreemCommon(  921): <LOGMGR> <reportImmediately> [entry]
 07-07 15:13:55.010 V/WindowManager( 1429): addWindow: Window{a29a971 u0 Splash Screen cn.carbs.wricheditor}
 07-07 15:13:55.011 D/DollieActivityManagerAdapter( 2840): [UidGone]  uid:11189
-07-07 15:13:55.011 E/DollieAdapterService( 2840): notifyActivityState pkg:cn.carbs.wricheditor/cn.carbs.wricheditor.TestLibActivity state:20 fg:false mUid:11189
+07-07 15:13:55.011 E/DollieAdapterService( 2840): notifyActivityState pkg:cn.carbs.wricheditor/cn.carbs.wricheditor.MainActivity state:20 fg:false mUid:11189
 07-07 15:13:55.011 W/JankShield( 1429): Could not find packageinfo
 07-07 15:13:55.011 I/iMonitor(  921): create: 902610000
 07-07 15:13:55.011 I/HidataAppQoeP( 2840): foregroundUidRemove uid: 11189 name: cn.carbs.wricheditor

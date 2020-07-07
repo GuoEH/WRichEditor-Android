@@ -20,12 +20,10 @@ import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
 import cn.carbs.wricheditor.library.callbacks.OnRichTypeChangedListener;
 import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
-import cn.carbs.wricheditor.library.interfaces.IRichSpan;
 import cn.carbs.wricheditor.library.models.RichAtomicData;
 import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.CursorUtil;
 import cn.carbs.wricheditor.library.utils.SpanUtil;
-import cn.carbs.wricheditor.library.utils.StrategyUtil;
 import cn.carbs.wricheditor.library.utils.TypeUtil;
 
 // 注意，此方法是不会合并的
@@ -69,8 +67,6 @@ public class WRichEditor extends EditText implements IRichCellView {
     protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
         super.onTextChanged(text, start, lengthBefore, lengthAfter);
         Log.d("fff", "editor onTextChanged text : " + text + " start : " + start + " lengthBefore : " + lengthBefore + " lengthAfter : " + lengthAfter);
-//        getEditableText().setSpan();
-        // Set<RichType> richTypes, Editable editable, int spanStart, int spanEnd
         if (mWRichEditorView == null) {
             return;
         }
@@ -250,6 +246,7 @@ public class WRichEditor extends EditText implements IRichCellView {
         if (start < 0 || end < 0) {
             return;
         }
+        Log.d("lll", "updateSpanUI");
         SpanUtil.setSpan(richType, open, object, mRichAtomicDataList, getEditableText(), richTypes, start, end);
     }
 
