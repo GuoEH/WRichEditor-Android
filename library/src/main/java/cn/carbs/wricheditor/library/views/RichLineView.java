@@ -2,7 +2,6 @@ package cn.carbs.wricheditor.library.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -17,7 +16,7 @@ import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.types.RichType;
 
-// TODO 抽象出来 provider 针对glide等
+// 不抽象，如果需要自定义，直接在外部自定义
 public class RichLineView extends RelativeLayout implements IRichCellView, View.OnClickListener {
 
     private boolean mSelectMode;
@@ -26,8 +25,9 @@ public class RichLineView extends RelativeLayout implements IRichCellView, View.
 
     private IRichCellData mRichCellData;
 
-
     private OnEditorFocusChangedListener mOnEditorFocusChangedListener;
+
+    private View mVContainer;
 
     private View mVLine;
 
@@ -50,9 +50,12 @@ public class RichLineView extends RelativeLayout implements IRichCellView, View.
 
     private void init(Context context) {
         inflate(context, R.layout.wricheditor_layout_rich_line_view, this);
+        mVContainer = findViewById(R.id.wricheditor_rich_image_view_container);
+        mVContainer.setOnClickListener(this);
         mVLine = findViewById(R.id.v_line);
         mVDelete = findViewById(R.id.iv_delete);
         mVDelete.setOnClickListener(this);
+        setOnClickListener(this);
     }
 
     @Override
@@ -83,6 +86,16 @@ public class RichLineView extends RelativeLayout implements IRichCellView, View.
     @Override
     public void setSelectMode(boolean selectMode) {
         mSelectMode = selectMode;
+        if (mVContainer == null) {
+            return;
+        }
+        if (mSelectMode) {
+            mVContainer.setBackgroundResource(R.drawable.shape_wre_bg_select_rect);
+            mVDelete.setVisibility(View.VISIBLE);
+        } else {
+            mVContainer.setBackgroundResource(R.drawable.shape_wre_bg_null);
+            mVDelete.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -98,7 +111,9 @@ public class RichLineView extends RelativeLayout implements IRichCellView, View.
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if (id == R.id.iv_delete) {
+        if (id == R.id.wricheditor_rich_image_view_container) {
+            setSelectMode(true);
+        } else if (id == R.id.iv_delete) {
             // TODO merge
             if (mWRichEditorView != null && mWRichEditorView.mRichCellViewList != null) {
                 ViewParent parent = getParent();

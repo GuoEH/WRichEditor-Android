@@ -3,6 +3,8 @@ package cn.carbs.wricheditor.library.views;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -15,14 +17,18 @@ import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.types.RichType;
 
-// TODO 抽象出来 provider 针对glide等
-public class RichImageView extends RelativeLayout implements IRichCellView {
+// 不抽象，如果需要自定义，直接在外部自定义
+public class RichImageView extends RelativeLayout implements IRichCellView, View.OnClickListener {
 
     private boolean mSelectMode;
 
     private WRichEditorView mWRichEditorView;
 
+    private View mVContainer;
+
     private ImageView mImageView;
+
+    private View mVDelete;
 
     private IRichCellData mRichCellData;
 
@@ -45,9 +51,32 @@ public class RichImageView extends RelativeLayout implements IRichCellView {
 
     private void init(Context context) {
         inflate(context, R.layout.wricheditor_layout_rich_image_view, this);
+        mVContainer = findViewById(R.id.wricheditor_rich_image_view_container);
+        mVContainer.setOnClickListener(this);
         mImageView = findViewById(R.id.image_view);
-        // TODO
         mImageView.setImageResource(R.drawable.image_farmers);
+        mVDelete = findViewById(R.id.iv_delete);
+        mVDelete.setOnClickListener(this);
+        setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        if (id == R.id.wricheditor_rich_image_view_container) {
+            setSelectMode(true);
+        } else if (id == R.id.iv_delete) {
+            if (mWRichEditorView != null && mWRichEditorView.mRichCellViewList != null) {
+                ViewParent parent = getParent();
+                if (parent != null && parent instanceof ViewGroup) {
+                    clearFocus();
+                    ((ViewGroup) parent).removeView(this);
+                    mWRichEditorView.mRichCellViewList.remove(this);
+                }
+            }
+        } else if (v == this) {
+            setSelectMode(true);
+        }
     }
 
     @Override
@@ -78,6 +107,16 @@ public class RichImageView extends RelativeLayout implements IRichCellView {
     @Override
     public void setSelectMode(boolean selectMode) {
         mSelectMode = selectMode;
+        if (mVContainer == null) {
+            return;
+        }
+        if (mSelectMode) {
+            mVContainer.setBackgroundResource(R.drawable.shape_wre_bg_select_rect);
+            mVDelete.setVisibility(View.VISIBLE);
+        } else {
+            mVContainer.setBackgroundResource(R.drawable.shape_wre_bg_null);
+            mVDelete.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override

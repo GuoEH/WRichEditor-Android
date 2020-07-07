@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/wricheditor_rich_image_view_container"
     android:layout_width="wrap_content"
-    android:layout_height="42dp"
+    android:layout_height="28dp"
+    android:layout_marginTop="2dp"
+    android:layout_marginBottom="2dp"
     android:orientation="vertical">
 
     <View
@@ -12,16 +14,18 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:background="#ffff0000" />
+        android:background="#ff666666" />
 
     <ImageView
         android:id="@+id/iv_delete"
-        android:layout_width="42dp"
-        android:layout_height="42dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_alignParentRight="true"
-        android:background="@drawable/shape_wre_bg_black_round_rect"
-        android:padding="2dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="4dp"
+        android:background="@drawable/shape_wre_bg_black_round"
         android:scaleType="centerInside"
-        android:src="@drawable/wre_ic_delete" />
+        android:src="@drawable/wre_ic_clear"
+        android:visibility="invisible" />
 
 </RelativeLayout>

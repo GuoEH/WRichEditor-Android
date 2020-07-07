@@ -3,40 +3,30 @@
     android:id="@+id/wricheditor_rich_image_view_container"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_marginTop="2dp"
+    android:layout_marginBottom="2dp"
+    android:orientation="vertical"
+    android:padding="4dp">
 
     <ImageView
-        android:src="@drawable/image_farmers"
         android:id="@+id/image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:scaleType="centerInside" />
+        android:scaleType="centerInside"
+        android:src="@drawable/image_farmers" />
 
     <ImageView
         android:id="@+id/iv_delete"
-        android:layout_width="42dp"
-        android:layout_height="42dp"
-        android:layout_alignLeft="@id/image_view"
-        android:layout_alignBottom="@id/image_view"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/shape_wre_bg_black_round_rect"
-        android:padding="2dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/wre_ic_delete" />
-
-    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignTop="@id/image_view"
         android:layout_alignRight="@id/image_view"
-        android:layout_alignBottom="@id/image_view"
-        android:id="@+id/iv_edit"
-        android:layout_width="42dp"
-        android:layout_height="42dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/shape_wre_bg_black_round_rect"
-        android:padding="2dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/shape_wre_bg_black_round"
         android:scaleType="centerInside"
-        android:src="@drawable/wre_ic_edit" />
+        android:src="@drawable/wre_ic_clear"
+        android:visibility="invisible" />
 
 </RelativeLayout>

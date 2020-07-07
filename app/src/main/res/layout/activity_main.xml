@@ -73,7 +73,7 @@
                 android:padding="8dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_insert_link" />
-            
+
             <ImageButton
                 android:id="@+id/button_line"
                 android:layout_width="wrap_content"
