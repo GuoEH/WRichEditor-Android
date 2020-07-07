@@ -4,10 +4,13 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Rect;
 import android.text.Editable;
+import android.text.Spannable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.EditText;
 
 import java.util.ArrayList;
@@ -156,7 +159,19 @@ public class WRichEditor extends EditText implements IRichCellView {
 
                         if (iRichCellView instanceof WRichEditor) {
                             // 1. 如果是，则将光标调整到上一个WRichEditor的最后，同时将此WRichEditor删除
+                            // 获取editable，然后将此WRichEditor remove
+                            Editable editable = getEditableText();
+//                            Editable editable1 = getText();
+                            Log.d("nnn", "editable spannable ? " + (editable instanceof Spannable));
+                            ViewParent parent = getParent();
+                            if (parent != null && parent instanceof ViewGroup) {
+                                ((ViewGroup) parent).removeView(this);
+                                Log.d("nnn", "removeView");
+                                mWRichEditorView.mRichCellViewList.remove(this);
+                            }
+                            ((WRichEditor)iRichCellView).addExtraEditable(editable);
                             ((WRichEditor)iRichCellView).requestFocusAndPutCursorToTail();
+
                         } else {
 
                         }
@@ -245,6 +260,18 @@ public class WRichEditor extends EditText implements IRichCellView {
         // 从 mRichAtomicDataList 找到end所在的位置
 
 
+    }
+
+    public void addExtraEditable(Editable extraEditable) {
+        Log.d("xxx", "addExtraEditable 0");
+        if (extraEditable != null) {
+            Editable originalEditable = getEditableText();
+            // TODO 这个地方待验证
+//            originalEditable.append(extraEditable, originalLength, originalLength + extraLength);
+            originalEditable.append(extraEditable);
+            Log.d("nnn", "addExtraEditable 1 originalEditable now length : " + originalEditable.length());
+            setText(originalEditable);
+        }
     }
 
     public void requestFocusAndPutCursorToTail() {
