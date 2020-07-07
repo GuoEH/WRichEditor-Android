@@ -4,6 +4,7 @@
     <declare-styleable name="WRichEditorView">
         <attr name="linkColor" format="reference|color" />
         <attr name="linkUnderline" format="reference|boolean" />
+        <attr name="headlineTextSize" format="reference|dimension" />
 <!--        <attr name="bulletColor" format="reference|color" />-->
 <!--        <attr name="bulletRadius" format="reference|dimension" />-->
 <!--        <attr name="bulletGapWidth" format="reference|dimension" />-->

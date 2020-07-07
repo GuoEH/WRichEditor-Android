@@ -31,6 +31,7 @@ public class TestLibActivity extends AppCompatActivity implements View.OnClickLi
     private ImageButton mBtnItalic;
     private ImageButton mBtnStrikeThrough;
     private ImageButton mBtnUnderLine;
+    private ImageButton mBtnHeadline;
     private ImageButton mBtnLink;
 
     private Button mBtnAddImage;
@@ -56,6 +57,8 @@ public class TestLibActivity extends AppCompatActivity implements View.OnClickLi
         mBtnStrikeThrough.setOnClickListener(this);
         mBtnUnderLine = findViewById(R.id.button_under_line);
         mBtnUnderLine.setOnClickListener(this);
+        mBtnHeadline = findViewById(R.id.button_headline);
+        mBtnHeadline.setOnClickListener(this);
         mBtnLink = findViewById(R.id.button_link);
         mBtnLink.setOnClickListener(this);
     }
@@ -86,6 +89,13 @@ public class TestLibActivity extends AppCompatActivity implements View.OnClickLi
         boolean open = TypeUtil.toggleCertainRichType(richTypes, RichType.UNDER_LINE);
         mWRichEditorView.updateTextByRichTypeChanged(RichType.UNDER_LINE, open, null);
         setButtonTextColor(mBtnUnderLine, open);
+    }
+
+    private void onHeadLineClicked() {
+        Set<RichType> richTypes = mWRichEditorView.getRichTypes();
+        boolean open = TypeUtil.toggleCertainRichType(richTypes, RichType.HEADLINE);
+        mWRichEditorView.updateTextByRichTypeChanged(RichType.HEADLINE, open, null);
+        setButtonTextColor(mBtnHeadline, open);
     }
 
     private void onInsertLinkClicked() {
@@ -146,6 +156,8 @@ public class TestLibActivity extends AppCompatActivity implements View.OnClickLi
             onStrikeThroughClicked();
         } else if (id == R.id.button_under_line) {
             onUnderLineClicked();
+        } else if (id == R.id.button_headline) {
+            onHeadLineClicked();
         } else if (id == R.id.button_link) {
             onInsertLinkClicked();
         }

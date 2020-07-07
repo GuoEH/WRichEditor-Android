@@ -17,6 +17,7 @@ import cn.carbs.wricheditor.library.configures.RichEditorConfig;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.StrategyUtil;
+import cn.carbs.wricheditor.library.utils.ViewUtil;
 
 /**
  * 主视图，继承自ScrollView，富文本通过向其中不断添加子View实现
@@ -52,12 +53,14 @@ public class WRichEditorView extends ScrollView implements OnEditorFocusChangedL
     private void init(Context context) {
         inflate(context, R.layout.wricheditor_layout_main_view, this);
         mLinearLayout = findViewById(R.id.wricheditor_main_view_container);
+        RichEditorConfig.sHeadlineTextSize = ViewUtil.dp2px(getContext(), 24);
     }
 
     private void initAttrs(AttributeSet attrs) {
         TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.WRichEditorView);
-        RichEditorConfig.sLinkColor = array.getColor(R.styleable.WRichEditorView_linkColor, 0xFF2196F3);
-        RichEditorConfig.sLinkUnderline = array.getBoolean(R.styleable.WRichEditorView_linkUnderline, true);
+        RichEditorConfig.sLinkColor = array.getColor(R.styleable.WRichEditorView_linkColor, RichEditorConfig.sLinkColor);
+        RichEditorConfig.sLinkUnderline = array.getBoolean(R.styleable.WRichEditorView_linkUnderline, RichEditorConfig.sLinkUnderline);
+        RichEditorConfig.sHeadlineTextSize = array.getDimensionPixelSize(R.styleable.WRichEditorView_headlineTextSize, RichEditorConfig.sHeadlineTextSize);
         array.recycle();
     }
 
@@ -161,7 +164,7 @@ public class WRichEditorView extends ScrollView implements OnEditorFocusChangedL
         if (retWRichEditor != null) {
             return retWRichEditor;
         }
-        if(mLastFocusedRichCellView instanceof WRichEditor) {
+        if (mLastFocusedRichCellView instanceof WRichEditor) {
             return (WRichEditor) mLastFocusedRichCellView;
         }
         return null;
@@ -179,6 +182,7 @@ public class WRichEditorView extends ScrollView implements OnEditorFocusChangedL
     }
 
     IRichCellView mLastFocusedRichCellView;
+
     @Override
     public void onEditorFocusChanged(IRichCellView iRichCellView, boolean focused) {
         Log.d("eee", "onEditorFocusChanged focused : " + focused);

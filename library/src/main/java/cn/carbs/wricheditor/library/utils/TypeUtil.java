@@ -5,6 +5,7 @@ import java.util.Set;
 import cn.carbs.wricheditor.library.configures.RichEditorConfig;
 import cn.carbs.wricheditor.library.interfaces.IRichSpan;
 import cn.carbs.wricheditor.library.spannables.BoldStyleSpan;
+import cn.carbs.wricheditor.library.spannables.HeadlineSpan;
 import cn.carbs.wricheditor.library.spannables.ItalicStyleSpan;
 import cn.carbs.wricheditor.library.spannables.LinkStyleSpan;
 import cn.carbs.wricheditor.library.spannables.StrikeThroughStyleSpan;
@@ -93,6 +94,8 @@ public class TypeUtil {
                 return new UnderlineStyleSpan();
             case LINK:
                 return new LinkStyleSpan((String)extra, RichEditorConfig.sLinkColor, RichEditorConfig.sLinkUnderline);
+            case HEADLINE:
+                return new HeadlineSpan(RichEditorConfig.sHeadlineTextSize);
         }
         return null;
     }

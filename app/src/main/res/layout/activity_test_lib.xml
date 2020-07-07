@@ -19,7 +19,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
-                android:background="#80000000"
+                android:background="#b0000000"
                 android:padding="8dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_format_bold" />
@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
-                android:background="#80000000"
+                android:background="#b0000000"
                 android:padding="8dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_format_italic" />
@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
-                android:background="#80000000"
+                android:background="#b0000000"
                 android:padding="8dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_format_strikethrough" />
@@ -49,17 +49,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
-                android:background="#80000000"
+                android:background="#b0000000"
                 android:padding="8dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_format_underline" />
+
+            <ImageButton
+                android:id="@+id/button_headline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="#b0000000"
+                android:padding="8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_format_headline" />
 
             <ImageButton
                 android:id="@+id/button_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
-                android:background="#80000000"
+                android:background="#b0000000"
                 android:padding="8dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_insert_link" />
@@ -73,6 +83,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/h_scroll"
+        app:headlineTextSize="24dp"
         app:linkColor="#FF2196F3" />
 
     <HorizontalScrollView
