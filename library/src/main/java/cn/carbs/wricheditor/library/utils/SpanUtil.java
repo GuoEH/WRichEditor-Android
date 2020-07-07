@@ -27,7 +27,7 @@ public class SpanUtil {
         if (spanStart == spanEnd) {
             // 没有选中，分情况：
             // 如果是 HeadLine 类型，则将整行都置为大号字体
-            // TODO
+            // TODO 还有quote类型
             if (richType == RichType.HEADLINE) {
                 // TODO 应该是整行都变
                 if (spanEnd == 0) {
@@ -48,6 +48,7 @@ public class SpanUtil {
         }
 
         if (open) {
+            Log.d("mmm", "editable.setSpan : " + TypeUtil.getSpanByType(richType, object).getClass().getName());
             editable.setSpan(TypeUtil.getSpanByType(richType, object), spanStart, spanEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         } else {
             IRichSpan richSpan = TypeUtil.getSpanByType(richType, object);

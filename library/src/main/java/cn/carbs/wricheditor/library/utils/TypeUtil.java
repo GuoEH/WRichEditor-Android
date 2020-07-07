@@ -6,9 +6,11 @@ import java.util.Set;
 import cn.carbs.wricheditor.library.configures.RichEditorConfig;
 import cn.carbs.wricheditor.library.interfaces.IRichSpan;
 import cn.carbs.wricheditor.library.spannables.BoldStyleSpan;
+import cn.carbs.wricheditor.library.spannables.CustomQuoteSpan;
 import cn.carbs.wricheditor.library.spannables.HeadlineSpan;
 import cn.carbs.wricheditor.library.spannables.ItalicStyleSpan;
 import cn.carbs.wricheditor.library.spannables.LinkStyleSpan;
+import cn.carbs.wricheditor.library.spannables.QuoteStyleSpan;
 import cn.carbs.wricheditor.library.spannables.StrikeThroughStyleSpan;
 import cn.carbs.wricheditor.library.spannables.UnderlineStyleSpan;
 import cn.carbs.wricheditor.library.types.RichType;
@@ -120,10 +122,11 @@ public class TypeUtil {
                 return new LinkStyleSpan((String)extra, RichEditorConfig.sLinkColor, RichEditorConfig.sLinkUnderline);
             case HEADLINE:
                 return new HeadlineSpan(RichEditorConfig.sHeadlineTextSize);
+            case QUOTE:
+//                return new QuoteStyleSpan();
+                return new CustomQuoteSpan();
         }
         return null;
     }
-
-
 
 }

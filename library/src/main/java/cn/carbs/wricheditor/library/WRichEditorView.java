@@ -110,29 +110,9 @@ public class WRichEditorView extends ScrollView implements OnEditorFocusChangedL
     // object 中存储 link 等信息
     public void updateTextByRichTypeChanged(RichType richType, boolean open, Object object) {
         StrategyUtil.sStrongSet = true;
-
-        // 1. 循环内部子View，找到焦点所在的EditView
-        /*WRichEditor focusedWRichEditor = null;
-        int cellViewSize = mRichCellViewList.size();
-        for (int i = 0; i < cellViewSize; i++) {
-            IRichCellView cellView = mRichCellViewList.get(i);
-            if (cellView != null && cellView.getView() != null) {
-                if (cellView.getRichType() == RichType.NONE) {
-                    // 具有 EditText 的 cell
-                    WRichEditor wRichEditor = ((WRichEditor) cellView.getView());
-                    Log.d("uuu", "updateTextByRichTypeChanged() i : " + i + "wRichEditor.hasFocus() ？ " + wRichEditor.hasFocus());
-                    if (wRichEditor.hasFocus()) {
-                        focusedWRichEditor = wRichEditor;
-                        break;
-                    }
-                } else {
-
-                }
-            }
-        }*/
+        // 1. 找到焦点所在的EditView
         WRichEditor focusedWRichEditor = findCurrentFocusedRichEditor();
         if (focusedWRichEditor == null) {
-            // TODO 暂时返回，针对富文本格式
             return;
         }
         // 2. 交给某个单元Cell去更新

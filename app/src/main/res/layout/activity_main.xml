@@ -65,6 +65,16 @@
                 android:src="@drawable/ic_format_headline" />
 
             <ImageButton
+                android:id="@+id/button_quote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="#b0000000"
+                android:padding="8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_insert_quote" />
+
+            <ImageButton
                 android:id="@+id/button_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -22,6 +22,9 @@ public enum RichType {
     // 标题
     HEADLINE,
 
+    // 引用
+    QUOTE,
+
     // 多媒体类型，采用自定义view
     IMAGE,
 

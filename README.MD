@@ -68,6 +68,13 @@ com.smartisanos.notes.rtf.RichEditTextView
 // 这个功能有坑
 originalEditable.append(extraEditable);
 
+// TODO 
+
+line 等view 在删除时，需要merge一下，同时在别的editor获取焦点时，取消自定义的焦点
+
+
+// bug 点击 H 后，变成粗体，再点击H后变成非粗体
+
 
 
 

@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton mBtnStrikeThrough;
     private ImageButton mBtnUnderLine;
     private ImageButton mBtnHeadline;
+    private ImageButton mBtnQuote;
     private ImageButton mBtnLink;
     private ImageButton mBtnInsertImage;
     private ImageButton mBtnInsertLine;
@@ -53,8 +54,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mWRichEditorView = findViewById(R.id.wrich_editor_view);
         mWRichEditorView.setOnRichTypeChangedListener(this);
 
-        mBtnInsertImage = findViewById(R.id.button_image);
-        mBtnInsertImage.setOnClickListener(this);
         mBtnAddEditor = findViewById(R.id.button_2);
         mBtnAddEditor.setOnClickListener(this);
 
@@ -66,12 +65,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnStrikeThrough.setOnClickListener(this);
         mBtnUnderLine = findViewById(R.id.button_under_line);
         mBtnUnderLine.setOnClickListener(this);
-        mBtnInsertLine = findViewById(R.id.button_line);
-        mBtnInsertLine.setOnClickListener(this);
         mBtnHeadline = findViewById(R.id.button_headline);
         mBtnHeadline.setOnClickListener(this);
+        mBtnQuote = findViewById(R.id.button_quote);
+        mBtnQuote.setOnClickListener(this);
         mBtnLink = findViewById(R.id.button_link);
         mBtnLink.setOnClickListener(this);
+        mBtnInsertLine = findViewById(R.id.button_line);
+        mBtnInsertLine.setOnClickListener(this);
+        mBtnInsertImage = findViewById(R.id.button_image);
+        mBtnInsertImage.setOnClickListener(this);
 
         mImageButtonMap.put(RichType.BOLD, mBtnBold);
         mImageButtonMap.put(RichType.ITALIC, mBtnItalic);
@@ -115,6 +118,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         boolean open = TypeUtil.toggleCertainRichType(richTypes, RichType.HEADLINE);
         mWRichEditorView.updateTextByRichTypeChanged(RichType.HEADLINE, open, null);
         setButtonTextColor(mBtnHeadline, open);
+    }
+
+    // todo
+    private void onInsertQuoteClicked() {
+        Log.d("mmm", "onInsertQuoteClicked()");
+        Set<RichType> richTypes = mWRichEditorView.getRichTypes();
+        boolean open = TypeUtil.toggleCertainRichType(richTypes, RichType.QUOTE);
+        mWRichEditorView.updateTextByRichTypeChanged(RichType.QUOTE, open, null);
+        setButtonTextColor(mBtnQuote, open);
     }
 
     private void onInsertLinkClicked() {
@@ -197,6 +209,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             onInsertLineClicked();
         } else if (id == R.id.button_image) {
             onInsertImageClicked();
+        } else if (id == R.id.button_quote) {
+            onInsertQuoteClicked();
         } else if (id == R.id.button_2) {
             button2Clicked();
         }
