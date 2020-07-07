@@ -66,17 +66,19 @@ public class WRichEditor extends EditText implements IRichCellView {
     @Override
     protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
         super.onTextChanged(text, start, lengthBefore, lengthAfter);
-        Log.d("fff", "editor onTextChanged text : " + text + " start : " + start + " lengthBefore : " + lengthBefore + " lengthAfter : " + lengthAfter);
+
         if (mWRichEditorView == null) {
             return;
         }
-        // TODO
+        Log.d("lll", "hint : " + getHint() + " , has parent : " + (getParent() != null)  + " , editor onTextChanged text : " + text + " start : " + start + " lengthBefore : " + lengthBefore + " lengthAfter : " + lengthAfter);
         SpanUtil.setSpan(mWRichEditorView.mRichTypes, text, getEditableText(), start, start + lengthAfter);
+
+
 
     }
 
 
-    // TODO 由此触发setSpan函数
+    // TODO
     @Override
     protected void onSelectionChanged(int selStart, int selEnd) {
         super.onSelectionChanged(selStart, selEnd);
@@ -158,15 +160,25 @@ public class WRichEditor extends EditText implements IRichCellView {
                             // 获取editable，然后将此WRichEditor remove
                             Editable editable = getEditableText();
 //                            Editable editable1 = getText();
-                            Log.d("nnn", "editable spannable ? " + (editable instanceof Spannable));
+//                            Log.d("nnn", "editable spannable ? " + (editable instanceof Spannable));
+//                            ViewParent parent = getParent();
+//                            if (parent != null && parent instanceof ViewGroup) {
+//                                ((ViewGroup) parent).removeView(this);
+//                                Log.d("nnn", "removeView");
+//                                mWRichEditorView.mRichCellViewList.remove(this);
+//                            }
+                            ((WRichEditor)iRichCellView).addExtraEditable(editable);
+
+                            ((WRichEditor)iRichCellView).requestFocusAndPutCursorToTail();
+
                             ViewParent parent = getParent();
                             if (parent != null && parent instanceof ViewGroup) {
+                                setText("");
+                                clearFocus();
                                 ((ViewGroup) parent).removeView(this);
                                 Log.d("nnn", "removeView");
                                 mWRichEditorView.mRichCellViewList.remove(this);
                             }
-                            ((WRichEditor)iRichCellView).addExtraEditable(editable);
-                            ((WRichEditor)iRichCellView).requestFocusAndPutCursorToTail();
 
                         } else {
 
@@ -246,7 +258,6 @@ public class WRichEditor extends EditText implements IRichCellView {
         if (start < 0 || end < 0) {
             return;
         }
-        Log.d("lll", "updateSpanUI");
         SpanUtil.setSpan(richType, open, object, mRichAtomicDataList, getEditableText(), richTypes, start, end);
     }
 
@@ -267,14 +278,14 @@ public class WRichEditor extends EditText implements IRichCellView {
 //            originalEditable.append(extraEditable, originalLength, originalLength + extraLength);
             originalEditable.append(extraEditable);
             Log.d("nnn", "addExtraEditable 1 originalEditable now length : " + originalEditable.length());
-            setText(originalEditable);
+//            setText(originalEditable);
         }
     }
 
     public void requestFocusAndPutCursorToTail() {
         requestFocus();
         setSelection(getEditableText().toString().length());
-        Log.d("iii", "requestFocusAndPutCursorToTail()");
+        Log.d("lll", "hint : " + getHint() + ", requestFocusAndPutCursorToTail()");
     }
 
 }

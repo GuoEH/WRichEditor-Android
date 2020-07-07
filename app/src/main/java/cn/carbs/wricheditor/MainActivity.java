@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test_lib);
+        setContentView(R.layout.activity_main);
 
         mWRichEditorView = findViewById(R.id.wrich_editor_view);
         mWRichEditorView.setOnRichTypeChangedListener(this);
@@ -194,7 +194,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void button2Clicked() {
         WRichEditor editText = new WRichEditor(MainActivity.this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        editText.setBackgroundColor(0x22222222);
+        int size = mWRichEditorView.mRichCellViewList == null ? 0 : mWRichEditorView.mRichCellViewList.size();
+        editText.setHint("CELL : " + size);
+        if (size % 2 == 0) {
+            editText.setBackgroundColor(0x10222222);
+        } else {
+            editText.setBackgroundColor(0x18222222);
+        }
         mWRichEditorView.addRichCell(editText, lp);
     }
 
@@ -208,8 +214,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onRichTypeChanged(Set<RichType> oldTypes, Set<RichType> newTypes) {
-        Log.d("wangwang", "onRichTypeChanged");
-
         if (newTypes == null) {
             newTypes = new HashSet<>();
         }
