@@ -27,8 +27,11 @@
 
     <cn.carbs.wricheditor.library.WRichEditor
         android:id="@+id/w_rich_editor"
+        android:lineSpacingExtra="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
         android:layout_toRightOf="@id/fl_left_container_in_wrapper"
         android:background="@null" />
 
