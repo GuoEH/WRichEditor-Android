@@ -2,7 +2,6 @@ package cn.carbs.wricheditor.library.utils;
 
 import android.text.Editable;
 import android.text.Spanned;
-import android.text.style.StyleSpan;
 import android.util.Log;
 
 import java.util.ArrayList;

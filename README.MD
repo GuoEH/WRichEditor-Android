@@ -75,6 +75,11 @@ line 等view 在删除时，需要merge一下，同时在别的editor获取焦�
 
 // bug 点击 H 后，变成粗体，再点击H后变成非粗体
 
+// 原生的 BulletSpan、QuoteSpan、DrawableMarginSpan 都有部分问题，多行时，光标错位
+
+// TODO 如何像锤子一样，添加横线
+
+// TODO 引用、有序列表、无序列表，都采用插入一个 WRichEditor 的方式实现
 
 
 

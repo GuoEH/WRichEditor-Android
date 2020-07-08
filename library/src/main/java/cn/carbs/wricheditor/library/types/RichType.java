@@ -25,6 +25,12 @@ public enum RichType {
     // 引用
     QUOTE,
 
+    // 有序列表
+    LIST_ORDERED,
+
+    // 无序列表
+    LIST_UNORDERED,
+
     // 多媒体类型，采用自定义view
     IMAGE,
 
@@ -33,6 +39,5 @@ public enum RichType {
     MUSIC,
 
     NETDISK
-
 
 }
