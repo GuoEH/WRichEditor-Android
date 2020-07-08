@@ -132,7 +132,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void onInsertLinkClicked() {
         setButtonTextColor(mBtnLink, true);
-        WRichEditorWrapperView wRichEditorWrapperView = mWRichEditorScrollView.findCurrentOrRecentFocusedRichEditorWrapperView();
+        int[] focusedRichEditorWrapperView = new int[1];
+        WRichEditorWrapperView wRichEditorWrapperView = mWRichEditorScrollView.findCurrentOrRecentFocusedRichEditorWrapperView(focusedRichEditorWrapperView);
         if (wRichEditorWrapperView == null) {
             return;
         }
