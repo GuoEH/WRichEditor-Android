@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="WRichEditorView">
+    <declare-styleable name="WRichEditorScrollView">
         <attr name="linkColor" format="reference|color" />
         <attr name="linkUnderline" format="reference|boolean" />
         <attr name="headlineTextSize" format="reference|dimension" />

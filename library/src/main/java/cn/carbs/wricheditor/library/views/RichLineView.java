@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import androidx.annotation.Nullable;
 
 import cn.carbs.wricheditor.library.R;
-import cn.carbs.wricheditor.library.WRichEditorView;
+import cn.carbs.wricheditor.library.WRichEditorScrollView;
 import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
 import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
@@ -21,7 +21,7 @@ public class RichLineView extends RelativeLayout implements IRichCellView, View.
 
     private boolean mSelectMode;
 
-    private WRichEditorView mWRichEditorView;
+    private WRichEditorScrollView mWRichEditorScrollView;
 
     private IRichCellData mRichCellData;
 
@@ -64,8 +64,8 @@ public class RichLineView extends RelativeLayout implements IRichCellView, View.
     }
 
     @Override
-    public void setWRichEditorView(WRichEditorView wRichEditorView) {
-        mWRichEditorView = wRichEditorView;
+    public void setWRichEditorView(WRichEditorScrollView wRichEditorScrollView) {
+        mWRichEditorScrollView = wRichEditorScrollView;
     }
 
     @Override
@@ -115,12 +115,12 @@ public class RichLineView extends RelativeLayout implements IRichCellView, View.
             setSelectMode(true);
         } else if (id == R.id.iv_delete) {
             // TODO merge
-            if (mWRichEditorView != null && mWRichEditorView.mRichCellViewList != null) {
+            if (mWRichEditorScrollView != null && mWRichEditorScrollView.mRichCellViewList != null) {
                 ViewParent parent = getParent();
                 if (parent != null && parent instanceof ViewGroup) {
                     clearFocus();
                     ((ViewGroup) parent).removeView(this);
-                    mWRichEditorView.mRichCellViewList.remove(this);
+                    mWRichEditorScrollView.mRichCellViewList.remove(this);
                 }
             }
         }

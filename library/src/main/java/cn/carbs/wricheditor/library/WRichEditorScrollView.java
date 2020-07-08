@@ -23,7 +23,7 @@ import cn.carbs.wricheditor.library.utils.ViewUtil;
 /**
  * 主视图，继承自ScrollView，富文本通过向其中不断添加子View实现
  */
-public class WRichEditorView extends ScrollView implements OnEditorFocusChangedListener {
+public class WRichEditorScrollView extends ScrollView implements OnEditorFocusChangedListener {
 
     // TODO
     public ArrayList<IRichCellView> mRichCellViewList = new ArrayList<>();
@@ -36,18 +36,18 @@ public class WRichEditorView extends ScrollView implements OnEditorFocusChangedL
 
     private OnRichTypeChangedListener mOnRichTypeChangedListener;
 
-    public WRichEditorView(Context context) {
+    public WRichEditorScrollView(Context context) {
         super(context);
         init(context);
     }
 
-    public WRichEditorView(Context context, AttributeSet attrs) {
+    public WRichEditorScrollView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
         initAttrs(attrs);
     }
 
-    public WRichEditorView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public WRichEditorScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
         initAttrs(attrs);
@@ -60,10 +60,10 @@ public class WRichEditorView extends ScrollView implements OnEditorFocusChangedL
     }
 
     private void initAttrs(AttributeSet attrs) {
-        TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.WRichEditorView);
-        RichEditorConfig.sLinkColor = array.getColor(R.styleable.WRichEditorView_linkColor, RichEditorConfig.sLinkColor);
-        RichEditorConfig.sLinkUnderline = array.getBoolean(R.styleable.WRichEditorView_linkUnderline, RichEditorConfig.sLinkUnderline);
-        RichEditorConfig.sHeadlineTextSize = array.getDimensionPixelSize(R.styleable.WRichEditorView_headlineTextSize, RichEditorConfig.sHeadlineTextSize);
+        TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.WRichEditorScrollView);
+        RichEditorConfig.sLinkColor = array.getColor(R.styleable.WRichEditorScrollView_linkColor, RichEditorConfig.sLinkColor);
+        RichEditorConfig.sLinkUnderline = array.getBoolean(R.styleable.WRichEditorScrollView_linkUnderline, RichEditorConfig.sLinkUnderline);
+        RichEditorConfig.sHeadlineTextSize = array.getDimensionPixelSize(R.styleable.WRichEditorScrollView_headlineTextSize, RichEditorConfig.sHeadlineTextSize);
         array.recycle();
     }
 

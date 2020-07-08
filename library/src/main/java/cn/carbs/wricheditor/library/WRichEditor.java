@@ -36,7 +36,7 @@ import cn.carbs.wricheditor.library.utils.TypeUtil;
 @SuppressLint("AppCompatCustomView")
 public class WRichEditor extends EditText implements IRichCellView {
 
-    private WRichEditorView mWRichEditorView;
+    private WRichEditorScrollView mWRichEditorScrollView;
 
     private IRichCellData mRichCellData;
 
@@ -72,7 +72,7 @@ public class WRichEditor extends EditText implements IRichCellView {
     protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
         super.onTextChanged(text, start, lengthBefore, lengthAfter);
 
-        if (mWRichEditorView == null) {
+        if (mWRichEditorScrollView == null) {
             return;
         }
         Log.d("xxx", "hint : " + getHint()
@@ -84,7 +84,7 @@ public class WRichEditor extends EditText implements IRichCellView {
                 + " , lengthAfter : " + lengthAfter);
         // 回调返回的 text 和 getEditableText() 不一定一致，SpannableStringBuilder中的textWatcher的内置问题
         if (getParent() != null && getEditableText().toString().equals(text.toString())) {
-            SpanUtil.setSpan(mWRichEditorView.mRichTypes, text, getEditableText(), start, start + lengthAfter);
+            SpanUtil.setSpan(mWRichEditorScrollView.mRichTypes, text, getEditableText(), start, start + lengthAfter);
         }
     }
 
@@ -132,13 +132,13 @@ public class WRichEditor extends EditText implements IRichCellView {
         if (keyCode == KeyEvent.KEYCODE_ENTER) {
             // 响应 keycode，如果有 headline 类型的 RichType
             Log.d("key", "keyCode : " + keyCode);
-            if (mWRichEditorView != null) {
-                Set<RichType> richTypes = mWRichEditorView.getRichTypes();
+            if (mWRichEditorScrollView != null) {
+                Set<RichType> richTypes = mWRichEditorScrollView.getRichTypes();
                 if (richTypes != null) {
                     // TODO
                     boolean changed = TypeUtil.removeCertainRichType(richTypes, RichType.HEADLINE);
                     if (changed) {
-                        OnRichTypeChangedListener typeChangedListener = mWRichEditorView.getOnRichTypeChangedListener();
+                        OnRichTypeChangedListener typeChangedListener = mWRichEditorScrollView.getOnRichTypeChangedListener();
                         if (typeChangedListener != null) {
                             // TODO api设计是否需要优化？考虑到光标移动的情况，应该不需要
                             typeChangedListener.onRichTypeChanged(TypeUtil.assembleRichTypes(richTypes, RichType.HEADLINE), richTypes);
@@ -159,12 +159,12 @@ public class WRichEditor extends EditText implements IRichCellView {
             int selectionStart = getSelectionStart();
             int selectionEnd = getSelectionEnd();
             if (selectionStart == selectionEnd && selectionStart == 0) {
-                if (mWRichEditorView != null && mWRichEditorView.mRichCellViewList != null) {
-                    int index = mWRichEditorView.mRichCellViewList.indexOf(this);
+                if (mWRichEditorScrollView != null && mWRichEditorScrollView.mRichCellViewList != null) {
+                    int index = mWRichEditorScrollView.mRichCellViewList.indexOf(this);
                     Log.d("iii", "WRichEditor index in mWRichEditorView is : " + index);
                     if (index > 0) {
                         // 查看上一个是不是WRichEditor，
-                        IRichCellView iRichCellView = mWRichEditorView.mRichCellViewList.get(index - 1);
+                        IRichCellView iRichCellView = mWRichEditorScrollView.mRichCellViewList.get(index - 1);
 
                         if (iRichCellView instanceof WRichEditor) {
                             // 1. 如果是，则将光标调整到上一个WRichEditor的最后，同时将此WRichEditor删除
@@ -189,7 +189,7 @@ public class WRichEditor extends EditText implements IRichCellView {
                                 clearFocus();
                                 ((ViewGroup) parent).removeView(this);
                                 Log.d("nnn", "removeView");
-                                mWRichEditorView.mRichCellViewList.remove(this);
+                                mWRichEditorScrollView.mRichCellViewList.remove(this);
                             }
 
                         } else {
@@ -207,9 +207,9 @@ public class WRichEditor extends EditText implements IRichCellView {
     }
 
     @Override
-    public void setWRichEditorView(WRichEditorView wRichEditorView) {
-        mWRichEditorView = wRichEditorView;
-        Log.d("ppp", "editor setWRichEditorView mWRichEditorView == null ? " + (mWRichEditorView == null));
+    public void setWRichEditorView(WRichEditorScrollView wRichEditorScrollView) {
+        mWRichEditorScrollView = wRichEditorScrollView;
+        Log.d("ppp", "editor setWRichEditorView mWRichEditorView == null ? " + (mWRichEditorScrollView == null));
     }
 
     @Override
@@ -258,20 +258,20 @@ public class WRichEditor extends EditText implements IRichCellView {
             // TODO 后面输入的字体将按照对应的设定字体进行
             // 当前没有选中字体
             if (richType == RichType.HEADLINE) {
-                updateSpanUI(richType, open, object, selectionStart, selectionEnd, mWRichEditorView.getRichTypes());
+                updateSpanUI(richType, open, object, selectionStart, selectionEnd, mWRichEditorScrollView.getRichTypes());
             }
             return;
         } else {
-            if (mWRichEditorView == null) {
+            if (mWRichEditorScrollView == null) {
                 return;
             }
 
             // 将选中的部分进行更新，同时更新此View对应的
-            updateSpanUI(richType, open, object, selectionStart, selectionEnd, mWRichEditorView.getRichTypes());
+            updateSpanUI(richType, open, object, selectionStart, selectionEnd, mWRichEditorScrollView.getRichTypes());
             // 是不是想的太复杂了？
 
             // TODO [难点] 切割data
-            updateSpanData(selectionStart, selectionEnd, mWRichEditorView.getRichTypes());
+            updateSpanData(selectionStart, selectionEnd, mWRichEditorScrollView.getRichTypes());
         }
     }
 

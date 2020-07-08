@@ -108,7 +108,7 @@
 
     </HorizontalScrollView>
 
-    <cn.carbs.wricheditor.library.WRichEditorView
+    <cn.carbs.wricheditor.library.WRichEditorScrollView
         android:id="@+id/wrich_editor_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.Set;
 
 import cn.carbs.wricheditor.library.WRichEditor;
-import cn.carbs.wricheditor.library.WRichEditorView;
+import cn.carbs.wricheditor.library.WRichEditorScrollView;
 import cn.carbs.wricheditor.library.callbacks.OnRichTypeChangedListener;
 import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.TypeUtil;
@@ -31,7 +31,7 @@ import cn.carbs.wricheditor.library.views.RichLineView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnRichTypeChangedListener {
 
-    private WRichEditorView mWRichEditorView;
+    private WRichEditorScrollView mWRichEditorScrollView;
     private ImageButton mBtnBold;
     private ImageButton mBtnItalic;
     private ImageButton mBtnStrikeThrough;
@@ -51,8 +51,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mWRichEditorView = findViewById(R.id.wrich_editor_view);
-        mWRichEditorView.setOnRichTypeChangedListener(this);
+        mWRichEditorScrollView = findViewById(R.id.wrich_editor_view);
+        mWRichEditorScrollView.setOnRichTypeChangedListener(this);
 
         mBtnAddEditor = findViewById(R.id.button_2);
         mBtnAddEditor.setOnClickListener(this);
@@ -86,52 +86,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void onBoldClicked() {
-        Set<RichType> richTypes = mWRichEditorView.getRichTypes();
+        Set<RichType> richTypes = mWRichEditorScrollView.getRichTypes();
         boolean open = TypeUtil.toggleCertainRichType(richTypes, RichType.BOLD);
-        mWRichEditorView.updateTextByRichTypeChanged(RichType.BOLD, open, null);
+        mWRichEditorScrollView.updateTextByRichTypeChanged(RichType.BOLD, open, null);
         setButtonTextColor(mBtnBold, open);
     }
 
     private void onItalicClicked() {
-        Set<RichType> richTypes = mWRichEditorView.getRichTypes();
+        Set<RichType> richTypes = mWRichEditorScrollView.getRichTypes();
         boolean open = TypeUtil.toggleCertainRichType(richTypes, RichType.ITALIC);
-        mWRichEditorView.updateTextByRichTypeChanged(RichType.ITALIC, open, null);
+        mWRichEditorScrollView.updateTextByRichTypeChanged(RichType.ITALIC, open, null);
         setButtonTextColor(mBtnItalic, open);
     }
 
     private void onStrikeThroughClicked() {
-        Set<RichType> richTypes = mWRichEditorView.getRichTypes();
+        Set<RichType> richTypes = mWRichEditorScrollView.getRichTypes();
         boolean open = TypeUtil.toggleCertainRichType(richTypes, RichType.STRIKE_THROUGH);
-        mWRichEditorView.updateTextByRichTypeChanged(RichType.STRIKE_THROUGH, open, null);
+        mWRichEditorScrollView.updateTextByRichTypeChanged(RichType.STRIKE_THROUGH, open, null);
         setButtonTextColor(mBtnStrikeThrough, open);
     }
 
     private void onUnderLineClicked() {
-        Set<RichType> richTypes = mWRichEditorView.getRichTypes();
+        Set<RichType> richTypes = mWRichEditorScrollView.getRichTypes();
         boolean open = TypeUtil.toggleCertainRichType(richTypes, RichType.UNDER_LINE);
-        mWRichEditorView.updateTextByRichTypeChanged(RichType.UNDER_LINE, open, null);
+        mWRichEditorScrollView.updateTextByRichTypeChanged(RichType.UNDER_LINE, open, null);
         setButtonTextColor(mBtnUnderLine, open);
     }
 
     private void onHeadLineClicked() {
-        Set<RichType> richTypes = mWRichEditorView.getRichTypes();
+        Set<RichType> richTypes = mWRichEditorScrollView.getRichTypes();
         boolean open = TypeUtil.toggleCertainRichType(richTypes, RichType.HEADLINE);
-        mWRichEditorView.updateTextByRichTypeChanged(RichType.HEADLINE, open, null);
+        mWRichEditorScrollView.updateTextByRichTypeChanged(RichType.HEADLINE, open, null);
         setButtonTextColor(mBtnHeadline, open);
     }
 
     // todo
     private void onInsertQuoteClicked() {
         Log.d("mmm", "onInsertQuoteClicked()");
-        Set<RichType> richTypes = mWRichEditorView.getRichTypes();
+        Set<RichType> richTypes = mWRichEditorScrollView.getRichTypes();
         boolean open = TypeUtil.toggleCertainRichType(richTypes, RichType.QUOTE);
-        mWRichEditorView.updateTextByRichTypeChanged(RichType.QUOTE, open, null);
+        mWRichEditorScrollView.updateTextByRichTypeChanged(RichType.QUOTE, open, null);
         setButtonTextColor(mBtnQuote, open);
     }
 
     private void onInsertLinkClicked() {
         setButtonTextColor(mBtnLink, true);
-        WRichEditor wRichEditor = mWRichEditorView.findCurrentOrRecentFocusedRichEditor();
+        WRichEditor wRichEditor = mWRichEditorScrollView.findCurrentOrRecentFocusedRichEditor();
         if (wRichEditor == null) {
             return;
         }
@@ -159,9 +159,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     return;
                 }
                 setButtonTextColor(mBtnLink, false);
-                Set<RichType> richTypes = mWRichEditorView.getRichTypes();
+                Set<RichType> richTypes = mWRichEditorScrollView.getRichTypes();
                 TypeUtil.removeCertainRichType(richTypes, RichType.LINK);
-                mWRichEditorView.updateTextByRichTypeChanged(RichType.LINK, true, null);
+                mWRichEditorScrollView.updateTextByRichTypeChanged(RichType.LINK, true, null);
                 setButtonTextColor(mBtnUnderLine, false);
             }
         });
@@ -179,14 +179,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         RichLineView richLineView = new RichLineView(MainActivity.this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER_HORIZONTAL;
-        mWRichEditorView.addRichCell(richLineView, lp);
+        mWRichEditorScrollView.addRichCell(richLineView, lp);
     }
 
     private void onInsertImageClicked() {
         RichImageView richImageView = new RichImageView(MainActivity.this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER_HORIZONTAL;
-        mWRichEditorView.addRichCell(richImageView, lp);
+        mWRichEditorScrollView.addRichCell(richImageView, lp);
     }
 
     @Override
@@ -219,14 +219,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void button2Clicked() {
         WRichEditor editText = new WRichEditor(MainActivity.this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        int size = mWRichEditorView.mRichCellViewList == null ? 0 : mWRichEditorView.mRichCellViewList.size();
+        int size = mWRichEditorScrollView.mRichCellViewList == null ? 0 : mWRichEditorScrollView.mRichCellViewList.size();
         editText.setHint("CELL : " + size);
         if (size % 2 == 0) {
             editText.setBackgroundColor(0x10222222);
         } else {
             editText.setBackgroundColor(0x18222222);
         }
-        mWRichEditorView.addRichCell(editText, lp);
+        mWRichEditorScrollView.addRichCell(editText, lp);
     }
 
     private void setButtonTextColor(ImageButton button, boolean open) {
