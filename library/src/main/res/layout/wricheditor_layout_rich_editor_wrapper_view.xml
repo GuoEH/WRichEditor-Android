@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/wricheditor_rich_editor_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:id="@+id/fl_left_container_in_wrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <!--  引用  -->
+        <ImageView
+            android:id="@+id/iv_in_wrapper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:visibility="gone" />
+
+        <!--  有序列表/无序列表  -->
+        <TextView
+            android:id="@+id/tv_in_wrapper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <cn.carbs.wricheditor.library.WRichEditor
+        android:id="@+id/w_rich_editor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/fl_left_container_in_wrapper"
+        android:background="@null" />
+
+</RelativeLayout>

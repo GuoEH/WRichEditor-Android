@@ -13,7 +13,7 @@ public interface IRichCellView {
 
     View getView();
 
-    void setWRichEditorView(WRichEditorScrollView wRichEditorScrollView);
+    void setWRichEditorScrollView(WRichEditorScrollView wRichEditorScrollView);
 
     void setCellData(IRichCellData cellData);
 

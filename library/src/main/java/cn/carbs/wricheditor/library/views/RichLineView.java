@@ -64,7 +64,7 @@ public class RichLineView extends RelativeLayout implements IRichCellView, View.
     }
 
     @Override
-    public void setWRichEditorView(WRichEditorScrollView wRichEditorScrollView) {
+    public void setWRichEditorScrollView(WRichEditorScrollView wRichEditorScrollView) {
         mWRichEditorScrollView = wRichEditorScrollView;
     }
 

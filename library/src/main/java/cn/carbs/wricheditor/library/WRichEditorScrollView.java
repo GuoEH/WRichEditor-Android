@@ -79,7 +79,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
             lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         }
         // 子View中添加此ScrollView的引用，方便操作其它数据
-        richCell.setWRichEditorView(this);
+        richCell.setWRichEditorScrollView(this);
         richCell.setEditorFocusChangedListener(this);
         mLinearLayout.addView(richCell.getView(), lp);
         mRichCellViewList.add(richCell);
@@ -111,44 +111,46 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
     public void updateTextByRichTypeChanged(RichType richType, boolean open, Object object) {
         StrategyUtil.sStrongSet = true;
         // 1. 找到焦点所在的EditView
-        WRichEditor focusedWRichEditor = findCurrentFocusedRichEditor();
-        if (focusedWRichEditor == null) {
+        WRichEditorWrapperView focusedWRichEditorWrapperView = findCurrentFocusedRichEditorWrapperView();
+        if (focusedWRichEditorWrapperView == null) {
             return;
         }
         // 2. 交给某个单元Cell去更新
-        focusedWRichEditor.updateTextByRichTypeChanged(richType, open, object);
+        focusedWRichEditorWrapperView.updateTextByRichTypeChanged(richType, open, object);
     }
 
-    public WRichEditor findCurrentFocusedRichEditor() {
-        WRichEditor focusedWRichEditor = null;
+    public WRichEditorWrapperView findCurrentFocusedRichEditorWrapperView() {
+        WRichEditorWrapperView focusedWRichEditorWrapperView = null;
         int cellViewSize = mRichCellViewList.size();
         for (int i = 0; i < cellViewSize; i++) {
             IRichCellView cellView = mRichCellViewList.get(i);
             if (cellView != null && cellView.getView() != null) {
                 if (cellView.getRichType() == RichType.NONE) {
                     // 具有 EditText 的 cell
-                    WRichEditor wRichEditor = ((WRichEditor) cellView.getView());
-                    Log.d("uuu", "updateTextByRichTypeChanged() i : " + i + "wRichEditor.hasFocus() ？ " + wRichEditor.hasFocus());
-                    if (wRichEditor.hasFocus()) {
-                        focusedWRichEditor = wRichEditor;
-                        break;
+                    WRichEditorWrapperView wRichEditorWrapperView = ((WRichEditorWrapperView) cellView.getView());
+//                    Log.d("uuu", "updateTextByRichTypeChanged() i : " + i + "wRichEditor.hasFocus() ？ " + wRichEditor.hasFocus());
+                    if (wRichEditorWrapperView != null && wRichEditorWrapperView.getWRichEditor() != null) {
+                        if (wRichEditorWrapperView.getWRichEditor().hasFocus()) {
+                            focusedWRichEditorWrapperView = wRichEditorWrapperView;
+                            break;
+                        }
                     }
                 } else {
 
                 }
             }
         }
-        return focusedWRichEditor;
+        return focusedWRichEditorWrapperView;
     }
 
-    public WRichEditor findCurrentOrRecentFocusedRichEditor() {
-        WRichEditor retWRichEditor = findCurrentFocusedRichEditor();
-        Log.d("xxx", "findCurrentFocusedRichEditor() null ? : " + (retWRichEditor == null));
-        if (retWRichEditor != null) {
-            return retWRichEditor;
+    public WRichEditorWrapperView findCurrentOrRecentFocusedRichEditorWrapperView() {
+        WRichEditorWrapperView retWRichEditorWrapperView = findCurrentFocusedRichEditorWrapperView();
+        Log.d("xxx", "findCurrentFocusedRichEditorWrapperView() null ? : " + (retWRichEditorWrapperView == null));
+        if (retWRichEditorWrapperView != null) {
+            return retWRichEditorWrapperView;
         }
-        if (mLastFocusedRichCellView instanceof WRichEditor) {
-            return (WRichEditor) mLastFocusedRichCellView;
+        if (mLastFocusedRichCellView instanceof WRichEditorWrapperView) {
+            return (WRichEditorWrapperView) mLastFocusedRichCellView;
         }
         return null;
     }

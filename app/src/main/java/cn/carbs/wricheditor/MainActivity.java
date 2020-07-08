@@ -23,6 +23,7 @@ import java.util.Set;
 
 import cn.carbs.wricheditor.library.WRichEditor;
 import cn.carbs.wricheditor.library.WRichEditorScrollView;
+import cn.carbs.wricheditor.library.WRichEditorWrapperView;
 import cn.carbs.wricheditor.library.callbacks.OnRichTypeChangedListener;
 import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.TypeUtil;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mWRichEditorScrollView = findViewById(R.id.wrich_editor_view);
         mWRichEditorScrollView.setOnRichTypeChangedListener(this);
 
-        mBtnAddEditor = findViewById(R.id.button_2);
+        mBtnAddEditor = findViewById(R.id.button_add_editor_text);
         mBtnAddEditor.setOnClickListener(this);
 
         mBtnBold = findViewById(R.id.button_bold);
@@ -131,7 +132,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void onInsertLinkClicked() {
         setButtonTextColor(mBtnLink, true);
-        WRichEditor wRichEditor = mWRichEditorScrollView.findCurrentOrRecentFocusedRichEditor();
+        WRichEditorWrapperView wRichEditorWrapperView = mWRichEditorScrollView.findCurrentOrRecentFocusedRichEditorWrapperView();
+        if (wRichEditorWrapperView == null) {
+            return;
+        }
+        WRichEditor wRichEditor = wRichEditorWrapperView.getWRichEditor();
         if (wRichEditor == null) {
             return;
         }
@@ -189,6 +194,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mWRichEditorScrollView.addRichCell(richImageView, lp);
     }
 
+    private void onAddEditorTextClicked() {
+        WRichEditorWrapperView editTextWrapperView = new WRichEditorWrapperView(MainActivity.this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        int size = mWRichEditorScrollView.mRichCellViewList == null ? 0 : mWRichEditorScrollView.mRichCellViewList.size();
+        editTextWrapperView.getWRichEditor().setHint("CELL : " + size);
+        if (size % 2 == 0) {
+            editTextWrapperView.setBackgroundColor(0x10222222);
+        } else {
+            editTextWrapperView.setBackgroundColor(0x18222222);
+        }
+        mWRichEditorScrollView.addRichCell(editTextWrapperView, lp);
+    }
+
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -211,22 +229,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             onInsertImageClicked();
         } else if (id == R.id.button_quote) {
             onInsertQuoteClicked();
-        } else if (id == R.id.button_2) {
-            button2Clicked();
+        } else if (id == R.id.button_add_editor_text) {
+            onAddEditorTextClicked();
         }
-    }
-
-    private void button2Clicked() {
-        WRichEditor editText = new WRichEditor(MainActivity.this);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        int size = mWRichEditorScrollView.mRichCellViewList == null ? 0 : mWRichEditorScrollView.mRichCellViewList.size();
-        editText.setHint("CELL : " + size);
-        if (size % 2 == 0) {
-            editText.setBackgroundColor(0x10222222);
-        } else {
-            editText.setBackgroundColor(0x18222222);
-        }
-        mWRichEditorScrollView.addRichCell(editText, lp);
     }
 
     private void setButtonTextColor(ImageButton button, boolean open) {

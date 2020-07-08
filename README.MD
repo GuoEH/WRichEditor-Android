@@ -82,6 +82,15 @@ line 等view 在删除时，需要merge一下，同时在别的editor获取焦�
 // TODO 引用、有序列表、无序列表，都采用插入一个 WRichEditor 的方式实现
 
 
+WRichEditor  需要设置背景为null
+
+
+github上的开源项目，均兼具 bug多+功能少 特点，无法达到商业级应用的水准
+
+
+// TODO
+添加线、图片时，自动在下面加一个edittext
+
 
 
 

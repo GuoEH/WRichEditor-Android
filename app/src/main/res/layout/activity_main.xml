@@ -128,7 +128,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button_2"
+                android:id="@+id/button_add_editor_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="添加 EditText"
