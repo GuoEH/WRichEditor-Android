@@ -8,7 +8,6 @@ import android.text.Spanned;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.EditText;
@@ -19,7 +18,6 @@ import java.util.Set;
 
 import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
 import cn.carbs.wricheditor.library.callbacks.OnRichTypeChangedListener;
-import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.interfaces.IRichSpan;
 import cn.carbs.wricheditor.library.models.RichAtomicData;
@@ -48,6 +46,8 @@ public class WRichEditor extends EditText {
 
     private WRichEditorWrapperView mWrapperView;
 
+    private boolean mTextChangeValid = true;
+
     public WRichEditor(Context context) {
         super(context);
     }
@@ -69,9 +69,15 @@ public class WRichEditor extends EditText {
     //    当选中其中两个文字，并将其替换为3个文字时， onTextChanged 的回调时 ： start : 2 lengthBefore : 2 lengthAfter : 3
 
 
+    // 注意，setSpan不会响应 onTextChanged
     @Override
     protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
         super.onTextChanged(text, start, lengthBefore, lengthAfter);
+
+        Log.d("qwer", "onTextChanged hint : " + getHint() + "  mTextChangeValid : " + mTextChangeValid);
+        if (!mTextChangeValid) {
+            return;
+        }
 
         if (mWRichEditorScrollView == null) {
             return;
@@ -305,6 +311,33 @@ public class WRichEditor extends EditText {
             }
 
         }
+    }
+
+    // 将某个区间的富文本取出，然后只保留这部分富文本
+    public void subSpannableStringInclusiveExclusive(int start, int end) {
+
+        Editable editable = getText();
+        IRichSpan[] spans = editable.getSpans(start, end, IRichSpan.class);
+
+        List<SpanPart> list = new ArrayList<>();
+        for (IRichSpan span : spans) {
+            list.add(new SpanPart(editable.getSpanStart(span), editable.getSpanEnd(span), span));
+            Log.d("qwer", "subSpannableStringInclusiveExclusive editable.removeSpan(span)");
+            editable.removeSpan(span);
+        }
+        // TODO
+        Log.d("qwer", "subSpannableStringInclusiveExclusive setText ");
+        mTextChangeValid = false;
+        setText(editable.subSequence(start, end).toString());
+        mTextChangeValid = true;
+        // 循环将格式赋给添加的这一段
+        for (SpanPart part : list) {
+            if (part.isValid()) {
+                Log.d("qwer", "subSpannableStringInclusiveExclusive setSpan  ");
+                getText().setSpan(part.getRichSpan(), part.getStart() - start, part.getEnd() - start, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            }
+        }
+
     }
 
     public void requestFocusAndPutCursorToTail() {

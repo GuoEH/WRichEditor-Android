@@ -158,16 +158,28 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                     // 2. 如果当前RichEditor中有一个或者多个换行符，则截取从换行符后的text，添加到新生成的Editor中
                     int lastIndexOfLineBreaker = editableStr.lastIndexOf(CharConstant.LINE_BREAK_CHAR);
                     if (lastIndexOfLineBreaker == editableStr.length() - 1) {
+                        // 当前最后一个字符为换行符，分裂时，需要把这个换行符去掉
                         Log.d("qwe", "lastIndexOfLineBreaker == editableStr.length() - 1");
                         // 最后一个，不带入SpanString
                         // 在后面新增一个 WRichEditorWrapperView，并将焦点至于其中
                         // 获取应该插入CellView的位置
                         Log.d("qwe", "focusedRichEditorWrapperViewIndex[0] : " + focusedRichEditorWrapperViewIndex[0]
                                 + " mLinearLayout.getChildCount() : " + mLinearLayout.getChildCount());
+                        // TODO    dddddddd
+//                        wRichEditor.getEditableText().delete(editableStr.length() - 1, 1);
+                        //
+
+                        wRichEditor.subSpannableStringInclusiveExclusive(0, editableStr.length() - 1);
+//                        wRichEditor.setText(editableStr.substring(0, editableStr.length() - 1));
+
                         if (focusedRichEditorWrapperViewIndex[0] == mLinearLayout.getChildCount() - 1) {
                             Log.d("qwe", "cell last one");
                             // 在队尾append
                             // TODO 这里要注意，队尾append后，还要再append一个normal的
+
+                            // todo
+                            // editableStr.substring(0, editableStr.length() - 1);
+
                             insertAWRichEditorWrapperWithRichType(-1, RichType.QUOTE, true);
                             // 在最后加一个无格式的
                             insertAWRichEditorWrapperWithRichType(-1, RichType.NONE, false);
