@@ -31,7 +31,7 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
 
     private WRichEditor mWRichEditor;
 
-    private RichType mRichType;
+    private RichType mRichType = RichType.NONE;
 
     private boolean mNeedRequestFocusWhenAdded;
 
@@ -123,7 +123,7 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
 
     @Override
     public RichType getRichType() {
-        return RichType.NONE;
+        return mRichType;
     }
 
     @Override

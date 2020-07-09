@@ -3,6 +3,7 @@ package cn.carbs.wricheditor.library.utils;
 import android.text.Editable;
 import android.text.Spanned;
 import android.util.Log;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -131,7 +132,34 @@ public class SpanUtil {
         return cellViewA.getClass().getName().equals(cellViewB.getClass().getName());
     }
 
+    // 将某个区间的富文本取出，然后只保留这部分富文本
+    public static String getSpannableStringInclusiveExclusive(Editable editable, int start, int end, List<SpanPart> spanPartsOutput) {
 
+        IRichSpan[] spans = editable.getSpans(start, end, IRichSpan.class);
+
+        for (IRichSpan span : spans) {
+            spanPartsOutput.add(new SpanPart(editable.getSpanStart(span), editable.getSpanEnd(span), span));
+            // TODO
+//            editable.removeSpan(span);
+        }
+
+        return editable.subSequence(start, end).toString();
+    }
+
+    public static void setSpannableInclusiveExclusive(EditText editText, String textWithoutFormat, List<SpanPart> spanParts, boolean fromZero) {
+        editText.setText(textWithoutFormat);
+        // 循环将格式赋给添加的这一段
+        for (SpanPart part : spanParts) {
+            if (part.isValid()) {
+                if (fromZero) {
+                    editText.getText().setSpan(part.getRichSpan(), 0, part.getEnd() - part.getStart(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                } else {
+                    editText.getText().setSpan(part.getRichSpan(), part.getStart(), part.getEnd(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                }
+            }
+        }
+
+    }
 
 
 }

@@ -158,10 +158,6 @@ public class WRichEditor extends EditText {
         return super.onKeyUp(keyCode, event);
     }
 
-    public void setWRichEditorWrapperView(WRichEditorWrapperView wrapperView) {
-        mWrapperView = wrapperView;
-    }
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
@@ -209,6 +205,11 @@ public class WRichEditor extends EditText {
 
         return super.onKeyDown(keyCode, event);
     }
+
+    public void setWRichEditorWrapperView(WRichEditorWrapperView wrapperView) {
+        mWrapperView = wrapperView;
+    }
+
 
     public void setWRichEditorScrollView(WRichEditorScrollView wRichEditorScrollView) {
         mWRichEditorScrollView = wRichEditorScrollView;
@@ -313,6 +314,7 @@ public class WRichEditor extends EditText {
         }
     }
 
+    // TODO 可以删除这个方法，用SpanUtil中的方法代替
     // 将某个区间的富文本取出，然后只保留这部分富文本
     public void subSpannableStringInclusiveExclusive(int start, int end) {
 
