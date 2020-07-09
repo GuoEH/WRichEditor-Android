@@ -226,14 +226,13 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                             if (editableStr.endsWith(CharConstant.LINE_BREAK_STRING)) {
                                 Log.d("yyy", "1112");
                                 String textWithoutFormat0 = SpanUtil.getSpannableStringInclusiveExclusive(editableText, 0, quoteEnd - 1, spanPartsOutput0);
-                                String textWithoutFormat1 = SpanUtil.getSpannableStringInclusiveExclusive(editableText, quoteEnd, editableText.length(), spanPartsOutput1);
-
+//                                String textWithoutFormat1 = SpanUtil.getSpannableStringInclusiveExclusive(editableText, quoteEnd, editableText.length(), spanPartsOutput1);
+//                                Log.d("yyy", "1112  textWithoutFormat1 length() : " + textWithoutFormat1.length());
                                 SpanUtil.setSpannableInclusiveExclusive(focusedWRichEditor, textWithoutFormat0, spanPartsOutput0, false);
                                 focusedWRichEditorWrapperView.toggleQuoteMode(open, false);
 
                                 // 添加一个WRichEditorWrapperView
-                                WRichEditorWrapperView insertedWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 1, RichType.NONE, false);
-                                SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView.getWRichEditor(), textWithoutFormat1, spanPartsOutput1, true);
+                                insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 1, RichType.NONE, false);
                             } else {
                                 Log.d("yyy", "1113");
                                 focusedWRichEditorWrapperView.toggleQuoteMode(open, false);
