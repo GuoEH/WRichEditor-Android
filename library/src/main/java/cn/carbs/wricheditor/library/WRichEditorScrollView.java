@@ -251,7 +251,6 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                             // H   I   J   K   L   M   N   ('/n')
                             // 从起始0到quoteEnd，作为 focusedWRichEditor 的值，并置为quote状态
 
-                            Log.d("sss", "ddddddd");
                             Editable editableText = focusedWRichEditor.getText();
                             List<SpanPart> spanPartsOutput0 = new ArrayList<>(32);
                             List<SpanPart> spanPartsOutput1 = new ArrayList<>(32);
@@ -274,8 +273,6 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                             // 不选中
                             // A   B   C   D   E   F   G   '/n'
                             // H   I   J | K   L   M   N   ('/n')
-                            // 或者
-                            // A   B   C   D   E   F   G   '/n' |
 
                             // 选中
                             // A   B   C   D   E   F   G   '/n'
@@ -305,7 +302,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                                 String textWithoutFormat1 = SpanUtil.getSpannableStringInclusiveExclusive(editableText, quoteStart, editableText.length(), spanPartsOutput1);
                                 // 添加一个WRichEditorWrapperView
                                 WRichEditorWrapperView insertedWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 1, RichType.QUOTE, true);
-                                SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView.getWRichEditor(), textWithoutFormat1, spanPartsOutput1, true);
+                                SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView.getWRichEditor(), textWithoutFormat1, spanPartsOutput1, -quoteStart);
                                 if (needAddWRichEditor(focusedRichEditorWrapperViewIndex[0] + 1)) {
                                     insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 2, RichType.NONE, false);
                                 }
@@ -336,38 +333,8 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
 
                             WRichEditorWrapperView insertedWrapperView2 = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 2, RichType.NONE, false);
                             SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView2.getWRichEditor(), textWithoutFormat2, spanPartsOutput2, true);
-
                         }
                     }
-
-                    /*int lastIndexOfLineBreaker = editableStr.lastIndexOf(CharConstant.LINE_BREAK_CHAR);
-                    // 光标在最后
-                    if (lastIndexOfLineBreaker == editableStr.length() - 1) {
-                        // 当前最后一个字符为换行符，分裂时，需要把这个换行符去掉
-                        // 在后面新增一个 WRichEditorWrapperView，并将焦点至于其中
-                        // 获取应该插入CellView的位置
-                        Log.d("qwe", "focusedRichEditorWrapperViewIndex[0] : " + focusedRichEditorWrapperViewIndex[0]
-                                + " mLinearLayout.getChildCount() : " + mLinearLayout.getChildCount());
-
-                        focusedWRichEditor.subSpannableStringInclusiveExclusive(0, editableStr.length() - 1);
-
-                        if (focusedRichEditorWrapperViewIndex[0] == mLinearLayout.getChildCount() - 1) {
-                            Log.d("qwe", "cell last one");
-                            // 在队尾append
-                            // 队尾append后，还要再append一个normal的
-                            insertAWRichEditorWrapperWithRichType(-1, RichType.QUOTE, true);
-                            // 在最后加一个无格式的
-                            insertAWRichEditorWrapperWithRichType(-1, RichType.NONE, false);
-                        } else {
-                            // todo 待验证是否有越界问题
-                            insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 1, RichType.QUOTE, true);
-                        }
-                    } else {
-                        // 换行符后面还有SpanString
-                        // 将最后这部分SpanString带入新插入的Editor中
-
-                    }*/
-
                 }
             } else {
 

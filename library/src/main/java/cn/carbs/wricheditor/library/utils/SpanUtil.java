@@ -146,6 +146,7 @@ public class SpanUtil {
         return editable.subSequence(start, end).toString();
     }
 
+    // TODO bug 这个方法有bug，以后弃用
     public static void setSpannableInclusiveExclusive(EditText editText, String textWithoutFormat, List<SpanPart> spanParts, boolean fromZero) {
         editText.setText(textWithoutFormat);
         // 循环将格式赋给添加的这一段
@@ -158,8 +159,18 @@ public class SpanUtil {
                 }
             }
         }
-
     }
 
+    //
+    public static void setSpannableInclusiveExclusive(EditText editText, String textWithoutFormat, List<SpanPart> spanParts, int offset) {
+        editText.setText(textWithoutFormat);
+        // 循环将格式赋给添加的这一段
+        for (SpanPart part : spanParts) {
+            if (part.isValid()) {
+                editText.getText().setSpan(part.getRichSpan(), part.getStart() + offset, part.getEnd() + offset, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            }
+        }
+
+    }
 
 }
