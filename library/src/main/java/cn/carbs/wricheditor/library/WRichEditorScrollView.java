@@ -183,12 +183,11 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                         quoteStart = lastIndexOfEnterAmongLeftStr + 1;
                     }
                     // 找到从光标位置到后面的换行符（没有换行符则到位置最后）
-                    // todo BUG 这里有问题，应该加上左边的
-                    int firstIndexOfEnterAmongRightStr = cursorLeftStr.length() + cursorRightStr.indexOf(CharConstant.LINE_BREAK_CHAR);
+                    int firstIndexOfEnterAmongRightStr = cursorRightStr.indexOf(CharConstant.LINE_BREAK_CHAR);
                     if (firstIndexOfEnterAmongRightStr == -1) {
                         quoteEnd = editableStr.length();
                     } else {
-                        quoteEnd = firstIndexOfEnterAmongRightStr + 1;
+                        quoteEnd = cursorEnd + firstIndexOfEnterAmongRightStr + 1;
                     }
 
                     int currentEditableLength = editableStr.length();
@@ -218,7 +217,6 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                             // A   B   C   D   E | F   G   '/n'
                             // H   I   J   K   L | M   N   ('/n')
                             // 如果光标不在队尾
-                            // TODO 和下面的 else 好像一样
                             Editable editableText = focusedWRichEditor.getText();
                             List<SpanPart> spanPartsOutput0 = new ArrayList<>(32);
                             List<SpanPart> spanPartsOutput1 = new ArrayList<>(32);
