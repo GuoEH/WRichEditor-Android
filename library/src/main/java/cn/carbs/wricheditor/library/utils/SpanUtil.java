@@ -147,7 +147,7 @@ public class SpanUtil {
     }
 
     // TODO bug 这个方法有bug，以后弃用
-    public static void setSpannableInclusiveExclusive(EditText editText, String textWithoutFormat, List<SpanPart> spanParts, boolean fromZero) {
+    /*public static void setSpannableInclusiveExclusive(EditText editText, String textWithoutFormat, List<SpanPart> spanParts, boolean fromZero) {
         editText.setText(textWithoutFormat);
         // 循环将格式赋给添加的这一段
         for (SpanPart part : spanParts) {
@@ -159,7 +159,7 @@ public class SpanUtil {
                 }
             }
         }
-    }
+    }*/
 
     //
     public static void setSpannableInclusiveExclusive(EditText editText, String textWithoutFormat, List<SpanPart> spanParts, int offset) {

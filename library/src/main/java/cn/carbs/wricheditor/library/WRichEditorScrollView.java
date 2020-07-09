@@ -202,7 +202,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                             Editable editableText = focusedWRichEditor.getText();
                             List<SpanPart> spanPartsOutput0 = new ArrayList<>(32);
                             String textWithoutFormat0 = SpanUtil.getSpannableStringInclusiveExclusive(editableText, 0, currentEditableLength - 1, spanPartsOutput0);
-                            SpanUtil.setSpannableInclusiveExclusive(focusedWRichEditor, textWithoutFormat0, spanPartsOutput0, false);
+                            SpanUtil.setSpannableInclusiveExclusive(focusedWRichEditor, textWithoutFormat0, spanPartsOutput0, 0);
                             insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 1, RichType.QUOTE, true);
                         } else {
                             // 此种情况不存在
@@ -226,7 +226,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                                 String textWithoutFormat0 = SpanUtil.getSpannableStringInclusiveExclusive(editableText, 0, quoteEnd - 1, spanPartsOutput0);
 //                                String textWithoutFormat1 = SpanUtil.getSpannableStringInclusiveExclusive(editableText, quoteEnd, editableText.length(), spanPartsOutput1);
 //                                Log.d("yyy", "1112  textWithoutFormat1 length() : " + textWithoutFormat1.length());
-                                SpanUtil.setSpannableInclusiveExclusive(focusedWRichEditor, textWithoutFormat0, spanPartsOutput0, false);
+                                SpanUtil.setSpannableInclusiveExclusive(focusedWRichEditor, textWithoutFormat0, spanPartsOutput0, 0);
                                 focusedWRichEditorWrapperView.toggleQuoteMode(open, false);
 
                                 // 添加一个WRichEditorWrapperView
@@ -258,12 +258,12 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                             String textWithoutFormat0 = SpanUtil.getSpannableStringInclusiveExclusive(editableText, 0, quoteEnd - 1, spanPartsOutput0);
                             String textWithoutFormat1 = SpanUtil.getSpannableStringInclusiveExclusive(editableText, quoteEnd, editableText.length(), spanPartsOutput1);
 
-                            SpanUtil.setSpannableInclusiveExclusive(focusedWRichEditor, textWithoutFormat0, spanPartsOutput0, false);
+                            SpanUtil.setSpannableInclusiveExclusive(focusedWRichEditor, textWithoutFormat0, spanPartsOutput0, 0);
                             focusedWRichEditorWrapperView.toggleQuoteMode(open, false);
 
                             // 添加一个WRichEditorWrapperView
                             WRichEditorWrapperView insertedWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 1, RichType.NONE, false);
-                            SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView.getWRichEditor(), textWithoutFormat1, spanPartsOutput1, true);
+                            SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView.getWRichEditor(), textWithoutFormat1, spanPartsOutput1, -quoteEnd);
 
                             // 从 quoteEnd 到 length，作为新insert一个editor
                         }
@@ -286,14 +286,14 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                             // TODO 这里的quoteEnd应该要减一，因为末尾不应该留着 Enter
 
                             String textWithoutFormat0 = SpanUtil.getSpannableStringInclusiveExclusive(editableText, 0, quoteStart - 1, spanPartsOutput0);
-                            SpanUtil.setSpannableInclusiveExclusive(focusedWRichEditor, textWithoutFormat0, spanPartsOutput0, false);
+                            SpanUtil.setSpannableInclusiveExclusive(focusedWRichEditor, textWithoutFormat0, spanPartsOutput0, 0);
 
                             if (editableStr.endsWith(CharConstant.LINE_BREAK_STRING)) {
                                 Log.d("yyy", "3331");
                                 String textWithoutFormat1 = SpanUtil.getSpannableStringInclusiveExclusive(editableText, quoteStart, editableText.length() - 1, spanPartsOutput1);
                                 // 添加一个WRichEditorWrapperView
                                 WRichEditorWrapperView insertedWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 1, RichType.QUOTE, true);
-                                SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView.getWRichEditor(), textWithoutFormat1, spanPartsOutput1, true);
+                                SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView.getWRichEditor(), textWithoutFormat1, spanPartsOutput1, -quoteStart);
                                 if (needAddWRichEditor(focusedRichEditorWrapperViewIndex[0] + 1)) {
                                     insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 2, RichType.NONE, false);
                                 }
@@ -326,13 +326,13 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                             String textWithoutFormat1 = SpanUtil.getSpannableStringInclusiveExclusive(editableText, quoteStart, quoteEnd - 1, spanPartsOutput1);
                             String textWithoutFormat2 = SpanUtil.getSpannableStringInclusiveExclusive(editableText, quoteEnd, editableText.length(), spanPartsOutput2);
 
-                            SpanUtil.setSpannableInclusiveExclusive(focusedWRichEditor, textWithoutFormat0, spanPartsOutput0, false);
+                            SpanUtil.setSpannableInclusiveExclusive(focusedWRichEditor, textWithoutFormat0, spanPartsOutput0, 0);
 
                             WRichEditorWrapperView insertedWrapperView1 = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 1, RichType.QUOTE, true);
-                            SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView1.getWRichEditor(), textWithoutFormat1, spanPartsOutput1, true);
+                            SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView1.getWRichEditor(), textWithoutFormat1, spanPartsOutput1, -quoteStart);
 
                             WRichEditorWrapperView insertedWrapperView2 = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 2, RichType.NONE, false);
-                            SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView2.getWRichEditor(), textWithoutFormat2, spanPartsOutput2, true);
+                            SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView2.getWRichEditor(), textWithoutFormat2, spanPartsOutput2, -quoteEnd);
                         }
                     }
                 }
