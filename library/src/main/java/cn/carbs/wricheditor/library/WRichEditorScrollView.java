@@ -635,11 +635,13 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                             String[] splitStringByEnter = selectedStr.split(CharConstant.LINE_BREAK_STRING);
                             int splitLength = splitStringByEnter.length;
                             ArrayList<SplitPart> splitParts = new ArrayList<>(splitLength);
+                            Log.d("zzz", "111 splitLength : " + splitLength);
 
                             int splitItemStart = 0;
                             for (int i = 0; i < splitLength; i++) {
+                                Log.d("zzz", "111 splitParts add : " + splitStringByEnter[i] + "  start : " + splitItemStart);
                                 splitParts.add(new SplitPart(splitStringByEnter[i], splitItemStart));
-                                splitItemStart = splitItemStart + splitStringByEnter.length + 1; // split 后，去掉了
+                                splitItemStart = splitItemStart + splitStringByEnter[i].length() + 1; // split 后，去掉了
                             }
 
                             for (int i = 0; i < splitLength; i++) {
@@ -688,7 +690,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                             int splitItemStart = 0;
                             for (int i = 0; i < splitLength; i++) {
                                 splitParts.add(new SplitPart(splitStringByEnter[i], splitItemStart));
-                                splitItemStart = splitItemStart + splitStringByEnter.length + 1; // split 后，去掉了
+                                splitItemStart = splitItemStart + splitStringByEnter[i].length() + 1; // split 后，去掉了
                             }
 
                             for (int i = 0; i < splitLength; i++) {
@@ -751,7 +753,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                             int splitItemStart = quoteStart;
                             for (int i = 0; i < splitLength; i++) {
                                 splitParts.add(new SplitPart(splitStringByEnter[i], splitItemStart));
-                                splitItemStart = splitItemStart + splitStringByEnter.length + 1; // split 后，去掉了
+                                splitItemStart = splitItemStart + splitStringByEnter[i].length() + 1; // split 后，去掉了
                             }
 
                             for (int i = 0; i < splitLength; i++) {
@@ -790,6 +792,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                             // 第一部分
                             String textWithoutFormatUnselectedStrBefore = SpanUtil.getSpannableStringInclusiveExclusive(editable, 0, quoteStart - 1, spanPartsOutput);
                             // TODO 前面的文字添加
+                            Log.d("ooo", "textWithoutFormatUnselectedStrBefore : " + textWithoutFormatUnselectedStrBefore);
                             SpanUtil.setSpannableInclusiveExclusive(focusedWRichEditor, textWithoutFormatUnselectedStrBefore, spanPartsOutput, 0);
                             // TODO 别的地方还没有添加
                             focusedWRichEditorWrapperView.toggleUnOrderListMode(false, false);
@@ -800,23 +803,27 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                             int splitLength = splitStringByEnter.length;
                             ArrayList<SplitPart> splitParts = new ArrayList<>(splitLength);
                             int splitItemStart = quoteStart;
+                            Log.d("ooo", "splitParts quoteStart : " + quoteStart + " quoteEnd : " + quoteEnd);
                             for (int i = 0; i < splitLength; i++) {
                                 splitParts.add(new SplitPart(splitStringByEnter[i], splitItemStart));
-                                splitItemStart = splitItemStart + splitStringByEnter.length + 1; // split 后，去掉了
+                                Log.d("ooo", "splitParts add : " + splitStringByEnter[i] + " splitItemStart : " + splitItemStart);
+                                splitItemStart = splitItemStart + splitStringByEnter[i].length() + 1; // split 后，去掉了
                             }
 
                             for (int i = 0; i < splitLength; i++) {
                                 SplitPart itemSplit = splitParts.get(i);
                                 spanPartsOutput.clear();
+                                Log.d("ooo", "---> i : " + i + " splitLength : " + splitLength + " itemSplit text : "
+                                        + itemSplit.getText() + " itemSplit.start() : " + itemSplit.getStart() + " itemSplit.end() : " + itemSplit.getEnd());
                                 String textWithoutFormatItem = SpanUtil.getSpannableStringInclusiveExclusive(editable, itemSplit.getStart(), itemSplit.getEnd(), spanPartsOutput);
-                                WRichEditorWrapperView wRichEditorWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + i, RichType.LIST_UNORDERED, false);
+                                WRichEditorWrapperView wRichEditorWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + i + 1, RichType.LIST_UNORDERED, false);
                                 SpanUtil.setSpannableInclusiveExclusive(wRichEditorWrapperView.getWRichEditor(), textWithoutFormatItem, spanPartsOutput, -itemSplit.getStart());
                             }
 
                             // 第三部分
                             spanPartsOutput.clear();
                             String textWithoutFormat = SpanUtil.getSpannableStringInclusiveExclusive(editable, quoteEnd, editableStr.length(), spanPartsOutput);
-                            WRichEditorWrapperView insertedWrapperViewForThirdPart = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + splitLength, RichType.NONE, false);
+                            WRichEditorWrapperView insertedWrapperViewForThirdPart = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + splitLength + 1, RichType.NONE, false);
                             SpanUtil.setSpannableInclusiveExclusive(insertedWrapperViewForThirdPart.getWRichEditor(), textWithoutFormat, spanPartsOutput, -quoteEnd);
                         }
                     }
