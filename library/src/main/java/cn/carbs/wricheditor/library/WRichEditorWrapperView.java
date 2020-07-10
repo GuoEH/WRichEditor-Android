@@ -255,8 +255,7 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
                 return;
             }
             if (mIVForQuoteOrUnorderList != null) {
-                mIVForQuoteOrUnorderList.setImageResource(R.drawable.ic_list_unorder_icon);
-                mIVForQuoteOrUnorderList.setVisibility(View.VISIBLE);
+                mIVForQuoteOrUnorderList.setVisibility(View.GONE);
             }
         }
     }

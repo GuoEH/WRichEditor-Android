@@ -127,9 +127,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setButtonTextColor(mBtnHeadline, open);
     }
 
-    // todo
     private void onInsertQuoteClicked() {
-        Log.d("mmm", "onInsertQuoteClicked()");
         Set<RichType> richTypes = mWRichEditorScrollView.getRichTypes();
         boolean open = TypeUtil.toggleCertainRichType(richTypes, RichType.QUOTE);
         mWRichEditorScrollView.updateTextByRichTypeChanged(RichType.QUOTE, open, null);
@@ -206,7 +204,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void onListUnorderedClicked() {
-
+        Set<RichType> richTypes = mWRichEditorScrollView.getRichTypes();
+        boolean open = TypeUtil.toggleCertainRichType(richTypes, RichType.LIST_UNORDERED);
+        mWRichEditorScrollView.updateTextByRichTypeChanged(RichType.LIST_UNORDERED, open, null);
+        setButtonTextColor(mBtnListUnordered, open);
     }
 
     private void onAddEditorTextClicked() {

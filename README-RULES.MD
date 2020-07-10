@@ -7,3 +7,4 @@ LIST_UNORDERED:
     无序列表处理法则：
         1. 如果单选中一行，则将这一行作为无序列表
         2. 如果选中多行，则将这其中的每一行都作为无序列表
+        3. 处于 unordered_list 模式下，如果输入了enter符号，则新增一个 unordered_list，同时将焦点至于新增edit中

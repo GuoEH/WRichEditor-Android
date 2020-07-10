@@ -154,6 +154,16 @@ public class WRichEditor extends EditText {
                     }
                 }
             }
+            if (mWRichEditorScrollView != null && mWrapperView != null) {
+                RichType richType = mWrapperView.getRichType();
+                if (richType == RichType.LIST_UNORDERED) {
+                    // 如果是无序列表
+                    mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(mWrapperView, RichType.LIST_UNORDERED, true);
+                } else if (richType == RichType.LIST_ORDERED) {
+                    // TODO
+                }
+            }
+
         }
         return super.onKeyUp(keyCode, event);
     }

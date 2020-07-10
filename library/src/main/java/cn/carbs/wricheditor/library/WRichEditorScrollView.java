@@ -21,6 +21,7 @@ import cn.carbs.wricheditor.library.configures.RichEditorConfig;
 import cn.carbs.wricheditor.library.constants.CharConstant;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.models.SpanPart;
+import cn.carbs.wricheditor.library.models.SplitPart;
 import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.SpanUtil;
 import cn.carbs.wricheditor.library.utils.StrategyUtil;
@@ -544,11 +545,296 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
 //            focusedWRichEditorWrapperView.updateTextByRichTypeChanged(richType, open, object);
         } else if (richType == RichType.LIST_UNORDERED) {
             // 如果是无序列表
+
+            Log.d("zzz", "richType == RichType.LIST_UNORDERED");
+            // 如果是 "LIST_UNORDERED" 类型，则：
+            WRichEditor focusedWRichEditor = focusedWRichEditorWrapperView.getWRichEditor();
+            if (focusedWRichEditor == null) {
+                Log.d("zzz", "richType == RichType.LIST_UNORDERED  1");
+                return;
+            }
+            Editable editable = focusedWRichEditor.getEditableText();
+            String editableStr = editable.toString();
+            if (open) {
+                // 如果是 "开启" LIST_UNORDERED 动作
+                if(focusedWRichEditorWrapperView.getRichType() == RichType.LIST_UNORDERED) {
+                    // 如果已经处于 LIST_UNORDERED 状态，则直接返回
+                    return;
+                }
+
+                if (!editableStr.contains(CharConstant.LINE_BREAK_STRING)) {
+                    // 1. 判断当前RichEditor中有几个换行符，如果有0个，则不"分裂"，直接将这个Editor的左侧drawable做变换
+                    focusedWRichEditorWrapperView.toggleUnOrderListMode(true, false);
+                } else {
+
+                    // 2. 如果当前RichEditor中有一个或者多个换行符
+                    // 根据select的起点和终点，判断所处的行，并将这N行作为N个引用
+                    int cursorStart = focusedWRichEditor.getSelectionStart();
+                    int cursorEnd = focusedWRichEditor.getSelectionEnd();
+
+                    int quoteStart = 0;
+                    int quoteEnd = 0;
+
+                    // 没有选中任何文字：
+                    String cursorLeftStr = editableStr.substring(0, cursorStart);
+                    String cursorRightStr = editableStr.substring(cursorEnd);
+                    Log.d("zzz", "cursorLeftStr -->" + cursorLeftStr + "<--");
+                    Log.d("zzz", "cursorRightStr -->" + cursorRightStr + "<--");
+                    // 找到从光标位置到前面的换行符（没有换行符则到位置0）
+                    int lastIndexOfEnterAmongLeftStr = cursorLeftStr.lastIndexOf(CharConstant.LINE_BREAK_CHAR);
+                    // 这几个位置需要测试一下
+                    if (lastIndexOfEnterAmongLeftStr == -1) {
+                        quoteStart = 0;
+                    } else {
+                        quoteStart = lastIndexOfEnterAmongLeftStr + 1;
+                    }
+                    // 找到从光标位置到后面的换行符（没有换行符则到位置最后）
+                    int firstIndexOfEnterAmongRightStr = cursorRightStr.indexOf(CharConstant.LINE_BREAK_CHAR);
+                    if (firstIndexOfEnterAmongRightStr == -1) {
+                        quoteEnd = editableStr.length();
+                    } else {
+                        quoteEnd = cursorEnd + firstIndexOfEnterAmongRightStr + 1;
+                    }
+
+                    int currentEditableLength = editableStr.length();
+
+                    Log.d("zzz", "cursorStart : " + cursorStart + "  cursorEnd : " + cursorEnd);
+                    Log.d("zzz", "quoteStart : " + quoteStart + "  quoteEnd : " + quoteEnd);
+                    Log.d("zzz", "currentEditableLength : " + currentEditableLength);
+
+                    if (quoteStart == currentEditableLength && quoteEnd == currentEditableLength) {
+                        // 如果在最后
+                        if (editableStr.endsWith(CharConstant.LINE_BREAK_STRING)) {
+                            Editable editableText = focusedWRichEditor.getText();
+                            List<SpanPart> spanPartsOutput = new ArrayList<>(32);
+                            String textWithoutFormat0 = SpanUtil.getSpannableStringInclusiveExclusive(editableText, 0, currentEditableLength - 1, spanPartsOutput);
+                            SpanUtil.setSpannableInclusiveExclusive(focusedWRichEditor, textWithoutFormat0, spanPartsOutput, 0);
+                            insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 1, RichType.LIST_UNORDERED, true);
+                        } else {
+                            // 此种情况不存在
+                        }
+                    } else if (quoteStart == 0) {
+                        // 四种情况
+                        if (quoteEnd == currentEditableLength) {
+                            Log.d("zzz", "111");
+                            // 不选中时
+                            // A   B   C   D   E | F   G   '/n'
+                            // 选中时
+                            // A   B   C   D   E | F   G   '/n'
+                            // H   I   J   K   L | M   N   ('/n')
+                            // 如果光标不在队尾
+                            List<SpanPart> spanPartsOutput = new ArrayList<>(32);
+
+                            String selectedStr = null;
+
+                            if (editableStr.endsWith(CharConstant.LINE_BREAK_STRING)) {
+                                selectedStr = editableStr.substring(0, quoteEnd - 1);
+                            } else {
+                                selectedStr = editableStr.substring(0, quoteEnd);
+                            }
+                            String[] splitStringByEnter = selectedStr.split(CharConstant.LINE_BREAK_STRING);
+                            int splitLength = splitStringByEnter.length;
+                            ArrayList<SplitPart> splitParts = new ArrayList<>(splitLength);
+
+                            int splitItemStart = 0;
+                            for (int i = 0; i < splitLength; i++) {
+                                splitParts.add(new SplitPart(splitStringByEnter[i], splitItemStart));
+                                splitItemStart = splitItemStart + splitStringByEnter.length + 1; // split 后，去掉了
+                            }
+
+                            for (int i = 0; i < splitLength; i++) {
+                                SplitPart itemSplit = splitParts.get(i);
+                                spanPartsOutput.clear();
+                                String textWithoutFormat = SpanUtil.getSpannableStringInclusiveExclusive(editable, itemSplit.getStart(), itemSplit.getEnd(), spanPartsOutput);
+
+                                if (i == 0) {
+                                    SpanUtil.setSpannableInclusiveExclusive(focusedWRichEditor, textWithoutFormat, spanPartsOutput, 0);
+                                    focusedWRichEditorWrapperView.toggleUnOrderListMode(true, false);
+                                } else {
+                                    WRichEditorWrapperView wRichEditorWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + i, RichType.LIST_UNORDERED, false);
+                                    SpanUtil.setSpannableInclusiveExclusive(wRichEditorWrapperView.getWRichEditor(), textWithoutFormat, spanPartsOutput, -itemSplit.getStart());
+                                }
+                            }
+
+                            if (editableStr.endsWith(CharConstant.LINE_BREAK_STRING)) {
+                                Log.d("zzz", "1112");
+                                insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + splitLength, RichType.NONE, false);
+                            } else {
+                                Log.d("zzz", "1113");
+                                // TODO need test
+                                if (needAddWRichEditor(focusedRichEditorWrapperViewIndex[0] + splitLength - 1)) {
+                                    // 添加一个WRichEditorWrapperView
+                                    insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + splitLength, RichType.NONE, false);
+                                }
+//                                WRichEditorWrapperView insertedWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 1, RichType.NONE, false);
+                            }
+                        } else {
+                            Log.d("zzz", "222");
+                            // 不选中
+                            // A   B   C   D   E | F   G   '/n'
+                            // H   I   J   K   L   M   N   ('/n')
+                            // 选中
+                            // A   B   C | D   E | F   G   '/n'
+                            // H   I   J   K   L   M   N   ('/n')
+                            // 从起始0到quoteEnd，作为 focusedWRichEditor 的值，并置为quote状态
+
+                            List<SpanPart> spanPartsOutput = new ArrayList<>(32);
+                            String selectedStr = editableStr.substring(0, quoteEnd - 1);
+
+                            String[] splitStringByEnter = selectedStr.split(CharConstant.LINE_BREAK_STRING);
+                            int splitLength = splitStringByEnter.length;
+                            ArrayList<SplitPart> splitParts = new ArrayList<>(splitLength);
+
+                            int splitItemStart = 0;
+                            for (int i = 0; i < splitLength; i++) {
+                                splitParts.add(new SplitPart(splitStringByEnter[i], splitItemStart));
+                                splitItemStart = splitItemStart + splitStringByEnter.length + 1; // split 后，去掉了
+                            }
+
+                            for (int i = 0; i < splitLength; i++) {
+                                SplitPart itemSplit = splitParts.get(i);
+                                spanPartsOutput.clear();
+                                String textWithoutFormat = SpanUtil.getSpannableStringInclusiveExclusive(editable, itemSplit.getStart(), itemSplit.getEnd(), spanPartsOutput);
+
+                                if (i == 0) {
+                                    SpanUtil.setSpannableInclusiveExclusive(focusedWRichEditor, textWithoutFormat, spanPartsOutput, 0);
+                                    focusedWRichEditorWrapperView.toggleUnOrderListMode(true, false);
+                                } else {
+                                    WRichEditorWrapperView wRichEditorWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + i, RichType.LIST_UNORDERED, false);
+                                    SpanUtil.setSpannableInclusiveExclusive(wRichEditorWrapperView.getWRichEditor(), textWithoutFormat, spanPartsOutput, -itemSplit.getStart());
+                                }
+                            }
+
+                            spanPartsOutput.clear();
+                            // TODO
+                            String textWithoutFormat = SpanUtil.getSpannableStringInclusiveExclusive(editable, quoteEnd, editable.length(), spanPartsOutput);
+//                            SpanUtil.setSpannableInclusiveExclusive(focusedWRichEditor, textWithoutFormat, spanPartsOutput, -quoteEnd);
+//                            focusedWRichEditorWrapperView.toggleQuoteMode(true, false);
+                            // 添加一个WRichEditorWrapperView
+                            WRichEditorWrapperView insertedWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + splitLength, RichType.NONE, false);
+                            SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView.getWRichEditor(), textWithoutFormat, spanPartsOutput, -quoteEnd);
+                        }
+                    } else {
+                        if (quoteEnd == editableStr.length()) {
+                            Log.d("zzz", "333");
+                            // 不选中
+                            // A   B   C   D   E   F   G   '/n'
+                            // H   I   J | K   L   M   N   ('/n')
+
+                            // 选中
+                            // A   B   C   D   E   F   G   '/n'
+                            // H   I   J | K   L   M   N   '/n'
+                            // O   P   Q   R   S | T   U   ('/n')
+                            // 光标前面有Enter，后面没有
+
+                            List<SpanPart> spanPartsOutput = new ArrayList<>(32);
+
+                            String selectedStr = null;
+
+
+                            if (editableStr.endsWith(CharConstant.LINE_BREAK_STRING)) {
+                                selectedStr = editableStr.substring(quoteStart, quoteEnd - 1);
+                            } else {
+                                selectedStr = editableStr.substring(quoteStart, quoteEnd);
+                            }
+                            String textWithoutFormat = SpanUtil.getSpannableStringInclusiveExclusive(editable, 0, quoteStart - 1, spanPartsOutput);
+
+                            // TODO 前面的文字添加
+                            SpanUtil.setSpannableInclusiveExclusive(focusedWRichEditor, textWithoutFormat, spanPartsOutput, 0);
+                            // TODO 别的地方还没有添加
+                            focusedWRichEditorWrapperView.toggleUnOrderListMode(false, false);
+
+                            String[] splitStringByEnter = selectedStr.split(CharConstant.LINE_BREAK_STRING);
+                            int splitLength = splitStringByEnter.length;
+                            ArrayList<SplitPart> splitParts = new ArrayList<>(splitLength);
+
+                            int splitItemStart = quoteStart;
+                            for (int i = 0; i < splitLength; i++) {
+                                splitParts.add(new SplitPart(splitStringByEnter[i], splitItemStart));
+                                splitItemStart = splitItemStart + splitStringByEnter.length + 1; // split 后，去掉了
+                            }
+
+                            for (int i = 0; i < splitLength; i++) {
+                                SplitPart itemSplit = splitParts.get(i);
+                                spanPartsOutput.clear();
+                                String textWithoutFormatItem = SpanUtil.getSpannableStringInclusiveExclusive(editable, itemSplit.getStart(), itemSplit.getEnd(), spanPartsOutput);
+                                WRichEditorWrapperView wRichEditorWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + i, RichType.LIST_UNORDERED, false);
+                                SpanUtil.setSpannableInclusiveExclusive(wRichEditorWrapperView.getWRichEditor(), textWithoutFormatItem, spanPartsOutput, -itemSplit.getStart());
+                            }
+
+                            if (editableStr.endsWith(CharConstant.LINE_BREAK_STRING)) {
+                                Log.d("zzz", "3331");
+                                insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + splitLength, RichType.NONE, false);
+                            } else {
+                                Log.d("zzz", "3332");
+                                // TODO need test
+                                if (needAddWRichEditor(focusedRichEditorWrapperViewIndex[0] + splitLength - 1)) {
+                                    // 添加一个WRichEditorWrapperView
+                                    insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + splitLength, RichType.NONE, false);
+                                }
+                            }
+                        } else {
+                            Log.d("zzz", "444");
+                            // 不选中
+                            // A   B   C   D   E   F   G   '/n'
+                            // H   I   J   K | L   M   N   '/n'
+                            // O   P   Q   R   S   T   U   ('/n')
+                            // 选中
+                            // A   B   C   D   E   F   G   '/n'
+                            // H   I   J   K | L   M   N   '/n'
+                            // H   I   J   K   L   M | N   '/n'
+                            // O   P   Q   R   S   T   U   ('/n')
+
+                            List<SpanPart> spanPartsOutput = new ArrayList<>(32);
+
+                            // 第一部分
+                            String textWithoutFormatUnselectedStrBefore = SpanUtil.getSpannableStringInclusiveExclusive(editable, 0, quoteStart - 1, spanPartsOutput);
+                            // TODO 前面的文字添加
+                            SpanUtil.setSpannableInclusiveExclusive(focusedWRichEditor, textWithoutFormatUnselectedStrBefore, spanPartsOutput, 0);
+                            // TODO 别的地方还没有添加
+                            focusedWRichEditorWrapperView.toggleUnOrderListMode(false, false);
+
+                            // 中间部分
+                            String selectedStr = editableStr.substring(quoteStart, quoteEnd - 1);
+                            String[] splitStringByEnter = selectedStr.split(CharConstant.LINE_BREAK_STRING);
+                            int splitLength = splitStringByEnter.length;
+                            ArrayList<SplitPart> splitParts = new ArrayList<>(splitLength);
+                            int splitItemStart = quoteStart;
+                            for (int i = 0; i < splitLength; i++) {
+                                splitParts.add(new SplitPart(splitStringByEnter[i], splitItemStart));
+                                splitItemStart = splitItemStart + splitStringByEnter.length + 1; // split 后，去掉了
+                            }
+
+                            for (int i = 0; i < splitLength; i++) {
+                                SplitPart itemSplit = splitParts.get(i);
+                                spanPartsOutput.clear();
+                                String textWithoutFormatItem = SpanUtil.getSpannableStringInclusiveExclusive(editable, itemSplit.getStart(), itemSplit.getEnd(), spanPartsOutput);
+                                WRichEditorWrapperView wRichEditorWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + i, RichType.LIST_UNORDERED, false);
+                                SpanUtil.setSpannableInclusiveExclusive(wRichEditorWrapperView.getWRichEditor(), textWithoutFormatItem, spanPartsOutput, -itemSplit.getStart());
+                            }
+
+                            // 第三部分
+                            spanPartsOutput.clear();
+                            String textWithoutFormat = SpanUtil.getSpannableStringInclusiveExclusive(editable, quoteEnd, editableStr.length(), spanPartsOutput);
+                            WRichEditorWrapperView insertedWrapperViewForThirdPart = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + splitLength, RichType.NONE, false);
+                            SpanUtil.setSpannableInclusiveExclusive(insertedWrapperViewForThirdPart.getWRichEditor(), textWithoutFormat, spanPartsOutput, -quoteEnd);
+                        }
+                    }
+                }
+            } else {
+                // 如果是 "关闭" QUOTE 动作
+                Log.d("zzz", "richType == RichType.LIST_UNORDERED  2");
+                if(focusedWRichEditorWrapperView.getRichType() != RichType.LIST_UNORDERED) {
+                    // 如果已经处于
+                    Log.d("zzz", "richType == RichType.LIST_UNORDERED  3");
+                    return;
+                }
+                // 因为一个回车一行，所以直接关掉
+                focusedWRichEditorWrapperView.toggleUnOrderListMode(false, false);
+            }
         } else if (richType == RichType.LIST_ORDERED) {
+            // TODO
             // 如果是有序列表
-
-
-
         } else {
             focusedWRichEditorWrapperView.updateTextByRichTypeChanged(richType, open, object);
         }
@@ -614,6 +900,18 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
             return true;
         }
         return false;
+    }
+
+
+    public int getRichEditorWrapperViewIndex(WRichEditorWrapperView wrapperView) {
+        int cellViewSize = mRichCellViewList.size();
+        for (int i = 0; i < cellViewSize; i++) {
+            IRichCellView cellView = mRichCellViewList.get(i);
+            if (cellView == wrapperView) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public WRichEditorWrapperView findCurrentFocusedRichEditorWrapperView(int[] indexInCellViewList) {
@@ -698,4 +996,13 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
         }
         return editTextWrapperView;
     }
+
+    public WRichEditorWrapperView insertAWRichEditorWrapperWithRichType(WRichEditorWrapperView wrapperView, RichType richType, boolean needRequestFocusWhenAdded) {
+        int index = -1;
+        if (wrapperView != null) {
+            index = getRichEditorWrapperViewIndex(wrapperView);
+        }
+        return insertAWRichEditorWrapperWithRichType(index, richType, needRequestFocusWhenAdded);
+    }
+
 }
