@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -33,21 +33,21 @@ import cn.carbs.wricheditor.library.views.RichLineView;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnRichTypeChangedListener {
 
     private WRichEditorScrollView mWRichEditorScrollView;
-    private ImageButton mBtnBold;
-    private ImageButton mBtnItalic;
-    private ImageButton mBtnStrikeThrough;
-    private ImageButton mBtnUnderLine;
-    private ImageButton mBtnHeadline;
-    private ImageButton mBtnQuote;
-    private ImageButton mBtnLink;
-    private ImageButton mBtnListOrdered;
-    private ImageButton mBtnListUnordered;
-    private ImageButton mBtnInsertImage;
-    private ImageButton mBtnInsertLine;
+    private ImageView mBtnBold;
+    private ImageView mBtnItalic;
+    private ImageView mBtnStrikeThrough;
+    private ImageView mBtnUnderLine;
+    private ImageView mBtnHeadline;
+    private ImageView mBtnQuote;
+    private ImageView mBtnLink;
+    private ImageView mBtnListOrdered;
+    private ImageView mBtnListUnordered;
+    private ImageView mBtnInsertImage;
+    private ImageView mBtnInsertLine;
 
-    private Button mBtnAddEditor;
+    private ImageView mBtnAddEditor;
 
-    private HashMap<RichType, ImageButton> mImageButtonMap = new HashMap<>();
+    private HashMap<RichType, ImageView> mImageViewMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,12 +83,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnListUnordered = findViewById(R.id.button_list_unordered);
         mBtnListUnordered.setOnClickListener(this);
 
-        mImageButtonMap.put(RichType.BOLD, mBtnBold);
-        mImageButtonMap.put(RichType.ITALIC, mBtnItalic);
-        mImageButtonMap.put(RichType.STRIKE_THROUGH, mBtnStrikeThrough);
-        mImageButtonMap.put(RichType.UNDER_LINE, mBtnUnderLine);
-        mImageButtonMap.put(RichType.HEADLINE, mBtnHeadline);
-        mImageButtonMap.put(RichType.LINK, mBtnLink);
+        mImageViewMap.put(RichType.BOLD, mBtnBold);
+        mImageViewMap.put(RichType.ITALIC, mBtnItalic);
+        mImageViewMap.put(RichType.STRIKE_THROUGH, mBtnStrikeThrough);
+        mImageViewMap.put(RichType.UNDER_LINE, mBtnUnderLine);
+        mImageViewMap.put(RichType.HEADLINE, mBtnHeadline);
+        mImageViewMap.put(RichType.LINK, mBtnLink);
 
     }
 
@@ -211,6 +211,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void onAddEditorTextClicked() {
+        Log.d("www", "onAddEditorTextClicked()");
         WRichEditorWrapperView editTextWrapperView = new WRichEditorWrapperView(MainActivity.this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         int size = mWRichEditorScrollView.mRichCellViewList == null ? 0 : mWRichEditorScrollView.mRichCellViewList.size();
@@ -254,11 +255,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void setButtonTextColor(ImageButton button, boolean open) {
+    private void setButtonTextColor(ImageView button, boolean open) {
         if (open) {
-            button.setBackgroundColor(0xb06000E0);
+            button.setBackgroundResource(R.drawable.selector_format_buttons_select);
         } else {
-            button.setBackgroundColor(0xb0000000);
+            button.setBackgroundResource(R.drawable.selector_format_buttons_unselect);
         }
     }
 
@@ -267,7 +268,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (newTypes == null) {
             newTypes = new HashSet<>();
         }
-        for (Map.Entry<RichType, ImageButton> entry : mImageButtonMap.entrySet()) {
+        for (Map.Entry<RichType, ImageView> entry : mImageViewMap.entrySet()) {
             if (newTypes.contains(entry.getKey())) {
                 setButtonTextColor(entry.getValue(), true);
             } else {

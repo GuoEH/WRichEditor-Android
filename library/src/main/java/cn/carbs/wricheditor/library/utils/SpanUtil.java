@@ -2,7 +2,6 @@ package cn.carbs.wricheditor.library.utils;
 
 import android.text.Editable;
 import android.text.Spanned;
-import android.util.Log;
 import android.widget.EditText;
 
 import java.util.ArrayList;
@@ -27,9 +26,7 @@ public class SpanUtil {
         if (spanStart == spanEnd) {
             // 没有选中，分情况：
             // 如果是 HeadLine 类型，则将整行都置为大号字体
-            // TODO 还有quote类型
             if (richType == RichType.HEADLINE) {
-                // TODO 应该是整行都变
                 if (spanEnd == 0) {
                     return;
                 }
@@ -48,7 +45,6 @@ public class SpanUtil {
         }
 
         if (open) {
-            Log.d("mmm", "editable.setSpan : " + TypeUtil.getSpanByType(richType, object).getClass().getName());
             editable.setSpan(TypeUtil.getSpanByType(richType, object), spanStart, spanEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         } else {
             IRichSpan richSpan = TypeUtil.getSpanByType(richType, object);
@@ -59,7 +55,6 @@ public class SpanUtil {
                 list.add(new SpanPart(editable.getSpanStart(span), editable.getSpanEnd(span)));
                 editable.removeSpan(span);
             }
-
             for (SpanPart part : list) {
                 if (part.isValid()) {
                     if (part.getStart() < spanStart) {
@@ -115,11 +110,9 @@ public class SpanUtil {
                 retRichTypes.add(richType);
             }
         }
-        Log.d("qqq", "richTypes size : " + retRichTypes.size());
         return retRichTypes;
     }
 
-    // todo
     // 删除其中一个cell时，检查是否能够merge
     public static void mergeTwoRichCellView() {
 
@@ -139,29 +132,11 @@ public class SpanUtil {
 
         for (IRichSpan span : spans) {
             spanPartsOutput.add(new SpanPart(editable.getSpanStart(span), editable.getSpanEnd(span), span));
-            // TODO
-//            editable.removeSpan(span);
         }
 
         return editable.subSequence(start, end).toString();
     }
 
-    // TODO bug 这个方法有bug，以后弃用
-    /*public static void setSpannableInclusiveExclusive(EditText editText, String textWithoutFormat, List<SpanPart> spanParts, boolean fromZero) {
-        editText.setText(textWithoutFormat);
-        // 循环将格式赋给添加的这一段
-        for (SpanPart part : spanParts) {
-            if (part.isValid()) {
-                if (fromZero) {
-                    editText.getText().setSpan(part.getRichSpan(), 0, part.getEnd() - part.getStart(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-                } else {
-                    editText.getText().setSpan(part.getRichSpan(), part.getStart(), part.getEnd(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-                }
-            }
-        }
-    }*/
-
-    // FIXME 有可能 spanParts 中的 start 与 end 构成的范围超长，应该将超长的"剩余"的部分输出，下次使用
     public static void setSpannableInclusiveExclusive(EditText editText, String textWithoutFormat, List<SpanPart> spanParts, int offset) {
         if (editText == null) {
             return;
@@ -187,8 +162,6 @@ public class SpanUtil {
                 editableText.setSpan(part.getRichSpan(), start, end, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             }
         }
-
-
     }
 
 }
