@@ -2,42 +2,52 @@ package cn.carbs.wricheditor.library.types;
 
 public enum RichType {
 
-    NONE,
+    NONE(true),
 
     // 粗体
-    BOLD,
+    BOLD(true),
 
     // 斜体
-    ITALIC,
+    ITALIC(true),
 
     // 中横线
-    STRIKE_THROUGH,
+    STRIKE_THROUGH(true),
 
     // 下划线
-    UNDER_LINE,
+    UNDER_LINE(true),
 
     // 链接
-    LINK,
+    LINK(true),
 
     // 标题
-    HEADLINE,
+    HEADLINE(true),
 
     // 引用
-    QUOTE,
+    QUOTE(true),
 
     // 有序列表
-    LIST_ORDERED,
+    LIST_ORDERED(true),
 
     // 无序列表
-    LIST_UNORDERED,
+    LIST_UNORDERED(true),
 
     // 多媒体类型，采用自定义view
-    IMAGE,
+    IMAGE(false),
 
-    VIDEO,
+    VIDEO(false),
 
-    MUSIC,
+    AUDIO(false),
 
-    NETDISK
+    NETDISK(false);
+
+    private boolean hasEditor;
+
+    RichType(boolean hasEditor) {
+        this.hasEditor = hasEditor;
+    }
+
+    public boolean getHasEditor() {
+        return hasEditor;
+    }
 
 }

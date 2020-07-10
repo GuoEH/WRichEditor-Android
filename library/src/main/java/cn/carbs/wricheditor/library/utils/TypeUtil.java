@@ -36,7 +36,7 @@ public class TypeUtil {
     public static boolean isSpanTypeRichResource(RichType richType) {
         if (richType == RichType.IMAGE
                 || richType == RichType.VIDEO
-                || richType == RichType.MUSIC
+                || richType == RichType.AUDIO
                 || richType == RichType.NETDISK) {
             return true;
         }

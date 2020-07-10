@@ -74,7 +74,7 @@ public class WRichEditor extends EditText {
     protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
         super.onTextChanged(text, start, lengthBefore, lengthAfter);
 
-        Log.d("qwer", "onTextChanged hint : " + getHint() + "  mTextChangeValid : " + mTextChangeValid);
+        Log.d("textchange", "onTextChanged hint : " + getHint() + "  mTextChangeValid : " + mTextChangeValid);
         if (!mTextChangeValid) {
             return;
         }
@@ -82,7 +82,7 @@ public class WRichEditor extends EditText {
         if (mWRichEditorScrollView == null) {
             return;
         }
-        Log.d("xxx", "hint : " + getHint()
+        Log.d("textchange", "hint : " + getHint()
                 + " , has parent : " + (getParent() != null)
                 + " , editor onTextChanged text : " + text
                 + " , editor getEditableText() : " + getEditableText().toString()
@@ -271,7 +271,7 @@ public class WRichEditor extends EditText {
 
     // SpannableStringBuilder
     public void addExtraEditable(Editable extraEditable) {
-        Log.d("xxx", "hint : " + getHint() + " , addExtraEditable 0 " + extraEditable.getClass().getName());
+        Log.d("textchange", "hint : " + getHint() + " , addExtraEditable 0 " + extraEditable.getClass().getName());
         if (extraEditable != null) {
 
 //            SpannableStringBuilder spannableStringBuilder = (SpannableStringBuilder) extraEditable;
