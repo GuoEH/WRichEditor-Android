@@ -542,6 +542,13 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
             // 如果没有选中，只会更新headline
             // TODO 暂时先注释
 //            focusedWRichEditorWrapperView.updateTextByRichTypeChanged(richType, open, object);
+        } else if (richType == RichType.LIST_UNORDERED) {
+            // 如果是无序列表
+        } else if (richType == RichType.LIST_ORDERED) {
+            // 如果是有序列表
+
+
+
         } else {
             focusedWRichEditorWrapperView.updateTextByRichTypeChanged(richType, open, object);
         }
@@ -616,12 +623,8 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
         for (int i = 0; i < cellViewSize; i++) {
             IRichCellView cellView = mRichCellViewList.get(i);
             if (cellView != null && cellView.getView() != null) {
-                // TODO 这里应该是
-//                if (cellView.getRichType() == NONE) {
                 if (cellView.getRichType().getHasEditor()) {
-                    // 具有 EditText 的 cell
                     WRichEditorWrapperView wRichEditorWrapperView = ((WRichEditorWrapperView) cellView.getView());
-//                    Log.d("uuu", "updateTextByRichTypeChanged() i : " + i + "wRichEditor.hasFocus() ？ " + wRichEditor.hasFocus());
                     if (wRichEditorWrapperView != null && wRichEditorWrapperView.getWRichEditor() != null) {
                         if (wRichEditorWrapperView.getWRichEditor().hasFocus()) {
                             focusedWRichEditorWrapperView = wRichEditorWrapperView;
@@ -629,8 +632,6 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                             break;
                         }
                     }
-                } else {
-
                 }
             }
         }
