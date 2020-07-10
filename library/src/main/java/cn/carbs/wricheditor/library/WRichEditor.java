@@ -159,6 +159,7 @@ public class WRichEditor extends EditText {
                 if (richType == RichType.LIST_UNORDERED) {
                     // 如果是无序列表
                     mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(mWrapperView, RichType.LIST_UNORDERED, true);
+                    return true;
                 } else if (richType == RichType.LIST_ORDERED) {
                     // TODO
                 }
@@ -211,8 +212,18 @@ public class WRichEditor extends EditText {
                     }
                 }
             }
+        } else if (keyCode == KeyEvent.KEYCODE_ENTER) {
+            if (mWRichEditorScrollView != null && mWrapperView != null) {
+                RichType richType = mWrapperView.getRichType();
+                if (richType == RichType.LIST_UNORDERED) {
+                    // 如果是无序列表，KeyDown的时候不响应enter
+                    return true;
+                } else if (richType == RichType.LIST_ORDERED) {
+                    // 如果是有序列表，KeyDown的时候不响应enter
+                    return true;
+                }
+            }
         }
-
         return super.onKeyDown(keyCode, event);
     }
 

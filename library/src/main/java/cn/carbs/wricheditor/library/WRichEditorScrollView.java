@@ -1000,7 +1000,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
     public WRichEditorWrapperView insertAWRichEditorWrapperWithRichType(WRichEditorWrapperView wrapperView, RichType richType, boolean needRequestFocusWhenAdded) {
         int index = -1;
         if (wrapperView != null) {
-            index = getRichEditorWrapperViewIndex(wrapperView);
+            index = getRichEditorWrapperViewIndex(wrapperView) + 1;
         }
         return insertAWRichEditorWrapperWithRichType(index, richType, needRequestFocusWhenAdded);
     }
