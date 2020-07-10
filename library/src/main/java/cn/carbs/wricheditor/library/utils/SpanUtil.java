@@ -161,15 +161,33 @@ public class SpanUtil {
         }
     }*/
 
-    //
+    // FIXME 有可能 spanParts 中的 start 与 end 构成的范围超长，应该将超长的"剩余"的部分输出，下次使用
     public static void setSpannableInclusiveExclusive(EditText editText, String textWithoutFormat, List<SpanPart> spanParts, int offset) {
+        if (editText == null) {
+            return;
+        }
         editText.setText(textWithoutFormat);
         // 循环将格式赋给添加的这一段
+        Editable editableText = editText.getText();
+        int editableLength = editableText.length();
         for (SpanPart part : spanParts) {
             if (part.isValid()) {
-                editText.getText().setSpan(part.getRichSpan(), part.getStart() + offset, part.getEnd() + offset, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                int start = part.getStart() + offset;
+                int end = part.getEnd() + offset;
+                if (start < 0) {
+                    start = 0;
+                } else if (start > editableLength - 1) {
+                    start = editableLength - 1;
+                }
+                if (end < 0) {
+                    end = 0;
+                } else if (end > editableLength - 1) {
+                    end = editableLength - 1;
+                }
+                editableText.setSpan(part.getRichSpan(), start, end, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             }
         }
+
 
     }
 
