@@ -902,7 +902,10 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                             List<SpanPart> spanPartsOutput = new ArrayList<>(32);
                             String textWithoutFormat = SpanUtil.getSpannableStringInclusiveExclusive(editableText, 0, currentEditableLength - 1, spanPartsOutput);
                             SpanUtil.setSpannableInclusiveExclusive(focusedWRichEditor, textWithoutFormat, spanPartsOutput, 0);
-                            insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 1, RichType.LIST_UNORDERED, true);
+                            insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 1, RichType.LIST_ORDERED, true);
+                            if (needAddWRichEditor(focusedRichEditorWrapperViewIndex[0] + 1)) {
+                                insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 2, RichType.NONE, false);
+                            }
                             OrderListUtil.updateOrderListNumbersAfterViewsChanged(mLinearLayout);
                         } else {
                             // 此种情况不存在
@@ -1056,7 +1059,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                                 SplitPart itemSplit = splitParts.get(i);
                                 spanPartsOutput.clear();
                                 String textWithoutFormatItem = SpanUtil.getSpannableStringInclusiveExclusive(editable, itemSplit.getStart(), itemSplit.getEnd(), spanPartsOutput);
-                                WRichEditorWrapperView wRichEditorWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + i, RichType.LIST_ORDERED, false);
+                                WRichEditorWrapperView wRichEditorWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + i + 1, RichType.LIST_ORDERED, false);
                                 SpanUtil.setSpannableInclusiveExclusive(wRichEditorWrapperView.getWRichEditor(), textWithoutFormatItem, spanPartsOutput, -itemSplit.getStart());
                             }
 

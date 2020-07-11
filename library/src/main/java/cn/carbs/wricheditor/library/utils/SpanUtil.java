@@ -156,8 +156,8 @@ public class SpanUtil {
                 }
                 if (end < 0) {
                     end = 0;
-                } else if (end > editableLength - 1) {
-                    end = editableLength - 1;
+                } else if (end > editableLength) {
+                    end = editableLength;
                 }
                 editableText.setSpan(part.getRichSpan(), start, end, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             }
