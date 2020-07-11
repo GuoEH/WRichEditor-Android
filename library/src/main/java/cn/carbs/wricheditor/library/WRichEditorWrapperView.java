@@ -58,7 +58,6 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
         init(context);
     }
 
-
     private void init(Context context) {
         inflate(context, R.layout.wricheditor_layout_rich_editor_wrapper_view, this);
         mIVForQuoteOrUnorderList = findViewById(R.id.iv_in_wrapper);
@@ -181,6 +180,14 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
             updateUnOrderListModeUI(false);
             updateOrderListModeUI(false);
             mRichType = RichType.NONE;
+        }
+    }
+
+    // TODO 查找外部遍历，同时更改涉及到list列表的序号
+    // 由util类去更改
+    public void setOrderedListText(String text) {
+        if (mTVForOrderList != null) {
+            mTVForOrderList.setText(text);
         }
     }
 
