@@ -5,14 +5,6 @@
         <attr name="linkColor" format="reference|color" />
         <attr name="linkUnderline" format="reference|boolean" />
         <attr name="headlineTextSize" format="reference|dimension" />
-<!--        <attr name="bulletColor" format="reference|color" />-->
-<!--        <attr name="bulletRadius" format="reference|dimension" />-->
-<!--        <attr name="bulletGapWidth" format="reference|dimension" />-->
-<!--        <attr name="historyEnable" format="reference|boolean" />-->
-<!--        <attr name="historySize" format="reference|integer" />-->
-<!--        <attr name="quoteColor" format="reference|color" />-->
-<!--        <attr name="quoteStripeWidth" format="reference|dimension" />-->
-<!--        <attr name="quoteCapWidth" format="reference|dimension" />-->
     </declare-styleable>
 
 </resources>

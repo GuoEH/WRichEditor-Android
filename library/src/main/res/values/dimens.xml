@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  wrich_editor_line_height = wrich_editor_padding_top + wrich_editor_text_size -->
+    <!--  wrich_editor_padding_top = wrich_editor_padding_bottom -->
+    <dimen name="wrich_editor_line_height">42dp</dimen>
+
+    <dimen name="wrich_editor_padding_top">22dp</dimen>
+
+    <dimen name="wrich_editor_padding_bottom">22dp</dimen>
+
+    <dimen name="wrich_editor_text_size">20dp</dimen>
+</resources>

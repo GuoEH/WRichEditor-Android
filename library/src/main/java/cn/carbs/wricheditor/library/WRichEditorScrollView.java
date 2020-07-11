@@ -757,7 +757,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                                 SplitPart itemSplit = splitParts.get(i);
                                 spanPartsOutput.clear();
                                 String textWithoutFormatItem = SpanUtil.getSpannableStringInclusiveExclusive(editable, itemSplit.getStart(), itemSplit.getEnd(), spanPartsOutput);
-                                WRichEditorWrapperView wRichEditorWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + i, RichType.LIST_UNORDERED, false);
+                                WRichEditorWrapperView wRichEditorWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + i + 1, RichType.LIST_UNORDERED, false);
                                 SpanUtil.setSpannableInclusiveExclusive(wRichEditorWrapperView.getWRichEditor(), textWithoutFormatItem, spanPartsOutput, -itemSplit.getStart());
                             }
 
@@ -767,9 +767,9 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                             } else {
                                 Log.d("zzz", "3332");
                                 // TODO need test
-                                if (needAddWRichEditor(focusedRichEditorWrapperViewIndex[0] + splitLength - 1)) {
+                                if (needAddWRichEditor(focusedRichEditorWrapperViewIndex[0] + splitLength)) {
                                     // 添加一个WRichEditorWrapperView
-                                    insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + splitLength, RichType.NONE, false);
+                                    insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + splitLength + 1, RichType.NONE, false);
                                 }
                             }
                         } else {
@@ -1069,9 +1069,10 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                             } else {
                                 Log.d("ttt", "3332");
                                 // TODO need test
-                                if (needAddWRichEditor(focusedRichEditorWrapperViewIndex[0] + splitLength - 1)) {
+                                if (needAddWRichEditor(focusedRichEditorWrapperViewIndex[0] + splitLength)) {
                                     // 添加一个WRichEditorWrapperView
-                                    insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + splitLength, RichType.NONE, false);
+                                    Log.d("ttt", "focusedRichEditorWrapperViewIndex[0] : " + focusedRichEditorWrapperViewIndex[0] + " splitLength : " + splitLength);
+                                    insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + splitLength + 1, RichType.NONE, false);
                                 }
                             }
                             OrderListUtil.updateOrderListNumbersAfterViewsChanged(mLinearLayout);

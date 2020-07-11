@@ -90,6 +90,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        WRichEditorWrapperView wrapperView = addEditText();
+        if (wrapperView != null && wrapperView.getWRichEditor() != null) {
+            wrapperView.getWRichEditor().requestFocus();
+        }
+    }
+
     private void onBoldClicked() {
         Set<RichType> richTypes = mWRichEditorScrollView.getRichTypes();
         boolean open = TypeUtil.toggleCertainRichType(richTypes, RichType.BOLD);
@@ -222,6 +231,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             editTextWrapperView.setBackgroundColor(0x18222222);
         }
         mWRichEditorScrollView.addRichCell(editTextWrapperView, lp);
+    }
+
+    private WRichEditorWrapperView addEditText() {
+        WRichEditorWrapperView editTextWrapperView = new WRichEditorWrapperView(MainActivity.this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        mWRichEditorScrollView.addRichCell(editTextWrapperView, lp);
+        editTextWrapperView.setBackgroundColor(0x66660000);
+        return editTextWrapperView;
     }
 
     @Override

@@ -3,6 +3,7 @@
     android:id="@+id/wricheditor_main_view_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="@dimen/wrich_editor_padding_top">
 
 </LinearLayout>

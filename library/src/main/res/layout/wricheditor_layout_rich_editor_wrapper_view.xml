@@ -12,8 +12,10 @@
         <!--  引用/无序列表  -->
         <ImageView
             android:id="@+id/iv_in_wrapper"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/wrich_editor_text_size"
+            android:layout_height="@dimen/wrich_editor_text_size"
+            android:layout_marginTop="2dp"
+            android:background="#ff009900"
             android:scaleType="centerInside"
             android:visibility="gone" />
 
@@ -22,7 +24,10 @@
             android:id="@+id/tv_in_wrapper"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:background="#ff009900"
+            android:gravity="center"
+            android:minWidth="@dimen/wrich_editor_text_size"
+            android:textSize="@dimen/wrich_editor_text_size"
             android:visibility="gone" />
     </FrameLayout>
 
@@ -30,10 +35,10 @@
         android:id="@+id/w_rich_editor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp"
         android:layout_toRightOf="@id/fl_left_container_in_wrapper"
         android:background="@null"
-        android:lineSpacingExtra="2dp" />
+        android:lineSpacingExtra="@dimen/wrich_editor_padding_bottom"
+        android:paddingBottom="@dimen/wrich_editor_padding_bottom"
+        android:textSize="@dimen/wrich_editor_text_size" />
 
 </RelativeLayout>
