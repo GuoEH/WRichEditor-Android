@@ -37,6 +37,8 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/fl_left_container_in_wrapper"
         android:background="@null"
+        android:fallbackLineSpacing="false"
+        android:lineHeight="@dimen/wrich_editor_line_height"
         android:lineSpacingExtra="@dimen/wrich_editor_padding_bottom"
         android:paddingBottom="@dimen/wrich_editor_padding_bottom"
         android:textSize="@dimen/wrich_editor_text_size" />
