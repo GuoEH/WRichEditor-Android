@@ -24,6 +24,7 @@ import cn.carbs.wricheditor.library.models.RichAtomicData;
 import cn.carbs.wricheditor.library.models.SpanPart;
 import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.CursorUtil;
+import cn.carbs.wricheditor.library.utils.OrderListUtil;
 import cn.carbs.wricheditor.library.utils.SpanUtil;
 import cn.carbs.wricheditor.library.utils.TypeUtil;
 
@@ -161,7 +162,10 @@ public class WRichEditor extends EditText {
                     mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(mWrapperView, RichType.LIST_UNORDERED, true);
                     return true;
                 } else if (richType == RichType.LIST_ORDERED) {
-                    // TODO
+                    // 如果是有序列表
+                    mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(mWrapperView, RichType.LIST_ORDERED, true);
+                    OrderListUtil.updateOrderListNumbersAfterViewsChanged(mWRichEditorScrollView.getContainerView());
+                    return true;
                 }
             }
 

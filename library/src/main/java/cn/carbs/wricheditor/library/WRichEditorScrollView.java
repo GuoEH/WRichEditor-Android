@@ -559,6 +559,9 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                 if (!editableStr.contains(CharConstant.LINE_BREAK_STRING)) {
                     // 1. 判断当前RichEditor中有几个换行符，如果有0个，则不"分裂"，直接将这个Editor的左侧drawable做变换
                     focusedWRichEditorWrapperView.toggleUnOrderListMode(true, false);
+                    if (needAddWRichEditor(focusedRichEditorWrapperViewIndex[0])) {
+                        insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 1, RichType.NONE, false);
+                    }
                 } else {
 
                     // 2. 如果当前RichEditor中有一个或者多个换行符
@@ -850,6 +853,9 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                 if (!editableStr.contains(CharConstant.LINE_BREAK_STRING)) {
                     // 1. 判断当前RichEditor中有几个换行符，如果有0个，则不"分裂"，直接将这个Editor的左侧drawable做变换
                     focusedWRichEditorWrapperView.toggleOrderListMode(true, false);
+                    if (needAddWRichEditor(focusedRichEditorWrapperViewIndex[0])) {
+                        insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 1, RichType.NONE, false);
+                    }
                     // todo 效率问题
                     OrderListUtil.updateOrderListNumbersAfterViewsChanged(mLinearLayout);
                 } else {
@@ -1123,10 +1129,10 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                 }
             } else {
                 // 如果是 "关闭" LIST_ORDERED 动作
-                Log.d("ttt", "richType == RichType.LIST_UNORDERED  2");
+                Log.d("ttt", "richType == RichType.LIST_ORDERED  2");
                 if (focusedWRichEditorWrapperView.getRichType() != RichType.LIST_ORDERED) {
                     // 如果已经处于
-                    Log.d("ttt", "richType == RichType.LIST_UNORDERED  3");
+                    Log.d("ttt", "richType == RichType.LIST_ORDERED  3");
                     return;
                 }
                 // 因为一个回车一行，所以直接关掉
@@ -1302,6 +1308,10 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
             index = getRichEditorWrapperViewIndex(wrapperView) + 1;
         }
         return insertAWRichEditorWrapperWithRichType(index, richType, needRequestFocusWhenAdded);
+    }
+
+    public ViewGroup getContainerView() {
+        return mLinearLayout;
     }
 
 }

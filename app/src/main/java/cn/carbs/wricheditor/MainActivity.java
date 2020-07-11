@@ -4,11 +4,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -199,10 +197,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mWRichEditorScrollView.addRichCell(richImageView, lp);
     }
 
-    private void onListOrderedClicked() {
-
-    }
-
     private void onListUnorderedClicked() {
         Set<RichType> richTypes = mWRichEditorScrollView.getRichTypes();
         boolean open = TypeUtil.toggleCertainRichType(richTypes, RichType.LIST_UNORDERED);
@@ -210,8 +204,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setButtonTextColor(mBtnListUnordered, open);
     }
 
+    private void onListOrderedClicked() {
+        Set<RichType> richTypes = mWRichEditorScrollView.getRichTypes();
+        boolean open = TypeUtil.toggleCertainRichType(richTypes, RichType.LIST_ORDERED);
+        mWRichEditorScrollView.updateTextByRichTypeChanged(RichType.LIST_ORDERED, open, null);
+        setButtonTextColor(mBtnListOrdered, open);
+    }
+
     private void onAddEditorTextClicked() {
-        Log.d("www", "onAddEditorTextClicked()");
         WRichEditorWrapperView editTextWrapperView = new WRichEditorWrapperView(MainActivity.this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         int size = mWRichEditorScrollView.mRichCellViewList == null ? 0 : mWRichEditorScrollView.mRichCellViewList.size();
