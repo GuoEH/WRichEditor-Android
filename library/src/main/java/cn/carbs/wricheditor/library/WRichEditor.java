@@ -13,6 +13,7 @@ import android.view.ViewParent;
 import android.widget.EditText;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -103,16 +104,59 @@ public class WRichEditor extends EditText {
     protected void onSelectionChanged(int selStart, int selEnd) {
         super.onSelectionChanged(selStart, selEnd);
         // 打字时，每次回调此函数都会 selStart == selEnd
-        LogUtil.d(TAG, "WRichEditor onSelectionChanged selStart : " + selStart + " selEnd : " + selEnd);
+        Editable editableText = getEditableText();
+        int editableLength = editableText.length();
+        LogUtil.d("www", "WRichEditor onSelectionChanged selStart : " + selStart + " selEnd : " + selEnd + " hasFocus : " + hasFocus());
         if (selStart == selEnd) {
             // TODO test
-            Editable editableText = getEditableText();
-            int editableLength = editableText.length();
             SpanUtil.getSpanTypesForCursorLocation(editableText, selEnd);
-//            boolean isCursorAutoChange = CursorUtil.isCursorChangedAutomaticallyByTextChange(editableLength, selStart);
-            CursorUtil.markLastTextLength(editableLength);
-            CursorUtil.markLastCursorLocation(selStart);
+            boolean isCursorAutoChange = CursorUtil.isCursorChangedAutomaticallyByTextChange(editableLength, selStart);
+            Log.d("www", "onSelectionChanged isCursorAutoChange : " + isCursorAutoChange);
+            if (isCursorAutoChange) {
+                // Rich Type 不变？
+            } else {
+
+            }
+            if (hasFocus() && mWRichEditorScrollView != null) {
+                Log.d("www", "111");
+                Set<RichType> currRichTypes = new HashSet<>(4);
+                // todo 将上次的 RichTypes 存储到 ScrollView 中
+                Set<RichType> prevRichTypes = mWRichEditorScrollView.getRichTypes();
+                if (selEnd == 0) {
+
+                } else if (0 < selEnd && selEnd < editableText.length()) {
+                    Log.d("www", "222");
+                    IRichSpan[] currRichSpans = editableText.getSpans(selEnd - 1, selEnd, IRichSpan.class);
+                    Log.d("www", "getSpans start : " + (selEnd - 1) + " selEnd : " + selEnd + " currRichSpans " + currRichSpans.length);
+                    if (currRichSpans == null || currRichSpans.length == 0) {
+                        // 没有
+                    } else {
+                        for (IRichSpan richSpan : currRichSpans) {
+                            currRichTypes.add(richSpan.getRichType());
+                            Log.d("www", "richSpan.getRichType() : " + richSpan.getRichType().name());
+                        }
+                    }
+                    if (mWrapperView != null) {
+                        RichType richType = mWrapperView.getRichType();
+                        if (richType != RichType.NONE) {
+                            currRichTypes.add(richType);
+                        }
+                    }
+                } else if (selEnd == editableText.length()) {
+
+                }
+                // TODO
+                OnRichTypeChangedListener typeChangedListener = mWRichEditorScrollView.getOnRichTypeChangedListener();
+                if (typeChangedListener != null) {
+                    // TODO api设计是否需要优化？考虑到光标移动的情况，应该不需要
+                    typeChangedListener.onRichTypeChanged(prevRichTypes, currRichTypes);
+                }
+            }
         }
+
+        CursorUtil.markLastTextLength(editableLength);
+        CursorUtil.markLastCursorLocation(selStart);
+
     }
 
     // 有效，在focus更改时，
@@ -125,8 +169,15 @@ public class WRichEditor extends EditText {
         }
     }
 
+    // 响应顺序
+//    : onKeyDown KEYCODE_ENTER
+//    : WRichEditor onSelectionChanged selStart : 4 selEnd : 4 hasFocus : true
+//    : onSelectionChanged isCursorAutoChange : true
+//    : onKeyUp
+
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
+        Log.d("www", "onKeyUp");
         if (keyCode == KeyEvent.KEYCODE_ENTER) {
             // 响应 keycode，如果有 headline 类型的 RichType
             if (mWRichEditorScrollView != null) {
@@ -200,6 +251,7 @@ public class WRichEditor extends EditText {
                 }
             }
         } else if (keyCode == KeyEvent.KEYCODE_ENTER) {
+            Log.d("www", "onKeyDown KEYCODE_ENTER");
             if (mWRichEditorScrollView != null && mWrapperView != null) {
                 RichType richType = mWrapperView.getRichType();
                 if (richType == RichType.LIST_UNORDERED) {

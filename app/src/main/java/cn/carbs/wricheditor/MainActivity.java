@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -285,6 +286,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (newTypes == null) {
             newTypes = new HashSet<>();
         }
+        Log.d("www", "=== onRichTypeChanged === ");
+        for (RichType item : newTypes) {
+            Log.d("www", "RichType item : " + item.name());
+        }
+
         for (Map.Entry<RichType, ImageView> entry : mImageViewMap.entrySet()) {
             if (newTypes.contains(entry.getKey())) {
                 setButtonTextColor(entry.getValue(), true);
