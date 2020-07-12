@@ -24,6 +24,7 @@ import cn.carbs.wricheditor.library.models.RichAtomicData;
 import cn.carbs.wricheditor.library.models.SpanPart;
 import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.CursorUtil;
+import cn.carbs.wricheditor.library.utils.LogUtil;
 import cn.carbs.wricheditor.library.utils.OrderListUtil;
 import cn.carbs.wricheditor.library.utils.SpanUtil;
 import cn.carbs.wricheditor.library.utils.TypeUtil;
@@ -35,6 +36,8 @@ import cn.carbs.wricheditor.library.utils.TypeUtil;
 // TODO wangwang 去掉 IRichCellView
 @SuppressLint("AppCompatCustomView")
 public class WRichEditor extends EditText {
+
+    public static final String TAG = WRichEditor.class.getSimpleName();
 
     private WRichEditorScrollView mWRichEditorScrollView;
 
@@ -75,7 +78,7 @@ public class WRichEditor extends EditText {
     protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
         super.onTextChanged(text, start, lengthBefore, lengthAfter);
 
-        Log.d("textchange", "onTextChanged hint : " + getHint() + "  mTextChangeValid : " + mTextChangeValid);
+        LogUtil.d(TAG, "onTextChanged hint : " + getHint() + "  mTextChangeValid : " + mTextChangeValid);
         if (!mTextChangeValid) {
             return;
         }
@@ -83,44 +86,32 @@ public class WRichEditor extends EditText {
         if (mWRichEditorScrollView == null) {
             return;
         }
-        Log.d("textchange", "hint : " + getHint()
-                + " , has parent : " + (getParent() != null)
-                + " , editor onTextChanged text : " + text
-                + " , editor getEditableText() : " + getEditableText().toString()
-                + " , start : " + start
-                + " , lengthBefore : " + lengthBefore
-                + " , lengthAfter : " + lengthAfter);
+        LogUtil.d(TAG, "WRichEditor onTextChanged hint : " + getHint()
+                + ", has parent : " + (getParent() != null)
+                + ", editor onTextChanged text : " + text
+                + ", editor getEditableText() : " + getEditableText().toString()
+                + ", start : " + start
+                + ", lengthBefore : " + lengthBefore
+                + ", lengthAfter : " + lengthAfter);
         // 回调返回的 text 和 getEditableText() 不一定一致，SpannableStringBuilder中的textWatcher的内置问题
         if (getParent() != null && getEditableText().toString().equals(text.toString())) {
             SpanUtil.setSpan(mWRichEditorScrollView.mRichTypes, text, getEditableText(), start, start + lengthAfter);
         }
     }
 
-
-    // TODO
     @Override
     protected void onSelectionChanged(int selStart, int selEnd) {
         super.onSelectionChanged(selStart, selEnd);
         // 打字时，每次回调此函数都会 selStart == selEnd
-        Log.d("qqq", "editor onSelectionChanged selStart : " + selStart + " selEnd : " + selEnd);
+        LogUtil.d(TAG, "WRichEditor onSelectionChanged selStart : " + selStart + " selEnd : " + selEnd);
         if (selStart == selEnd) {
             // TODO test
             Editable editableText = getEditableText();
             int editableLength = editableText.length();
             SpanUtil.getSpanTypesForCursorLocation(editableText, selEnd);
-
-            boolean isCursorAutoChange = CursorUtil.isCursorChangedAutomaticallyByTextChange(editableLength, selStart);
+//            boolean isCursorAutoChange = CursorUtil.isCursorChangedAutomaticallyByTextChange(editableLength, selStart);
             CursorUtil.markLastTextLength(editableLength);
             CursorUtil.markLastCursorLocation(selStart);
-            Log.d("qqq", "getEditableText().length() : " + getEditableText().length() + "  isCursorAutoChange : " + isCursorAutoChange);
-            // 怎样区分是手动滑动了cursor，还是跟随输入汉字？通过比较 lastTextLength 与 lastCursorLocation，同时，应该注意不同的editor之间的判断
-            if (getEditableText().length() == selStart) {
-                // 光标在末尾
-//                if ()
-            } else {
-                // 光标不在末尾，将用户强设置置为false ?
-//                StrategyUtil.sStrongSet = false;
-            }
         }
     }
 
@@ -128,23 +119,19 @@ public class WRichEditor extends EditText {
     @Override
     protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
-        Log.d("fff", "editor onFocusChanged focused : " + focused + " direction : " + direction);
+        LogUtil.d(TAG, "WRichEditor onFocusChanged focused : " + focused + " direction : " + direction);
         if (mOnEditorFocusChangedListener != null) {
-            // TODO
             mOnEditorFocusChangedListener.onEditorFocusChanged(mWrapperView, focused);
         }
     }
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        Log.d("key", "00 keyCode : " + keyCode);
         if (keyCode == KeyEvent.KEYCODE_ENTER) {
             // 响应 keycode，如果有 headline 类型的 RichType
-            Log.d("key", "keyCode : " + keyCode);
             if (mWRichEditorScrollView != null) {
                 Set<RichType> richTypes = mWRichEditorScrollView.getRichTypes();
                 if (richTypes != null) {
-                    // TODO
                     boolean changed = TypeUtil.removeCertainRichType(richTypes, RichType.HEADLINE);
                     if (changed) {
                         OnRichTypeChangedListener typeChangedListener = mWRichEditorScrollView.getOnRichTypeChangedListener();
@@ -175,10 +162,7 @@ public class WRichEditor extends EditText {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-
         if (keyCode == KeyEvent.KEYCODE_DEL) {
-            // TODO 删除后
-//            if (getEditableText().length() == 0) {
             int selectionStart = getSelectionStart();
             int selectionEnd = getSelectionEnd();
             if (selectionStart == selectionEnd && selectionStart == 0) {
@@ -197,7 +181,6 @@ public class WRichEditor extends EditText {
                             ((WRichEditorWrapperView) iRichCellView).addExtraEditable(editable);
                             ((WRichEditorWrapperView) iRichCellView).requestFocusAndPutCursorToTail();
 
-                            // TODO
                             ViewParent parent = mWrapperView.getParent();
                             if (parent != null && parent instanceof ViewGroup) {
                                 setText("");
@@ -238,7 +221,6 @@ public class WRichEditor extends EditText {
 
     public void setWRichEditorScrollView(WRichEditorScrollView wRichEditorScrollView) {
         mWRichEditorScrollView = wRichEditorScrollView;
-        Log.d("ppp", "editor setWRichEditorView mWRichEditorView == null ? " + (mWRichEditorScrollView == null));
     }
 
     public void setEditorFocusChangedListener(OnEditorFocusChangedListener listener) {
@@ -250,7 +232,8 @@ public class WRichEditor extends EditText {
     }
 
     // TODO 外部主动更改了字体样式，不涉及数据插入
-    public void updateTextByRichTypeChanged(RichType richType, boolean open, Object object) {
+    public void updateTextByRichTypeChanged(RichType richType, boolean open, Object extra) {
+        LogUtil.d(TAG, "updateTextByRichTypeChanged richType : " + richType.name() + ", open : " + open + ", extra : " + extra);
         int selectionStart = getSelectionStart();
         int selectionEnd = getSelectionEnd();
         if (selectionStart < 0 || selectionEnd < 0) {
@@ -260,7 +243,7 @@ public class WRichEditor extends EditText {
             // TODO 后面输入的字体将按照对应的设定字体进行
             // 当前没有选中字体
             if (richType == RichType.HEADLINE) {
-                updateSpanUI(richType, open, object, selectionStart, selectionEnd, mWRichEditorScrollView.getRichTypes());
+                updateSpanUI(richType, open, extra, selectionStart, selectionEnd, mWRichEditorScrollView.getRichTypes());
             }
             return;
         } else {
@@ -269,7 +252,7 @@ public class WRichEditor extends EditText {
             }
 
             // 将选中的部分进行更新，同时更新此View对应的
-            updateSpanUI(richType, open, object, selectionStart, selectionEnd, mWRichEditorScrollView.getRichTypes());
+            updateSpanUI(richType, open, extra, selectionStart, selectionEnd, mWRichEditorScrollView.getRichTypes());
             // 是不是想的太复杂了？
 
             // TODO [难点] 切割data
@@ -278,11 +261,11 @@ public class WRichEditor extends EditText {
     }
 
     // TODO 插入数据时，应该修改data
-    private void updateSpanUI(RichType richType, boolean open, Object object, int start, int end, Set<RichType> richTypes) {
+    private void updateSpanUI(RichType richType, boolean open, Object extra, int start, int end, Set<RichType> richTypes) {
         if (start < 0 || end < 0) {
             return;
         }
-        SpanUtil.setSpan(richType, open, object, mRichAtomicDataList, getEditableText(), richTypes, start, end);
+        SpanUtil.setSpan(richType, open, extra, mRichAtomicDataList, getEditableText(), richTypes, start, end);
     }
 
     // TODO 插入数据时，应该修改data
@@ -296,22 +279,12 @@ public class WRichEditor extends EditText {
 
     // SpannableStringBuilder
     public void addExtraEditable(Editable extraEditable) {
-        Log.d("textchange", "hint : " + getHint() + " , addExtraEditable 0 " + extraEditable.getClass().getName());
         if (extraEditable != null) {
-
-//            SpannableStringBuilder spannableStringBuilder = (SpannableStringBuilder) extraEditable;
-//            TextWatcher[] watchers = spannableStringBuilder.getSpans(0, extraEditable.length(),TextWatcher.class);
-            // android.text.DynamicLayout$ChangeWatcher
-            // android.widget.TextView$ChangeWatcher
-
             Editable originalEditable = getEditableText();
-
             // 当append是有格式的String时，即，Editable，已经remove的EditText会继续响应onTextChanged函数
             // originalEditable.append(extraEditable);
-
             // 当append是没有格式的String时，已经remove的EditText不会继续响应onTextChanged函数
             // originalEditable.append(extraEditable.toString());
-
             IRichSpan[] spans = extraEditable.getSpans(0, extraEditable.length(), IRichSpan.class);
 
             List<SpanPart> list = new ArrayList<>();
@@ -325,17 +298,9 @@ public class WRichEditor extends EditText {
             // 循环将格式赋给添加的这一段
             for (SpanPart part : list) {
                 if (part.isValid()) {
-//                    if (part.getStart() < spanStart) {
-//                        editable.setSpan(TypeUtil.getSpanByType(richType, object), part.getStart(), spanStart, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-//                    }
-
-//                    if (part.getEnd() > spanEnd) {
-//                        editable.setSpan(TypeUtil.getSpanByType(richType, object), spanEnd, part.getEnd(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-//                    }
                     originalEditable.setSpan(part.getRichSpan(), originalLength + part.getStart(), originalLength + part.getEnd(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                 }
             }
-
         }
     }
 
@@ -349,28 +314,22 @@ public class WRichEditor extends EditText {
         List<SpanPart> list = new ArrayList<>();
         for (IRichSpan span : spans) {
             list.add(new SpanPart(editable.getSpanStart(span), editable.getSpanEnd(span), span));
-            Log.d("qwer", "subSpannableStringInclusiveExclusive editable.removeSpan(span)");
             editable.removeSpan(span);
         }
-        // TODO
-        Log.d("qwer", "subSpannableStringInclusiveExclusive setText ");
         mTextChangeValid = false;
         setText(editable.subSequence(start, end).toString());
         mTextChangeValid = true;
         // 循环将格式赋给添加的这一段
         for (SpanPart part : list) {
             if (part.isValid()) {
-                Log.d("qwer", "subSpannableStringInclusiveExclusive setSpan  ");
                 getText().setSpan(part.getRichSpan(), part.getStart() - start, part.getEnd() - start, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             }
         }
-
     }
 
     public void requestFocusAndPutCursorToTail() {
         requestFocus();
         setSelection(getEditableText().toString().length());
-        Log.d("lll", "hint : " + getHint() + ", requestFocusAndPutCursorToTail()");
     }
 
 }

@@ -18,11 +18,13 @@ import cn.carbs.wricheditor.library.types.RichType;
 
 public class SpanUtil {
 
+    public static final String TAG = SpanUtil.class.getSimpleName();
     // SPAN_INCLUSIVE_EXCLUSIVE
-    public static void setSpan(RichType richType, boolean open, Object object, ArrayList<RichAtomicData> richAtomicDataList, Editable editable, Set<RichType> richTypes, int spanStart, int spanEnd) {
+    public static void setSpan(RichType richType, boolean open, Object extra, ArrayList<RichAtomicData> richAtomicDataList, Editable editable, Set<RichType> richTypes, int spanStart, int spanEnd) {
         if (editable == null || spanStart < 0 || spanEnd < 0 || spanStart > spanEnd) {
             return;
         }
+        LogUtil.d(TAG, "setSpan richType : " + richType.name() + ", open : " + open + ", extra : " + extra);
         if (spanStart == spanEnd) {
             // 没有选中，分情况：
             // 如果是 HeadLine 类型，则将整行都置为大号字体
@@ -34,20 +36,20 @@ public class SpanUtil {
                 int lastLineBreak = 0;
                 for (int i = spanEnd - 1; i >= 0; i--) {
                     char ic = editableStr.charAt(i);
-                    if (ic == CharConstant.LINE_BREAK_CHAR) {
+                    if (ic == CharConstant.ENTER_CHAR) {
                         lastLineBreak = i;
                         break;
                     }
                 }
-                editable.setSpan(TypeUtil.getSpanByType(richType, object), lastLineBreak, spanEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                editable.setSpan(TypeUtil.getSpanByType(richType, extra), lastLineBreak, spanEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             }
             return;
         }
 
         if (open) {
-            editable.setSpan(TypeUtil.getSpanByType(richType, object), spanStart, spanEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            editable.setSpan(TypeUtil.getSpanByType(richType, extra), spanStart, spanEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         } else {
-            IRichSpan richSpan = TypeUtil.getSpanByType(richType, object);
+            IRichSpan richSpan = TypeUtil.getSpanByType(richType, extra);
             IRichSpan[] spans = editable.getSpans(spanStart, spanEnd, richSpan.getClass());
 
             List<SpanPart> list = new ArrayList<>();
@@ -58,11 +60,10 @@ public class SpanUtil {
             for (SpanPart part : list) {
                 if (part.isValid()) {
                     if (part.getStart() < spanStart) {
-                        editable.setSpan(TypeUtil.getSpanByType(richType, object), part.getStart(), spanStart, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                        editable.setSpan(TypeUtil.getSpanByType(richType, extra), part.getStart(), spanStart, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     }
-
                     if (part.getEnd() > spanEnd) {
-                        editable.setSpan(TypeUtil.getSpanByType(richType, object), spanEnd, part.getEnd(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                        editable.setSpan(TypeUtil.getSpanByType(richType, extra), spanEnd, part.getEnd(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     }
                 }
             }

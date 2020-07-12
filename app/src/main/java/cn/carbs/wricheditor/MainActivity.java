@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 setButtonTextColor(mBtnLink, false);
                 Set<RichType> richTypes = mWRichEditorScrollView.getRichTypes();
                 TypeUtil.removeCertainRichType(richTypes, RichType.LINK);
-                mWRichEditorScrollView.updateTextByRichTypeChanged(RichType.LINK, true, null);
+                mWRichEditorScrollView.updateTextByRichTypeChanged(RichType.LINK, true, link);
                 setButtonTextColor(mBtnUnderLine, false);
             }
         });
@@ -196,14 +196,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         RichLineView richLineView = new RichLineView(MainActivity.this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER_HORIZONTAL;
-        mWRichEditorScrollView.addRichCell(richLineView, lp);
+        mWRichEditorScrollView.addRichCell(richLineView, lp, -1);
     }
 
     private void onInsertImageClicked() {
         RichImageView richImageView = new RichImageView(MainActivity.this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER_HORIZONTAL;
-        mWRichEditorScrollView.addRichCell(richImageView, lp);
+        mWRichEditorScrollView.addRichCell(richImageView, lp, -1);
     }
 
     private void onListUnorderedClicked() {
@@ -230,13 +230,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             editTextWrapperView.setBackgroundColor(0x18222222);
         }
-        mWRichEditorScrollView.addRichCell(editTextWrapperView, lp);
+        mWRichEditorScrollView.addRichCell(editTextWrapperView, lp, -1);
     }
 
     private WRichEditorWrapperView addEditText() {
         WRichEditorWrapperView editTextWrapperView = new WRichEditorWrapperView(MainActivity.this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        mWRichEditorScrollView.addRichCell(editTextWrapperView, lp);
+        mWRichEditorScrollView.addRichCell(editTextWrapperView, lp, -1);
         editTextWrapperView.setBackgroundColor(0x66660000);
         return editTextWrapperView;
     }

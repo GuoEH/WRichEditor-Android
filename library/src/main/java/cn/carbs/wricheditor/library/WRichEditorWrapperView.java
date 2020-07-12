@@ -11,7 +11,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
-import cn.carbs.wricheditor.library.configures.RichEditorConfig;
 import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.types.RichType;
@@ -137,13 +136,6 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
             return mWRichEditor.getSelectMode();
         }
         return false;
-    }
-
-    // TODO 外部主动更改了字体样式，不涉及数据插入
-    public void updateTextByRichTypeChanged(RichType richType, boolean open, Object extra) {
-        if (mWRichEditor != null) {
-            mWRichEditor.updateTextByRichTypeChanged(richType, open, extra);
-        }
     }
 
     // SpannableStringBuilder
