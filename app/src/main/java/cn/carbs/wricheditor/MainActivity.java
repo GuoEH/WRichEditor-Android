@@ -26,7 +26,6 @@ import cn.carbs.wricheditor.library.WRichEditorWrapperView;
 import cn.carbs.wricheditor.library.callbacks.OnRichTypeChangedListener;
 import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.TypeUtil;
-import cn.carbs.wricheditor.library.views.RichImageView;
 import cn.carbs.wricheditor.library.views.RichLineView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnRichTypeChangedListener {
@@ -196,18 +195,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void onInsertLineClicked() {
+        int[] focusedIndex = new int[1];
+        mWRichEditorScrollView.findCurrentOrRecentFocusedRichEditorWrapperView(focusedIndex);
         RichLineView richLineView = new RichLineView(MainActivity.this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER_HORIZONTAL;
-        mWRichEditorScrollView.addRichCell(richLineView, lp, -1);
+        mWRichEditorScrollView.addRichCell(richLineView, lp, focusedIndex[0] + 1);
+        mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(focusedIndex[0] + 2, RichType.NONE, true);
     }
 
     private void onInsertImageClicked() {
+        int[] focusedIndex = new int[1];
+        mWRichEditorScrollView.findCurrentOrRecentFocusedRichEditorWrapperView(focusedIndex);
         MyRichImageView richImageView = new MyRichImageView(MainActivity.this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER_HORIZONTAL;
-        mWRichEditorScrollView.addRichCell(richImageView, lp, -1);
+        // TODO index
+        mWRichEditorScrollView.addRichCell(richImageView, lp, focusedIndex[0] + 1);
         richImageView.setImageUrl("");
+        mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(focusedIndex[0] + 2, RichType.NONE, true);
     }
 
     private void onListUnorderedClicked() {
