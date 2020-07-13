@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.Editable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -1007,7 +1006,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
 
     }
 
-    private boolean needAddWRichEditor(int currentIndex) {
+    public boolean needAddWRichEditor(int currentIndex) {
         if (mLinearLayout == null) {
             return false;
         }
@@ -1151,7 +1150,6 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
 
     @Override
     public void onEditorFocusChanged(IRichCellView iRichCellView, boolean focused) {
-        Log.d("eee", "onEditorFocusChanged focused : " + focused);
         if (focused) {
             mLastFocusedRichCellView = iRichCellView;
         }

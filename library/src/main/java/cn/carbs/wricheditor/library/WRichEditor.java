@@ -8,6 +8,7 @@ import android.text.Spanned;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.EditText;
@@ -29,6 +30,7 @@ import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.CursorUtil;
 import cn.carbs.wricheditor.library.utils.LogUtil;
 import cn.carbs.wricheditor.library.utils.OrderListUtil;
+import cn.carbs.wricheditor.library.utils.RichUtil;
 import cn.carbs.wricheditor.library.utils.SpanUtil;
 import cn.carbs.wricheditor.library.utils.StrategyUtil;
 import cn.carbs.wricheditor.library.utils.TypeUtil;
@@ -300,27 +302,48 @@ public class WRichEditor extends EditText {
                         // 查看上一个是不是WRichEditor，
                         IRichCellView iRichCellView = mWRichEditorScrollView.mRichCellViewList.get(index - 1);
 
-                        if (iRichCellView != null && iRichCellView.getRichType() == RichType.NONE) {
-                            // 1. 如果是，则将光标调整到上一个WRichEditor的最后，同时将此WRichEditor删除
-                            // 获取editable，然后将此WRichEditor remove
+                        if (iRichCellView != null) {
+                            RichType richType = iRichCellView.getRichType();
                             Editable editable = getEditableText();
+                            if (richType == RichType.NONE) {
+                                // 1. 如果是，则将光标调整到上一个WRichEditor的最后，同时将此WRichEditor删除
+                                // 将此WRichEditor remove
+                                ((WRichEditorWrapperView) iRichCellView).addExtraEditable(editable);
+                                ((WRichEditorWrapperView) iRichCellView).requestFocusAndPutCursorToTail();
 
-                            ((WRichEditorWrapperView) iRichCellView).addExtraEditable(editable);
-                            ((WRichEditorWrapperView) iRichCellView).requestFocusAndPutCursorToTail();
-
-                            ViewParent parent = mWrapperView.getParent();
-                            if (parent != null && parent instanceof ViewGroup) {
-                                setText("");
-                                clearFocus();
-                                ((ViewGroup) parent).removeView(mWrapperView);
-                                Log.d("nnn", "removeView");
-                                mWRichEditorScrollView.mRichCellViewList.remove(mWrapperView);
+                                ViewParent parent = mWrapperView.getParent();
+                                if (parent != null && parent instanceof ViewGroup) {
+                                    setText("");
+                                    clearFocus();
+                                    ((ViewGroup) parent).removeView(mWrapperView);
+                                    mWRichEditorScrollView.mRichCellViewList.remove(mWrapperView);
+                                }
+                            } else if (richType.getGroup() == RichTypeConstants.GROUP_RESOURCE) {
+                                // 图片、音频、视频、横线、云盘
+                                // TODO
+                                // 1. 此view中的text是否为空，
+                                //  1.1 如果为空，判断此view的下一个view是否需要needAddEditor，
+                                if (editable == null || editable.length() == 0) {
+                                    boolean needAddWRichEditorIfDeleted = mWRichEditorScrollView.needAddWRichEditor(index);
+                                    if (needAddWRichEditorIfDeleted) {
+                                        // 不删除，只将焦点至于上面的resource上
+                                    } else {
+                                        // 删除，并将焦点至于上面的resource上
+                                        ViewParent parent = mWrapperView.getParent();
+                                        if (parent != null && parent instanceof ViewGroup) {
+                                            setText("");
+                                            clearFocus();
+                                            ((ViewGroup) parent).removeView(mWrapperView);
+                                            mWRichEditorScrollView.mRichCellViewList.remove(mWrapperView);
+                                        }
+                                    }
+                                    removeFocusToResourceTypeAbove(index - 1);
+                                } else {
+                                    //  1.2 如果不为空，则将焦点至于上面的resource上
+                                    removeFocusToResourceTypeAbove(index - 1);
+                                }
                             }
-
-                        } else {
-
                         }
-
                         // 2. 如果不是，则将焦点至于image、video、等资源上
 
                     }
@@ -340,6 +363,14 @@ public class WRichEditor extends EditText {
             }
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    private void removeFocusToResourceTypeAbove(int targetIndex) {
+        if (mWRichEditorScrollView != null && mWRichEditorScrollView.getContainerView() != null) {
+            RichUtil.hideSoftKeyboard(getContext(), this);
+            clearFocus();
+            TypeUtil.selectOnlyOneResourceType(mWRichEditorScrollView, targetIndex);
+        }
     }
 
     public void setWRichEditorWrapperView(WRichEditorWrapperView wrapperView) {

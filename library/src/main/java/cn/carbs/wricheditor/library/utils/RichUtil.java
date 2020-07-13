@@ -1,6 +1,10 @@
 package cn.carbs.wricheditor.library.utils;
 
+import android.app.Activity;
+import android.content.Context;
 import android.text.Editable;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import java.util.ArrayList;
 
@@ -9,8 +13,18 @@ import cn.carbs.wricheditor.library.models.RichCellData;
 
 public class RichUtil {
 
+    public static void hideSoftKeyboard(Context context, View view) {
+        if (view == null) {
+            return;
+        }
+        InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+
     /**
      * 光标插入位置的定位，如果光标位于两个不同格式的数据之间，则返回前一个 RichAtomicData
+     *
      * @param richCellData
      * @param editable
      * @param location
@@ -48,7 +62,7 @@ public class RichUtil {
         // cursor 右侧的 RichAtomicData 数据对应的 index
         int iRight = -1;
 
-        for(int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++) {
             RichAtomicData currRichAtomicData = atomicDataList.get(i);
             cLeft = cRight;
             cRight = cRight + currRichAtomicData.getTextLength();

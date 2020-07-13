@@ -25,19 +25,7 @@ line 等view 在删除时，需要merge一下，同时在别的editor获取焦�
 
 // bug 点击 H 后，变成粗体，再点击H后变成非粗体
 
-// 原生的 BulletSpan、QuoteSpan、DrawableMarginSpan 都有部分问题，多行时，光标错位
-
 // TODO WRichEditor  设置lineHeight
-
-
-github上的开源项目，均兼具 bug多+功能少 特点，无法达到商业级应用的水准
-
-
-// TODO
-添加线、图片时，自动在下面加一个edittext
-
-// TODO
-是否需要将 wRichEditor.getEditableText();  改成 getEditable()?
 
 // bug
 当最后一个符号为换行符，并且添加引用时，需要注意，如果此时格式开启了加粗B等，上面的整行都变成了粗体，因为响应了TextChanged
@@ -46,20 +34,7 @@ github上的开源项目，均兼具 bug多+功能少 特点，无法达到商�
 选中某段文字后，点击某个格式，只会响应此变化的格式，之前已经选中的格式不能带入
 
 
-web 编辑器优势：
-容错性好
-
-na 编辑器 由于场景众多，且java强语言类型
-
 锤子便签：在quote时，会自动将所有的字符进行一次缩小，颜色变浅
-
-
-//TODO
-锤子便签中，在quote模式，如果点击了回车键，则跳出quote模式。多行打开quote时，没有合并
-知乎编辑器中，在quote模式，如果点击了回车键，会继续在quote中换行，当再次点击quote键时，会将此段的换行去掉，前后两端仍然处于quote模式下
-
-// TODO 
-添加图片、横线时，应该在其后面添加一个普通的
 
 
 // TODO 
@@ -67,6 +42,15 @@ na 编辑器 由于场景众多，且java强语言类型
 
 // TODO
 list quote 状态互相切换
+
+// TODO
+delete按键与resource类型richtype的交互
+
+// TODO
+去掉mRichCellViewList
+
+// TODO 
+不应该从外部调用  setSelectMode，重新设计此方法
 
 //// 说明：
 Android端以Native方式实现富文本编辑器。

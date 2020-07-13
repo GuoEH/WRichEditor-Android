@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private HashMap<RichType, ImageView> mImageViewMap = new HashMap<>();
 
+    private boolean mHasAddFirstEditor = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +97,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
+        if (mHasAddFirstEditor) {
+            return;
+        }
         WRichEditorWrapperView wrapperView = addEditText();
         if (wrapperView != null && wrapperView.getWRichEditor() != null) {
             wrapperView.getWRichEditor().requestFocus();
@@ -201,7 +206,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER_HORIZONTAL;
         mWRichEditorScrollView.addRichCell(richLineView, lp, focusedIndex[0] + 1);
-        mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(focusedIndex[0] + 2, RichType.NONE, true);
+        if (mWRichEditorScrollView.needAddWRichEditor(focusedIndex[0] + 1)) {
+            mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(focusedIndex[0] + 2, RichType.NONE, true);
+        }
     }
 
     private void onInsertImageClicked() {
@@ -213,7 +220,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // TODO index
         mWRichEditorScrollView.addRichCell(richImageView, lp, focusedIndex[0] + 1);
         richImageView.setImageUrl("");
-        mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(focusedIndex[0] + 2, RichType.NONE, true);
+        if (mWRichEditorScrollView.needAddWRichEditor(focusedIndex[0] + 1)) {
+            mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(focusedIndex[0] + 2, RichType.NONE, true);
+        }
     }
 
     private void onListUnorderedClicked() {
@@ -295,10 +304,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (newTypes == null) {
             newTypes = new HashSet<>();
         }
-        Log.d("www", "=== onRichTypeChanged === ");
-        for (RichType item : newTypes) {
-            Log.d("www", "RichType item : " + item.name());
-        }
+//        Log.d("www", "=== onRichTypeChanged === ");
+//        for (RichType item : newTypes) {
+//            Log.d("www", "RichType item : " + item.name());
+//        }
 
         for (Map.Entry<RichType, ImageView> entry : mImageViewMap.entrySet()) {
             if (newTypes.contains(entry.getKey())) {

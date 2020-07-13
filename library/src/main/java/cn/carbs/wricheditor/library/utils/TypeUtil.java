@@ -180,4 +180,30 @@ public class TypeUtil {
         }
     }
 
+    public static void selectOnlyOneResourceType(WRichEditorScrollView scrollView, int currentSelectedIndex) {
+
+        if (scrollView == null) {
+            return;
+        }
+        if (scrollView.getContainerView() == null) {
+            return;
+        }
+        ViewGroup viewGroup = scrollView.getContainerView();
+        int childCount = viewGroup.getChildCount();
+
+        if (viewGroup != null && currentSelectedIndex < childCount - 1) {
+            View targetView = viewGroup.getChildAt(currentSelectedIndex);
+            for (int i = 0; i < childCount; i++) {
+                View childView = viewGroup.getChildAt(i);
+                if (childView instanceof IRichCellView) {
+                    IRichCellView cellView = (IRichCellView) childView;
+                    RichType richType = cellView.getRichType();
+                    if (richType != null && richType.getGroup() == RichTypeConstants.GROUP_RESOURCE) {
+                        cellView.setSelectMode(cellView == targetView);
+                    }
+                }
+            }
+        }
+    }
+
 }

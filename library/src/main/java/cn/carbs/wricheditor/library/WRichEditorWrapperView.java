@@ -130,6 +130,9 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
     @Override
     public void setSelectMode(boolean selectMode) {
         // TODO
+        if (mWRichEditor != null) {
+            mWRichEditor.requestFocus();
+        }
     }
 
     @Override
