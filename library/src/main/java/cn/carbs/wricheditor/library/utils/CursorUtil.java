@@ -6,6 +6,7 @@ public class CursorUtil {
     private static int sLastTextLength;
     private static int sLastCursorLocation;
     private static String sLastWRichEditorContentDescription;
+    private static int sWRichEditorContentDescription;
 
     public static void markLastTextLength(int lastTextLength) {
         sLastTextLength = lastTextLength;
@@ -56,17 +57,7 @@ public class CursorUtil {
     }
 
     public static synchronized String getNewContentDescriptionForWRichEditor() {
-        String ret = "0";
-        if (sLastWRichEditorContentDescription == null) {
-            return ret;
-        }
-        try {
-            int i = Integer.valueOf(sLastWRichEditorContentDescription);
-            ret = String.valueOf((i + 1));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return ret;
+        return String.valueOf(sWRichEditorContentDescription++);
     }
 
 }

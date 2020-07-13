@@ -1,15 +1,12 @@
 =================
 
-// TODO
+// 待测试
 系统默认实现了：当光标至于某一段统一的格式文字中间时，自动按照当时的格式来进行输入，并且是按照紧接着后面的格式为标准。
 此时的问题：如何根据光标位置，获取此位置后面的文字的样式呢？
 
 // TODO
 检查delete键是否连续？image等类型，如果插入后不
 
-
-// TODO
-每一个生成的edittext 都有contentDescription
 =================
 
 1. 换肤
@@ -29,8 +26,6 @@ line 等view 在删除时，需要merge一下，同时在别的editor获取焦�
 // bug 点击 H 后，变成粗体，再点击H后变成非粗体
 
 // 原生的 BulletSpan、QuoteSpan、DrawableMarginSpan 都有部分问题，多行时，光标错位
-
-// TODO 引用、有序列表、无序列表，都采用插入一个 WRichEditor 的方式实现
 
 // TODO WRichEditor  设置lineHeight
 
@@ -70,6 +65,8 @@ na 编辑器 由于场景众多，且java强语言类型
 // TODO 
 无序列表时，在行中间按下enter键，应该把 enterEnd 后面的内容带入下一行，并把 enterStart 到 enterEnd 之间的内容删除
 
+// TODO
+list quote 状态互相切换
 
 //// 说明：
 Android端以Native方式实现富文本编辑器。
