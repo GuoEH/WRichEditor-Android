@@ -2,6 +2,7 @@ package cn.carbs.wricheditor.library.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -34,6 +35,12 @@ public class RichImageView extends RelativeLayout implements IRichCellView, View
 
     private OnEditorFocusChangedListener mOnEditorFocusChangedListener;
 
+    private int mImageWidth;
+    private int mImageHeight;
+
+    private int mImageViewWidth;
+    private int mImageViewHeight;
+
     public RichImageView(Context context) {
         super(context);
         init(context);
@@ -54,7 +61,6 @@ public class RichImageView extends RelativeLayout implements IRichCellView, View
         mVContainer = findViewById(R.id.wricheditor_rich_image_view_container);
         mVContainer.setOnClickListener(this);
         mImageView = findViewById(R.id.image_view);
-        mImageView.setImageResource(R.drawable.image_farmers);
         mVDelete = findViewById(R.id.iv_delete);
         mVDelete.setOnClickListener(this);
         setOnClickListener(this);
@@ -77,6 +83,13 @@ public class RichImageView extends RelativeLayout implements IRichCellView, View
         } else if (v == this) {
             setSelectMode(true);
         }
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        mImageViewWidth = getMeasuredWidth();
+        mImageViewHeight = 0;
     }
 
     @Override
@@ -127,5 +140,40 @@ public class RichImageView extends RelativeLayout implements IRichCellView, View
     @Override
     public void setEditorFocusChangedListener(OnEditorFocusChangedListener listener) {
         mOnEditorFocusChangedListener = listener;
+    }
+
+    public ImageView getImageView() {
+        return mImageView;
+    }
+
+    public void setImageWidthAndHeight(int imageWidth, int imageHeight) {
+//        mImageViewWidth = getMeasuredWidth();
+//        mImageViewHeight = 0;
+        Log.d("wangpp", "setImageWidthAndHeight mImageViewWidth : " + mImageViewWidth + "  getMeasuredWidth() : " + getMeasuredWidth());
+        int measuredWidth = getMeasuredWidth();
+        if (measuredWidth > 0) {
+            mImageViewWidth = measuredWidth;
+        }
+
+        int imageViewWidth = mImageViewWidth
+                - getResources().getDimensionPixelSize(R.dimen.wrich_editor_image_view_padding) * 2
+                - getResources().getDimensionPixelSize(R.dimen.wrich_editor_image_view_margin_h) * 2;
+        int imageViewHeight = imageViewWidth * imageHeight / imageWidth;
+        /*if (mIVPagerItem != null && mIVPagerItem.getLayoutParams() != null) {
+            if (imageViewHeight != mIVPagerItem.getLayoutParams().height) {
+                mIVPagerItem.setLayoutParams(new RelativeLayout.LayoutParams(ConfigurationManager.sScreenWidth, imageViewHeight));
+            }
+        }*/
+
+        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mImageView.getLayoutParams();
+        if (lp == null) {
+            lp = new RelativeLayout.LayoutParams(imageViewWidth, imageViewHeight);
+            mImageView.setLayoutParams(lp);
+        } else {
+            if (lp.height != imageViewHeight) {
+                lp.height = imageHeight;
+            }
+            mImageView.setLayoutParams(lp);
+        }
     }
 }

@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/wricheditor_rich_image_view_container"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/wrich_editor_image_view_margin_h"
     android:layout_marginTop="2dp"
+    android:layout_marginRight="@dimen/wrich_editor_image_view_margin_h"
     android:layout_marginBottom="2dp"
-    android:padding="4dp">
+    android:padding="@dimen/wrich_editor_image_view_padding">
 
     <ImageView
         android:id="@+id/image_view"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:scaleType="centerInside"
-        android:src="@drawable/image_farmers" />
+        android:background="#66ff0000"
+        android:scaleType="centerInside" />
 
     <ImageView
         android:id="@+id/iv_delete"

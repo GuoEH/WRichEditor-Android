@@ -9,4 +9,8 @@
     <dimen name="wrich_editor_padding_bottom">22dp</dimen>
 
     <dimen name="wrich_editor_text_size">20dp</dimen>
+
+    <dimen name="wrich_editor_image_view_padding">4dp</dimen>
+
+    <dimen name="wrich_editor_image_view_margin_h">24dp</dimen>
 </resources>

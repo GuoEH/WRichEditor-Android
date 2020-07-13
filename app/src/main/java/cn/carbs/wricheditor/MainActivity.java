@@ -203,10 +203,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void onInsertImageClicked() {
-        RichImageView richImageView = new RichImageView(MainActivity.this);
+        MyRichImageView richImageView = new MyRichImageView(MainActivity.this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER_HORIZONTAL;
         mWRichEditorScrollView.addRichCell(richImageView, lp, -1);
+        richImageView.setImageUrl("");
     }
 
     private void onListUnorderedClicked() {
