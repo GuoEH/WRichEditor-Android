@@ -243,7 +243,7 @@ public class WRichEditor extends EditText {
                 }
                 typeChangedListener.onRichTypeChanged(prevRichTypes, currRichTypes);
             }
-
+            TypeUtil.removeAllResourceTypeFocus(mWRichEditorScrollView);
         }
     }
 

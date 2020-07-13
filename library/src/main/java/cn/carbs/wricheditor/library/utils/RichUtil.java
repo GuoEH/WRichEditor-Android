@@ -8,6 +8,8 @@ import android.view.inputmethod.InputMethodManager;
 
 import java.util.ArrayList;
 
+import cn.carbs.wricheditor.library.WRichEditorScrollView;
+import cn.carbs.wricheditor.library.WRichEditorWrapperView;
 import cn.carbs.wricheditor.library.models.RichAtomicData;
 import cn.carbs.wricheditor.library.models.RichCellData;
 
@@ -19,6 +21,17 @@ public class RichUtil {
         }
         InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    public static void removeAllEditorFocus(Context context, WRichEditorScrollView wRichEditorScrollView) {
+        if (wRichEditorScrollView != null) {
+            int[] index = new int[1];
+            WRichEditorWrapperView focusedWrapperView = wRichEditorScrollView.findCurrentOrRecentFocusedRichEditorWrapperView(index);
+            if (focusedWrapperView != null && focusedWrapperView.getWRichEditor() != null) {
+                RichUtil.hideSoftKeyboard(context, focusedWrapperView.getWRichEditor());
+                focusedWrapperView.getWRichEditor().clearFocus();
+            }
+        }
     }
 
 

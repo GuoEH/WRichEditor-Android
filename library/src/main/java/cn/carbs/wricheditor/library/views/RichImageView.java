@@ -13,10 +13,12 @@ import androidx.annotation.Nullable;
 
 import cn.carbs.wricheditor.library.R;
 import cn.carbs.wricheditor.library.WRichEditorScrollView;
+import cn.carbs.wricheditor.library.WRichEditorWrapperView;
 import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
 import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.types.RichType;
+import cn.carbs.wricheditor.library.utils.RichUtil;
 import cn.carbs.wricheditor.library.utils.TypeUtil;
 
 // 不抽象，如果需要自定义，直接在外部自定义
@@ -72,6 +74,7 @@ public class RichImageView extends RelativeLayout implements IRichCellView, View
         int id = v.getId();
         if (id == R.id.wricheditor_rich_image_view_container) {
             TypeUtil.selectOnlyOneResourceType(mWRichEditorScrollView, this);
+            RichUtil.removeAllEditorFocus(getContext(), mWRichEditorScrollView);
         } else if (id == R.id.iv_delete) {
             if (mWRichEditorScrollView != null && mWRichEditorScrollView.mRichCellViewList != null) {
                 ViewParent parent = getParent();
@@ -83,6 +86,7 @@ public class RichImageView extends RelativeLayout implements IRichCellView, View
             }
         } else if (v == this) {
             TypeUtil.selectOnlyOneResourceType(mWRichEditorScrollView, this);
+            RichUtil.removeAllEditorFocus(getContext(), mWRichEditorScrollView);
         }
     }
 
@@ -148,9 +152,6 @@ public class RichImageView extends RelativeLayout implements IRichCellView, View
     }
 
     public void setImageWidthAndHeight(int imageWidth, int imageHeight) {
-//        mImageViewWidth = getMeasuredWidth();
-//        mImageViewHeight = 0;
-        Log.d("wangpp", "setImageWidthAndHeight mImageViewWidth : " + mImageViewWidth + "  getMeasuredWidth() : " + getMeasuredWidth());
         int measuredWidth = getMeasuredWidth();
         if (measuredWidth > 0) {
             mImageViewWidth = measuredWidth;
@@ -160,12 +161,6 @@ public class RichImageView extends RelativeLayout implements IRichCellView, View
                 - getResources().getDimensionPixelSize(R.dimen.wrich_editor_image_view_padding) * 2
                 - getResources().getDimensionPixelSize(R.dimen.wrich_editor_image_view_margin_h) * 2;
         int imageViewHeight = imageViewWidth * imageHeight / imageWidth;
-        /*if (mIVPagerItem != null && mIVPagerItem.getLayoutParams() != null) {
-            if (imageViewHeight != mIVPagerItem.getLayoutParams().height) {
-                mIVPagerItem.setLayoutParams(new RelativeLayout.LayoutParams(ConfigurationManager.sScreenWidth, imageViewHeight));
-            }
-        }*/
-
         RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mImageView.getLayoutParams();
         if (lp == null) {
             lp = new RelativeLayout.LayoutParams(imageViewWidth, imageViewHeight);

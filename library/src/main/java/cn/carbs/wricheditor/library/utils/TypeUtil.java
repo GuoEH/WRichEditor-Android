@@ -206,4 +206,26 @@ public class TypeUtil {
         }
     }
 
+    public static void removeAllResourceTypeFocus(WRichEditorScrollView scrollView) {
+
+        if (scrollView == null) {
+            return;
+        }
+        if (scrollView.getContainerView() == null) {
+            return;
+        }
+        ViewGroup viewGroup = scrollView.getContainerView();
+        int childCount = viewGroup.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            View childView = viewGroup.getChildAt(i);
+            if (childView instanceof IRichCellView) {
+                IRichCellView cellView = (IRichCellView) childView;
+                RichType richType = cellView.getRichType();
+                if (richType != null && richType.getGroup() == RichTypeConstants.GROUP_RESOURCE) {
+                    cellView.setSelectMode(false);
+                }
+            }
+        }
+    }
+
 }
