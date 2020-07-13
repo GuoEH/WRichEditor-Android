@@ -1,14 +1,18 @@
 package cn.carbs.wricheditor.library.utils;
 
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import cn.carbs.wricheditor.library.WRichEditorScrollView;
 import cn.carbs.wricheditor.library.WRichEditorWrapperView;
 import cn.carbs.wricheditor.library.configures.RichEditorConfig;
 import cn.carbs.wricheditor.library.constants.RichTypeConstants;
+import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.interfaces.IRichSpan;
 import cn.carbs.wricheditor.library.spannables.BoldStyleSpan;
 import cn.carbs.wricheditor.library.spannables.HeadlineSpan;
@@ -152,6 +156,28 @@ public class TypeUtil {
                 return null;
         }
         return null;
+    }
+
+    public static void selectOnlyOneResourceType(WRichEditorScrollView scrollView, View currentSelectedView) {
+
+        if (scrollView == null) {
+            return;
+        }
+        if (scrollView.getContainerView() == null) {
+            return;
+        }
+        ViewGroup viewGroup = scrollView.getContainerView();
+        int childCount = viewGroup.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            View childView = viewGroup.getChildAt(i);
+            if (childView instanceof IRichCellView) {
+                IRichCellView cellView = (IRichCellView) childView;
+                RichType richType = cellView.getRichType();
+                if (richType != null && richType.getGroup() == RichTypeConstants.GROUP_RESOURCE) {
+                    cellView.setSelectMode(cellView == currentSelectedView);
+                }
+            }
+        }
     }
 
 }
