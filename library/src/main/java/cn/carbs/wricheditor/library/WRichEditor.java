@@ -19,6 +19,8 @@ import java.util.Set;
 
 import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
 import cn.carbs.wricheditor.library.callbacks.OnRichTypeChangedListener;
+import cn.carbs.wricheditor.library.configures.RichEditorConfig;
+import cn.carbs.wricheditor.library.constants.RichTypeConstants;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.interfaces.IRichSpan;
 import cn.carbs.wricheditor.library.models.RichAtomicData;
@@ -28,6 +30,7 @@ import cn.carbs.wricheditor.library.utils.CursorUtil;
 import cn.carbs.wricheditor.library.utils.LogUtil;
 import cn.carbs.wricheditor.library.utils.OrderListUtil;
 import cn.carbs.wricheditor.library.utils.SpanUtil;
+import cn.carbs.wricheditor.library.utils.StrategyUtil;
 import cn.carbs.wricheditor.library.utils.TypeUtil;
 
 // 注意，此方法是不会合并的
@@ -73,7 +76,6 @@ public class WRichEditor extends EditText {
     //    相反 onTextChanged 的回调返回的数据为 start: 起始位置，如6， lengthBefore: 0, lengthAfter: 新增字符串长度
     //    当选中其中两个文字，并将其替换为3个文字时， onTextChanged 的回调时 ： start : 2 lengthBefore : 2 lengthAfter : 3
 
-
     // 注意，setSpan不会响应 onTextChanged
     @Override
     protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
@@ -110,45 +112,47 @@ public class WRichEditor extends EditText {
         if (selStart == selEnd) {
             // TODO test
             SpanUtil.getSpanTypesForCursorLocation(editableText, selEnd);
-            boolean isCursorAutoChange = CursorUtil.isCursorChangedAutomaticallyByTextChange(editableLength, selStart);
+            boolean isCursorAutoChange = CursorUtil.isCursorChangedAutomaticallyByTextChange(editableLength, selStart, (String) getContentDescription());
             Log.d("www", "onSelectionChanged isCursorAutoChange : " + isCursorAutoChange);
             if (isCursorAutoChange) {
                 // Rich Type 不变？
             } else {
-
+                // 强设置失效，格式改为顺应上下文
+                StrategyUtil.sStrongSet = false;
             }
             if (hasFocus() && mWRichEditorScrollView != null) {
                 Log.d("www", "111");
-                Set<RichType> currRichTypes = new HashSet<>(4);
+                Set<RichType> currRichTypes = null;
                 // todo 将上次的 RichTypes 存储到 ScrollView 中
                 Set<RichType> prevRichTypes = mWRichEditorScrollView.getRichTypes();
                 if (selEnd == 0) {
-
-                } else if (0 < selEnd && selEnd < editableText.length()) {
-                    Log.d("www", "222");
-                    IRichSpan[] currRichSpans = editableText.getSpans(selEnd - 1, selEnd, IRichSpan.class);
-                    Log.d("www", "getSpans start : " + (selEnd - 1) + " selEnd : " + selEnd + " currRichSpans " + currRichSpans.length);
-                    if (currRichSpans == null || currRichSpans.length == 0) {
-                        // 没有
+                    Log.d("www", "112");
+                    // 光标处于0位置
+                    if (editableLength == 0) {
+                        // 光标处于0位置，并且没有任何内容
+                        currRichTypes = new HashSet<>(4);
+                        currRichTypes.addAll(prevRichTypes);
+                        Log.d("www", "113");
+                        TypeUtil.correctLineFormatGroupType(currRichTypes, mWrapperView);
                     } else {
-                        for (IRichSpan richSpan : currRichSpans) {
-                            currRichTypes.add(richSpan.getRichType());
-                            Log.d("www", "richSpan.getRichType() : " + richSpan.getRichType().name());
-                        }
+                        // 光标处于0位置，但是EditText中包含内容
+                        currRichTypes = getRichTypesByTextContextOrStrongSet(prevRichTypes, editableText, 0);
                     }
-                    if (mWrapperView != null) {
-                        RichType richType = mWrapperView.getRichType();
-                        if (richType != RichType.NONE) {
-                            currRichTypes.add(richType);
-                        }
-                    }
+                } else if (0 < selEnd && selEnd < editableText.length()) {
+                    // 格式与后向文字相同
+                    currRichTypes = getRichTypesByTextContextOrStrongSet(prevRichTypes, editableText, selEnd);
                 } else if (selEnd == editableText.length()) {
-
+                    // 处于最后的位置，格式与前向文字相同
+                    currRichTypes = getRichTypesByTextContextOrStrongSet(prevRichTypes, editableText, selEnd - 1);
                 }
                 // TODO
                 OnRichTypeChangedListener typeChangedListener = mWRichEditorScrollView.getOnRichTypeChangedListener();
                 if (typeChangedListener != null) {
                     // TODO api设计是否需要优化？考虑到光标移动的情况，应该不需要
+                    Log.d("www", "888");
+                    for (RichType richType : currRichTypes) {
+                        Log.d("www", "----> richType : " + richType.name());
+                    }
                     typeChangedListener.onRichTypeChanged(prevRichTypes, currRichTypes);
                 }
             }
@@ -156,16 +160,88 @@ public class WRichEditor extends EditText {
 
         CursorUtil.markLastTextLength(editableLength);
         CursorUtil.markLastCursorLocation(selStart);
+        CursorUtil.markLastWRichEditorContentDescription((String) getContentDescription());
 
+    }
+
+
+    private Set<RichType> getRichTypesByTextContextOrStrongSet(Set<RichType> prevRichTypes, Editable editableText, int start) {
+        if (prevRichTypes == null) {
+            prevRichTypes = new HashSet<>();
+        }
+        Set<RichType> currRichTypes = new HashSet<>(4);
+        if (StrategyUtil.sStrongSet) {
+            currRichTypes.addAll(prevRichTypes);
+        } else {
+            IRichSpan[] currRichSpans = editableText.getSpans(start, start + 1, IRichSpan.class);
+            Log.d("www", "getSpans start : " + start + " currRichSpans " + currRichSpans.length);
+            if (currRichSpans == null || currRichSpans.length == 0) {
+                // 没有
+            } else {
+                for (IRichSpan richSpan : currRichSpans) {
+                    currRichTypes.add(richSpan.getRichType());
+                    Log.d("www", "richSpan.getRichType() : " + richSpan.getRichType().name());
+                }
+            }
+        }
+        // TODO
+//                        currRichTypes.addAll(prevRichTypes);
+        TypeUtil.correctLineFormatGroupType(currRichTypes, mWrapperView);
+        return currRichTypes;
     }
 
     // 有效，在focus更改时，
     @Override
     protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
-        LogUtil.d(TAG, "WRichEditor onFocusChanged focused : " + focused + " direction : " + direction);
+        LogUtil.d(TAG, "WRichEditor onFocusChanged focused : " + focused + ", contentDescription : " + getContentDescription());
+        StrategyUtil.sStrongSet = false;
         if (mOnEditorFocusChangedListener != null) {
             mOnEditorFocusChangedListener.onEditorFocusChanged(mWrapperView, focused);
+        }
+        if (focused && mWRichEditorScrollView != null) {
+            Set<RichType> currRichTypes = null;
+            // todo 将上次的 RichTypes 存储到 ScrollView 中
+            Set<RichType> prevRichTypes = mWRichEditorScrollView.getRichTypes();
+            int selEnd = getSelectionEnd();
+
+            Editable editableText = getEditableText();
+            int editableLength = editableText.length();
+
+            if (selEnd == 0) {
+                Log.d("xxx", "112");
+                // 光标处于0位置
+                if (editableLength == 0) {
+                    // 光标处于0位置，并且没有任何内容
+                    currRichTypes = new HashSet<>(4);
+                    currRichTypes.addAll(prevRichTypes);
+                    Log.d("xxx", "113");
+                    TypeUtil.correctLineFormatGroupType(currRichTypes, mWrapperView);
+                } else {
+                    // 光标处于0位置，但是EditText中包含内容
+                    currRichTypes = getRichTypesByTextContextOrStrongSet(prevRichTypes, editableText, 0);
+                }
+            } else if (0 < selEnd && selEnd < editableText.length()) {
+                // 格式与后向文字相同
+                currRichTypes = getRichTypesByTextContextOrStrongSet(prevRichTypes, editableText, selEnd);
+            } else if (selEnd == editableText.length()) {
+                // 处于最后的位置，格式与前向文字相同
+                currRichTypes = getRichTypesByTextContextOrStrongSet(prevRichTypes, editableText, selEnd - 1);
+            }
+            // TODO
+            OnRichTypeChangedListener typeChangedListener = mWRichEditorScrollView.getOnRichTypeChangedListener();
+            if (typeChangedListener != null) {
+                // TODO api设计是否需要优化？考虑到光标移动的情况，应该不需要
+                Log.d("xxx", "888");
+                if (currRichTypes == null) {
+                    currRichTypes = new HashSet<>();
+                }
+                for (RichType richType : currRichTypes) {
+                    Log.d("xxx", "----> richType : " + richType.name());
+                }
+                typeChangedListener.onRichTypeChanged(prevRichTypes, currRichTypes);
+            }
+
         }
     }
 

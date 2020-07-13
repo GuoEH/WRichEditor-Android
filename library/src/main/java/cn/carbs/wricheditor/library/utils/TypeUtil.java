@@ -1,9 +1,14 @@
 package cn.carbs.wricheditor.library.utils;
 
+import android.util.Log;
+
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import cn.carbs.wricheditor.library.WRichEditorWrapperView;
 import cn.carbs.wricheditor.library.configures.RichEditorConfig;
+import cn.carbs.wricheditor.library.constants.RichTypeConstants;
 import cn.carbs.wricheditor.library.interfaces.IRichSpan;
 import cn.carbs.wricheditor.library.spannables.BoldStyleSpan;
 import cn.carbs.wricheditor.library.spannables.HeadlineSpan;
@@ -86,6 +91,29 @@ public class TypeUtil {
             }
         }
         return ret;
+    }
+
+    public static void correctLineFormatGroupType(Set<RichType> currRichTypes, WRichEditorWrapperView wrapperView) {
+        if (wrapperView != null && currRichTypes != null) {
+            RichType richType = wrapperView.getRichType();
+            Log.d("xxx", "correctLineFormatGroupType 0 richType : " + richType.name());
+//            if (richType != RichType.NONE) {
+                ArrayList<RichType> toBeRemovedList = new ArrayList<>();
+                for (RichType richType1 : currRichTypes) {
+                    if (richType1.getGroup() == RichTypeConstants.GROUP_LINE_FORMAT) {
+                        toBeRemovedList.add(richType1);
+
+                        Log.d("xxx", "correctLineFormatGroupType 1 toBeRemovedList.add : " + richType1.name());
+                    }
+                }
+                for (RichType toBeRemoved : toBeRemovedList) {
+                    Log.d("xxx", "correctLineFormatGroupType 1 currRichTypes.remove : " + toBeRemoved.name());
+                    currRichTypes.remove(toBeRemoved);
+                }
+                Log.d("xxx", "correctLineFormatGroupType 1 currRichTypes.add : " + richType.name());
+                currRichTypes.add(richType);
+//            }
+        }
     }
 
     public static boolean checkIfRichTypesSetSame(Set<RichType> richTypesA, Set<RichType> richTypesB) {

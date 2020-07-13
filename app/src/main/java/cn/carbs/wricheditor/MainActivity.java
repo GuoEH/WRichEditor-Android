@@ -88,7 +88,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mImageViewMap.put(RichType.UNDER_LINE, mBtnUnderLine);
         mImageViewMap.put(RichType.HEADLINE, mBtnHeadline);
         mImageViewMap.put(RichType.LINK, mBtnLink);
-
+        mImageViewMap.put(RichType.QUOTE, mBtnQuote);
+        mImageViewMap.put(RichType.LIST_UNORDERED, mBtnListUnordered);
+        mImageViewMap.put(RichType.LIST_ORDERED, mBtnListOrdered);
     }
 
     @Override

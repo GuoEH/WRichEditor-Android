@@ -14,6 +14,7 @@ import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
 import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.types.RichType;
+import cn.carbs.wricheditor.library.utils.CursorUtil;
 
 // 注意，此方法是不会合并的
 // getEditableText().getSpans(0, getEditableText().toString().length(), richSpan.getClass());
@@ -64,6 +65,7 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
         mTVForOrderList = findViewById(R.id.tv_in_wrapper);
         mWRichEditor = findViewById(R.id.w_rich_editor);
         mWRichEditor.setWRichEditorWrapperView(this);
+        mWRichEditor.setContentDescription(CursorUtil.getNewContentDescriptionForWRichEditor());
         if (mWRichEditorScrollView != null) {
             mWRichEditor.setWRichEditorScrollView(mWRichEditorScrollView);
         }
