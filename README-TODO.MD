@@ -22,12 +22,10 @@ line 等view 在删除时，需要merge一下，同时在别的editor获取焦�
 ordered list 的体验并不好
 
 // TODO
-有序列表删不动
+删除继续优化
 
-// TODO
-当光标在无格式的edittext中时，如果前一个是lineformat格式，删不动
-
-
+// TODO 
+headline失效
 
 // ========== EXPERIENCE ===========
 1. 锤子便签：在quote时，会自动将所有的字符进行一次缩小，颜色变浅
@@ -37,3 +35,4 @@ ordered list 的体验并不好
 // ========== FIXED ===========
 1. 选中某段文字后，点击某个格式，只会响应此变化的格式，之前已经选中的格式不能带入
 2. 检查delete键是否连续，image等类型
+3. 首行改为Quote模式时，下一行不增加cell的问题

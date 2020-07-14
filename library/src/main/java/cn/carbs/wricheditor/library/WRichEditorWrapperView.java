@@ -140,6 +140,7 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
             }
         } else {
             if (mWRichEditor != null) {
+                Log.d("clearfocus", "clearFocus() 5");
                 mWRichEditor.clearFocus();
             }
         }

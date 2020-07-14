@@ -141,6 +141,9 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                 if (!editableStr.contains(CharConstant.ENTER_STR)) {
                     // 1. 判断当前RichEditor中有几个换行符，如果有0个，则不"分裂"，直接将这个Editor的左侧drawable做变换
                     focusedWRichEditorWrapperView.toggleQuoteMode(true, false);
+                    if (needAddWRichEditor(focusedRichEditorWrapperViewIndex[0])) {
+                        insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 1, RichType.NONE, false);
+                    }
                 } else {
                     // 2. 如果当前RichEditor中有一个或者多个换行符，则截取从换行符后的text，添加到新生成的Editor中
                     // 根据select的起点和终点，判断所处的行，并将这些行作为一个引用
@@ -1036,6 +1039,41 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
     }
 
     /**
+     * 当前index后面是否需要加一个空的EditText
+     * @param currentIndex 当前 CellView 所处的 index
+     * @return
+     */
+    public boolean needAddWRichEditorForDeleteAction(int currentIndex) {
+        if (mLinearLayout == null) {
+            return false;
+        }
+        if (currentIndex < 0) {
+            // 无效index值
+            return false;
+        }
+        int childCount = mLinearLayout.getChildCount();
+        if (currentIndex >= childCount) {
+            // 无效index值
+            return false;
+        }
+        // 当前为最后一个，或者当前的下一个的类型不为 NONE
+        if (currentIndex == childCount - 1) {
+            return true;
+        }
+        IRichCellView nextRichCellView = (IRichCellView) mLinearLayout.getChildAt(currentIndex + 1);
+        if (nextRichCellView == null) {
+            // 无效CellView
+            return false;
+        }
+
+        RichType richType = nextRichCellView.getRichType();
+        if (richType == RichType.NONE) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * 当前Editor处于none状态，同时下一个也处于none状态
      *
      * @param currentIndex
@@ -1205,6 +1243,24 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
             return null;
         }
         return (IRichCellView) mLinearLayout.getChildAt(index);
+    }
+
+    public IRichCellView getTailCellView() {
+        if (mLinearLayout == null) {
+            return null;
+        }
+        int cellCount = mLinearLayout.getChildCount();
+        if (cellCount == 0) {
+            return null;
+        }
+        return (IRichCellView) mLinearLayout.getChildAt(cellCount - 1);
+    }
+
+    public void addNoneTypeTailOptionally() {
+        IRichCellView tailCellView = getTailCellView();
+        if (tailCellView == null || tailCellView.getRichType() != RichType.NONE) {
+            insertAWRichEditorWrapperWithRichType(-1, RichType.NONE, false);
+        }
     }
 
 }

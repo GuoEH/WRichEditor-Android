@@ -2,6 +2,7 @@ package cn.carbs.wricheditor.library.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -80,6 +81,7 @@ public class RichImageView extends RelativeLayout implements IRichCellView, View
             if (mWRichEditorScrollView != null) {
                 ViewParent parent = getParent();
                 if (parent != null && parent instanceof ViewGroup) {
+                    Log.d("clearfocus", "clearFocus() 6");
                     clearFocus();
                     ((ViewGroup) parent).removeView(this);
                 }

@@ -289,7 +289,6 @@ public class WRichEditor extends EditText {
             if (selectionStart == selectionEnd && selectionStart == 0) {
                 if (mWRichEditorScrollView != null && mWrapperView != null) {
                     int index = mWRichEditorScrollView.getCellViewIndex(mWrapperView);
-                    Log.d("iii", "WRichEditor index in mWRichEditorView is : " + index);
                     if (index > 0) {
                         // 查看上一个是不是WRichEditor，
                         IRichCellView iRichCellView = mWRichEditorScrollView.getCellViewByIndex(index - 1);
@@ -307,26 +306,32 @@ public class WRichEditor extends EditText {
                                 ViewParent parent = mWrapperView.getParent();
                                 if (parent != null && parent instanceof ViewGroup) {
                                     setText("");
+                                    Log.d("clearfocus", "clearFocus() 1");
                                     clearFocus();
                                     ((ViewGroup) parent).removeView(mWrapperView);
                                 }
+                                Log.d("wangwang", "delete 1");
                             } else if (richTypeGroup == RichTypeConstants.GROUP_RESOURCE) {
                                 // 图片、音频、视频、横线、云盘
                                 // 1. 此view中的text是否为空，
                                 //  1.1 如果为空，判断此view的下一个view是否需要needAddEditor，
                                 if (editable == null || editable.length() == 0) {
-                                    boolean needAddWRichEditorIfDeleted = mWRichEditorScrollView.needAddWRichEditor(index);
-                                    if (needAddWRichEditorIfDeleted) {
-                                        // 不删除，只将焦点至于上面的resource上
-                                    } else {
-                                        // 删除，并将焦点至于上面的resource上
-                                        ViewParent parent = mWrapperView.getParent();
-                                        if (parent != null && parent instanceof ViewGroup) {
-                                            setText("");
-                                            clearFocus();
-                                            ((ViewGroup) parent).removeView(mWrapperView);
-                                        }
+//                                    boolean needAddWRichEditorIfDeleted = mWRichEditorScrollView.needAddWRichEditorForDeleteAction(index);
+                                    ViewParent parent = mWrapperView.getParent();
+                                    if (parent != null && parent instanceof ViewGroup) {
+                                        setText("");
+                                        Log.d("clearfocus", "clearFocus() 2");
+                                        clearFocus();
+                                        ((ViewGroup) parent).removeView(mWrapperView);
                                     }
+//                                    if (needAddWRichEditorIfDeleted) {
+                                        // 依然删除，将焦点至于上面的resource上
+                                        // 判断最后一个view是否为NONE
+                                        mWRichEditorScrollView.addNoneTypeTailOptionally();
+//                                    } else {
+                                        // 删除，并将焦点至于上面的resource上
+
+//                                    }
                                     removeFocusToResourceTypeAbove(index - 1);
                                 } else {
                                     //  1.2 如果不为空，则将焦点至于上面的resource上
@@ -334,18 +339,19 @@ public class WRichEditor extends EditText {
                                 }
                             } else if (richTypeGroup == RichTypeConstants.GROUP_LINE_FORMAT) {
                                 if (editable == null || editable.length() == 0) {
-                                    boolean needAddWRichEditorIfDeleted = mWRichEditorScrollView.needAddWRichEditor(index);
-                                    if (needAddWRichEditorIfDeleted) {
-                                        // 不删除，只将焦点至于上面的LineFormat上
-                                    } else {
-                                        // 删除，并将焦点至于上面的LineFormat上
-                                        ViewParent parent = mWrapperView.getParent();
-                                        if (parent != null && parent instanceof ViewGroup) {
-                                            setText("");
-                                            clearFocus();
-                                            ((ViewGroup) parent).removeView(mWrapperView);
-                                        }
+//                                    boolean needAddWRichEditorIfDeleted = mWRichEditorScrollView.needAddWRichEditorForDeleteAction(index);
+                                    ViewParent parent = mWrapperView.getParent();
+                                    if (parent != null && parent instanceof ViewGroup) {
+                                        setText("");
+//                                        clearFocus();
+                                        ((ViewGroup) parent).removeView(mWrapperView);
                                     }
+//                                    if (needAddWRichEditorIfDeleted) {
+                                        // 不删除，只将焦点至于上面的LineFormat上
+//                                    } else {
+                                        // 删除，并将焦点至于上面的LineFormat上
+//                                    }
+                                    mWRichEditorScrollView.addNoneTypeTailOptionally();
                                     removeFocusToLineFormatTypeAbove(index - 1);
                                 } else {
                                     //  1.2 如果不为空，则将焦点至于上面的LineFormat上
@@ -375,6 +381,7 @@ public class WRichEditor extends EditText {
     private void removeFocusToResourceTypeAbove(int targetIndex) {
         if (mWRichEditorScrollView != null && mWRichEditorScrollView.getContainerView() != null) {
             RichUtil.hideSoftKeyboard(getContext(), this);
+            Log.d("clearfocus", "clearFocus() 4");
             clearFocus();
             TypeUtil.selectOnlyOneResourceType(mWRichEditorScrollView, targetIndex);
         }

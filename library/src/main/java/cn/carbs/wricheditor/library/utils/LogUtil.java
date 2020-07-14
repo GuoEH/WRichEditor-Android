@@ -11,4 +11,8 @@ public class LogUtil {
             Log.d(tag, message);
         }
     }
+
+    public static void printMethodStack() {
+        Log.d("wangwang", Log.getStackTraceString(new Throwable()));
+    }
 }

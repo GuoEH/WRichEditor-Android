@@ -3,6 +3,7 @@ package cn.carbs.wricheditor.library.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -16,6 +17,8 @@ import cn.carbs.wricheditor.library.models.RichCellData;
 public class RichUtil {
 
     public static void hideSoftKeyboard(Context context, View view) {
+        Log.d("wangwang", "hideSoftKeyboard");
+        LogUtil.printMethodStack();
         if (view == null) {
             return;
         }
@@ -29,6 +32,7 @@ public class RichUtil {
             WRichEditorWrapperView focusedWrapperView = wRichEditorScrollView.findCurrentOrRecentFocusedRichEditorWrapperView(index);
             if (focusedWrapperView != null && focusedWrapperView.getWRichEditor() != null) {
                 RichUtil.hideSoftKeyboard(context, focusedWrapperView.getWRichEditor());
+                Log.d("clearfocus", "clearFocus() 0");
                 focusedWrapperView.getWRichEditor().clearFocus();
             }
         }
