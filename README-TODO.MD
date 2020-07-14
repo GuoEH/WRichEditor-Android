@@ -44,9 +44,6 @@ line 等view 在删除时，需要merge一下，同时在别的editor获取焦�
 list quote 状态互相切换
 
 // TODO
-delete按键与resource类型richtype的交互
-
-// TODO
 去掉mRichCellViewList
 
 // TODO 

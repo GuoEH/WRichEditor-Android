@@ -124,6 +124,9 @@ public class RichImageView extends RelativeLayout implements IRichCellView, View
 
     @Override
     public void setSelectMode(boolean selectMode) {
+        if (mSelectMode == selectMode) {
+            return;
+        }
         mSelectMode = selectMode;
         if (mVContainer == null) {
             return;

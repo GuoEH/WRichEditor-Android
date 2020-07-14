@@ -8,3 +8,7 @@ na 编辑器 由于场景众多，且java强语言类型
 
 锤子便签中，在quote模式，如果点击了回车键，则跳出quote模式。多行打开quote时，没有合并
 知乎编辑器中，在quote模式，如果点击了回车键，会继续在quote中换行，当再次点击quote键时，会将此段的换行去掉，前后两端仍然处于quote模式下
+
+
+// TODO
+delete按键与resource类型richtype的交互

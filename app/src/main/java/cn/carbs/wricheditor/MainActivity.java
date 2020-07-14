@@ -3,6 +3,7 @@ package cn.carbs.wricheditor;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -24,6 +25,7 @@ import cn.carbs.wricheditor.library.WRichEditor;
 import cn.carbs.wricheditor.library.WRichEditorScrollView;
 import cn.carbs.wricheditor.library.WRichEditorWrapperView;
 import cn.carbs.wricheditor.library.callbacks.OnRichTypeChangedListener;
+import cn.carbs.wricheditor.library.parser.Parser;
 import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.TypeUtil;
 import cn.carbs.wricheditor.library.views.RichLineView;
@@ -42,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView mBtnListUnordered;
     private ImageView mBtnInsertImage;
     private ImageView mBtnInsertLine;
+    private ImageView mBtnExportToHTML;
+    private ImageView mBtnImportFromHTML;
 
     private ImageView mBtnAddEditor;
 
@@ -82,6 +86,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnListOrdered.setOnClickListener(this);
         mBtnListUnordered = findViewById(R.id.button_list_unordered);
         mBtnListUnordered.setOnClickListener(this);
+        mBtnExportToHTML = findViewById(R.id.button_export);
+        mBtnExportToHTML.setOnClickListener(this);
+        mBtnImportFromHTML = findViewById(R.id.button_import);
+        mBtnImportFromHTML.setOnClickListener(this);
 
         mImageViewMap.put(RichType.BOLD, mBtnBold);
         mImageViewMap.put(RichType.ITALIC, mBtnItalic);
@@ -260,6 +268,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return editTextWrapperView;
     }
 
+    private void exportToHtml() {
+        WRichEditorWrapperView editorWrapperView =(WRichEditorWrapperView) mWRichEditorScrollView.getContainerView().getChildAt(0);
+        WRichEditor wRichEditor = editorWrapperView.getWRichEditor();
+        if (wRichEditor != null) {
+            Editable editable = wRichEditor.getText();
+            StringBuilder sb = new StringBuilder();
+            Parser.withinContent(sb, editable, 0, editable.length());
+            Log.d("wangwang", "html : " + sb.toString());
+        }
+    }
+
+    private void importFromHtml() {
+
+    }
+
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -286,6 +309,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             onListOrderedClicked();
         } else if (id == R.id.button_list_unordered) {
             onListUnorderedClicked();
+        } else if (id == R.id.button_export) {
+            exportToHtml();
+        } else if (id == R.id.button_import) {
+            importFromHtml();
         } else if (id == R.id.button_add_editor_text) {
             onAddEditorTextClicked();
         }
