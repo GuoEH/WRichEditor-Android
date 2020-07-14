@@ -243,12 +243,13 @@ public class WRichEditor extends EditText {
 
     // 响应顺序
 //    : onKeyDown KEYCODE_ENTER
+//    : onKeyUp KEYCODE_ENTER
 //    : WRichEditor onSelectionChanged selStart : 4 selEnd : 4 hasFocus : true
 //    : onSelectionChanged isCursorAutoChange : true
-//    : onKeyUp
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_ENTER) {
+            Log.d("www", "onKeyUp KEYCODE_ENTER");
             // 响应 keycode，如果有 headline 类型的 RichType
             if (mWRichEditorScrollView != null) {
                 Set<RichType> richTypes = mWRichEditorScrollView.getRichTypes();
@@ -267,11 +268,43 @@ public class WRichEditor extends EditText {
                 RichType richType = mWrapperView.getRichType();
                 if (richType == RichType.LIST_UNORDERED) {
                     // 如果是无序列表
-                    mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(mWrapperView, RichType.LIST_UNORDERED, true);
+                    // 删除从cursorStart到结尾的所有文字
+                    int cursorStart = getSelectionStart();
+                    int cursorEnd = getSelectionEnd();
+                    if (cursorStart >= 0 && cursorEnd >= 0) {
+                        Editable editable = getEditableText();
+                        ArrayList<SpanPart> spanPartsOutput = new ArrayList<>(32);
+
+                        String textWithoutFormatItemStartLeft = SpanUtil.getSpannableStringInclusiveExclusive(editable, 0, cursorStart, spanPartsOutput);
+                        SpanUtil.setSpannableInclusiveExclusive(this, textWithoutFormatItemStartLeft, spanPartsOutput, 0);
+
+                        spanPartsOutput.clear();
+                        String textWithoutFormatItemEndRight = SpanUtil.getSpannableStringInclusiveExclusive(editable, cursorEnd, editable.length(), spanPartsOutput);
+                        WRichEditorWrapperView richEditorWrapperView = mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(mWrapperView, RichType.LIST_UNORDERED, true);
+                        SpanUtil.setSpannableInclusiveExclusive(richEditorWrapperView.getWRichEditor(), textWithoutFormatItemEndRight, spanPartsOutput, -cursorEnd);
+                    } else {
+                        mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(mWrapperView, RichType.LIST_UNORDERED, true);
+                    }
                     return true;
                 } else if (richType == RichType.LIST_ORDERED) {
                     // 如果是有序列表
-                    mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(mWrapperView, RichType.LIST_ORDERED, true);
+                    // 删除从cursorStart到结尾的所有文字
+                    int cursorStart = getSelectionStart();
+                    int cursorEnd = getSelectionEnd();
+                    if (cursorStart >= 0 && cursorEnd >= 0) {
+                        Editable editable = getEditableText();
+                        ArrayList<SpanPart> spanPartsOutput = new ArrayList<>(32);
+
+                        String textWithoutFormatItemStartLeft = SpanUtil.getSpannableStringInclusiveExclusive(editable, 0, cursorStart, spanPartsOutput);
+                        SpanUtil.setSpannableInclusiveExclusive(this, textWithoutFormatItemStartLeft, spanPartsOutput, 0);
+
+                        spanPartsOutput.clear();
+                        String textWithoutFormatItemEndRight = SpanUtil.getSpannableStringInclusiveExclusive(editable, cursorEnd, editable.length(), spanPartsOutput);
+                        WRichEditorWrapperView richEditorWrapperView = mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(mWrapperView, RichType.LIST_ORDERED, true);
+                        SpanUtil.setSpannableInclusiveExclusive(richEditorWrapperView.getWRichEditor(), textWithoutFormatItemEndRight, spanPartsOutput, -cursorEnd);
+                    } else {
+                        mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(mWrapperView, RichType.LIST_ORDERED, true);
+                    }
                     OrderListUtil.updateOrderListNumbersAfterViewsChanged(mWRichEditorScrollView.getContainerView());
                     return true;
                 }

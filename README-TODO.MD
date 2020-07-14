@@ -14,12 +14,20 @@ line 等view 在删除时，需要merge一下，同时在别的editor获取焦�
 
 // TODO WRichEditor  设置lineHeight
 
-
-// TODO 
-无序列表时，在行中间按下enter键，应该把 enterEnd 后面的内容带入下一行，并把 enterStart 到 enterEnd 之间的内容删除
-
 // TODO 
 headline失效
+
+// TODO
+换行后cursor问题
+
+// TODO
+cursor delete 时，如果当前行有文字，不应该合并吗？
+
+// TODO
+统一 getEditableText getText
+
+// TODO
+删除不必要的类
 
 // ========== EXPERIENCE ===========
 1. 锤子便签：在quote时，会自动将所有的字符进行一次缩小，颜色变浅
