@@ -2,6 +2,7 @@ package cn.carbs.wricheditor;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -276,6 +277,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             StringBuilder sb = new StringBuilder();
             Parser.withinContent(sb, editable, 0, editable.length());
             Log.d("wangwang", "html : " + sb.toString());
+            Intent intent = new Intent(this, WebViewActivity.class);
+            intent.putExtra(WebViewActivity.HTML, sb.toString());
+            startActivity(intent);
         }
     }
 
