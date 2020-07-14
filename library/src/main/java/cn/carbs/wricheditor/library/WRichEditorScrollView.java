@@ -747,6 +747,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                     return;
                 }
                 if (!editableStr.contains(CharConstant.ENTER_STR)) {
+                    LogUtil.d(TAG, "richType == RichType.LIST_ORDERED 0");
                     // 1. 判断当前RichEditor中有几个换行符，如果有0个，则不"分裂"，直接将这个Editor的左侧drawable做变换
                     focusedWRichEditorWrapperView.toggleOrderListMode(true, false);
                     if (needAddWRichEditor(focusedRichEditorWrapperViewIndex[0])) {
@@ -1026,6 +1027,12 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
         if (currentIndex == childCount - 1) {
             return true;
         }
+        // TODO 待检测
+        IRichCellView tailRichCellView = getTailCellView();
+        if (tailRichCellView != null && tailRichCellView.getRichType() == RichType.NONE) {
+            return false;
+        }
+
         IRichCellView nextRichCellView = (IRichCellView) mLinearLayout.getChildAt(currentIndex + 1);
         if (nextRichCellView == null) {
             return false;
