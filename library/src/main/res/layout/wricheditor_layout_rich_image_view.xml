@@ -14,8 +14,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:background="#66ff0000"
-        android:scaleType="centerInside" />
+        android:scaleType="fitCenter" />
+
+    <ImageView
+        android:id="@+id/image_view_cover"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:scaleType="fitCenter"
+        android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/iv_delete"

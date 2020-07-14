@@ -2,7 +2,6 @@ package cn.carbs.wricheditor.library.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -13,7 +12,6 @@ import androidx.annotation.Nullable;
 
 import cn.carbs.wricheditor.library.R;
 import cn.carbs.wricheditor.library.WRichEditorScrollView;
-import cn.carbs.wricheditor.library.WRichEditorWrapperView;
 import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
 import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
@@ -24,25 +22,27 @@ import cn.carbs.wricheditor.library.utils.TypeUtil;
 // 不抽象，如果需要自定义，直接在外部自定义
 public class RichImageView extends RelativeLayout implements IRichCellView, View.OnClickListener {
 
-    private boolean mSelectMode;
+    protected boolean mSelectMode;
 
-    private WRichEditorScrollView mWRichEditorScrollView;
+    protected WRichEditorScrollView mWRichEditorScrollView;
 
-    private View mVContainer;
+    protected View mVContainer;
 
-    private ImageView mImageView;
+    protected ImageView mImageView;
 
-    private View mVDelete;
+    protected ImageView mImageViewCover;
 
-    private IRichCellData mRichCellData;
+    protected View mVDelete;
 
-    private OnEditorFocusChangedListener mOnEditorFocusChangedListener;
+    protected IRichCellData mRichCellData;
 
-    private int mImageWidth;
-    private int mImageHeight;
+    protected OnEditorFocusChangedListener mOnEditorFocusChangedListener;
 
-    private int mImageViewWidth;
-    private int mImageViewHeight;
+    protected int mImageWidth;
+    protected int mImageHeight;
+
+    protected int mImageViewWidth;
+    protected int mImageViewHeight;
 
     public RichImageView(Context context) {
         super(context);
@@ -64,6 +64,7 @@ public class RichImageView extends RelativeLayout implements IRichCellView, View
         mVContainer = findViewById(R.id.wricheditor_rich_image_view_container);
         mVContainer.setOnClickListener(this);
         mImageView = findViewById(R.id.image_view);
+        mImageViewCover = findViewById(R.id.image_view_cover);
         mVDelete = findViewById(R.id.iv_delete);
         mVDelete.setOnClickListener(this);
         setOnClickListener(this);
@@ -121,6 +122,10 @@ public class RichImageView extends RelativeLayout implements IRichCellView, View
         return RichType.IMAGE;
     }
 
+    /**
+     * 不要在外部主动调用此函数
+     * @param selectMode
+     */
     @Override
     public void setSelectMode(boolean selectMode) {
         if (mSelectMode == selectMode) {
@@ -163,15 +168,21 @@ public class RichImageView extends RelativeLayout implements IRichCellView, View
                 - getResources().getDimensionPixelSize(R.dimen.wrich_editor_image_view_padding) * 2
                 - getResources().getDimensionPixelSize(R.dimen.wrich_editor_image_view_margin_h) * 2;
         int imageViewHeight = imageViewWidth * imageHeight / imageWidth;
-        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mImageView.getLayoutParams();
+        setLayoutParamsForImageView(mImageView, imageViewWidth, imageViewHeight);
+        setLayoutParamsForImageView(mImageViewCover, imageViewWidth, imageViewHeight);
+    }
+
+    private void setLayoutParamsForImageView(View view, int viewWidth, int viewHeight) {
+        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) view.getLayoutParams();
         if (lp == null) {
-            lp = new RelativeLayout.LayoutParams(imageViewWidth, imageViewHeight);
-            mImageView.setLayoutParams(lp);
+            lp = new RelativeLayout.LayoutParams(viewWidth, viewHeight);
+            view.setLayoutParams(lp);
         } else {
-            if (lp.height != imageViewHeight) {
-                lp.height = imageHeight;
+            if (lp.height != viewHeight) {
+                lp.height = viewHeight;
             }
-            mImageView.setLayoutParams(lp);
+            view.setLayoutParams(lp);
         }
     }
+
 }

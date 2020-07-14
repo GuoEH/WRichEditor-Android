@@ -47,6 +47,3 @@ line 等view 在删除时，需要merge一下，同时在别的editor获取焦�
 
 // TODO
 list quote 状态互相切换
-
-// TODO 
-不应该从外部调用  setSelectMode，重新设计此方法
