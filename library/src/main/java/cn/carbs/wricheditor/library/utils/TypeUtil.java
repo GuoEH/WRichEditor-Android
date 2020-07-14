@@ -228,4 +228,22 @@ public class TypeUtil {
         }
     }
 
+    public static boolean removeAllLineFormatType(Set<RichType> richTypes) {
+        boolean changed = false;
+        if (richTypes == null) {
+            return changed;
+        }
+        ArrayList<RichType> toBeRemovedList = new ArrayList<>(richTypes.size());
+        for (RichType item : richTypes) {
+            if (item.getGroup() == RichTypeConstants.GROUP_LINE_FORMAT) {
+                toBeRemovedList.add(item);
+            }
+        }
+        for (RichType richType : toBeRemovedList) {
+            changed = true;
+            richTypes.remove(richType);
+        }
+        return changed;
+    }
+
 }

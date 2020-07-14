@@ -27,12 +27,6 @@ line 等view 在删除时，需要merge一下，同时在别的editor获取焦�
 
 // TODO WRichEditor  设置lineHeight
 
-
-
-// bug
-选中某段文字后，点击某个格式，只会响应此变化的格式，之前已经选中的格式不能带入
-
-
 锤子便签：在quote时，会自动将所有的字符进行一次缩小，颜色变浅
 
 
@@ -40,7 +34,9 @@ line 等view 在删除时，需要merge一下，同时在别的editor获取焦�
 无序列表时，在行中间按下enter键，应该把 enterEnd 后面的内容带入下一行，并把 enterStart 到 enterEnd 之间的内容删除
 
 // TODO
-list quote 状态互相切换
+ordered list 的体验并不好
 
-//TODO 
-添加 WebView
+// ========== FIXED ===========
+1. 选中某段文字后，点击某个格式，只会响应此变化的格式，之前已经选中的格式不能带入
+2. 
+

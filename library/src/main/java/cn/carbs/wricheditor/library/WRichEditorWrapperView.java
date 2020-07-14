@@ -10,11 +10,16 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
+import cn.carbs.wricheditor.library.callbacks.OnRichTypeChangedListener;
 import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.CursorUtil;
+import cn.carbs.wricheditor.library.utils.TypeUtil;
 
 // 注意，此方法是不会合并的
 // getEditableText().getSpans(0, getEditableText().toString().length(), richSpan.getClass());
@@ -129,9 +134,14 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
 
     @Override
     public void setSelectMode(boolean selectMode) {
-        // TODO
-        if (mWRichEditor != null) {
-            mWRichEditor.requestFocus();
+        if (selectMode) {
+            if (mWRichEditor != null) {
+                mWRichEditor.requestFocus();
+            }
+        } else {
+            if (mWRichEditor != null) {
+                mWRichEditor.clearFocus();
+            }
         }
     }
 
@@ -170,6 +180,7 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
             updateQuoteModeUI(true);
             updateUnOrderListModeUI(false);
             updateOrderListModeUI(false);
+            onResourceRichTypeChanged(RichType.QUOTE);
         } else {
             if (mRichType != RichType.QUOTE && !mayRepeat) {
                 return;
@@ -178,14 +189,6 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
             updateUnOrderListModeUI(false);
             updateOrderListModeUI(false);
             mRichType = RichType.NONE;
-        }
-    }
-
-    // TODO 查找外部遍历，同时更改涉及到list列表的序号
-    // 由util类去更改
-    public void setOrderedListText(String text) {
-        if (mTVForOrderList != null) {
-            mTVForOrderList.setText(text);
         }
     }
 
@@ -198,6 +201,7 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
             updateOrderListModeUI(true);
             updateQuoteModeUI(false);
             updateUnOrderListModeUI(false);
+            onResourceRichTypeChanged(RichType.LIST_ORDERED);
         } else {
             if (mRichType != RichType.LIST_ORDERED && !mayRepeat) {
                 return;
@@ -218,6 +222,7 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
             updateUnOrderListModeUI(true);
             updateOrderListModeUI(false);
             updateQuoteModeUI(false);
+            onResourceRichTypeChanged(RichType.LIST_UNORDERED);
         } else {
             if (mRichType != RichType.LIST_UNORDERED && !myRepeat) {
                 return;
@@ -226,6 +231,13 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
             updateOrderListModeUI(false);
             updateQuoteModeUI(false);
             mRichType = RichType.NONE;
+        }
+    }
+
+    // 由util类去更改
+    public void setOrderedListText(String text) {
+        if (mTVForOrderList != null) {
+            mTVForOrderList.setText(text);
         }
     }
 
@@ -266,7 +278,6 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
     }
 
     private void updateOrderListModeUI(boolean open) {
-
         if (open) {
             if (mTVForOrderList != null) {
                 // todo 如果是有序列表，设置数字
@@ -279,7 +290,26 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
                 mTVForOrderList.setVisibility(View.GONE);
             }
         }
+    }
 
+    public void onResourceRichTypeChanged(RichType selectedResourceType) {
+        if (mWRichEditorScrollView == null) {
+            return;
+        }
+
+        Set<RichType> prevRichTypes = mWRichEditorScrollView.getRichTypes();
+        OnRichTypeChangedListener typeChangedListener = mWRichEditorScrollView.getOnRichTypeChangedListener();
+
+        Set<RichType> currRichTypes = new HashSet<>(4);
+
+        TypeUtil.removeAllLineFormatType(prevRichTypes);
+
+        currRichTypes.addAll(prevRichTypes);
+        currRichTypes.add(selectedResourceType);
+
+        if (typeChangedListener != null) {
+            typeChangedListener.onRichTypeChanged(prevRichTypes, currRichTypes);
+        }
     }
 
 

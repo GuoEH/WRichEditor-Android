@@ -1,6 +1,5 @@
 package cn.carbs.wricheditor;
 
-import android.net.UrlQuerySanitizer;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebSettings;

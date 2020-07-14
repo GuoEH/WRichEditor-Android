@@ -234,7 +234,7 @@ public class WRichEditor extends EditText {
                     currRichTypes = new HashSet<>();
                 }
                 for (RichType richType : currRichTypes) {
-                    Log.d("xxx", "----> richType : " + richType.name());
+                    Log.d("mmm", "----> richType : " + richType.name());
                 }
                 typeChangedListener.onRichTypeChanged(prevRichTypes, currRichTypes);
             }
