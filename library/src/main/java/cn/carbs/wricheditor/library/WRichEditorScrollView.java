@@ -1002,6 +1002,11 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
 
     }
 
+    /**
+     * 当前index后面是否需要加一个空的EditText
+     * @param currentIndex 当前 CellView 所处的 index
+     * @return
+     */
     public boolean needAddWRichEditor(int currentIndex) {
         if (mLinearLayout == null) {
             return false;

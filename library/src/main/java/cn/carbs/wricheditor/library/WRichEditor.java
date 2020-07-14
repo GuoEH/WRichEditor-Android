@@ -19,7 +19,6 @@ import java.util.Set;
 
 import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
 import cn.carbs.wricheditor.library.callbacks.OnRichTypeChangedListener;
-import cn.carbs.wricheditor.library.configures.RichEditorConfig;
 import cn.carbs.wricheditor.library.constants.RichTypeConstants;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.interfaces.IRichSpan;
@@ -298,7 +297,8 @@ public class WRichEditor extends EditText {
                         if (iRichCellView != null) {
                             RichType richType = iRichCellView.getRichType();
                             Editable editable = getEditableText();
-                            if (richType == RichType.NONE) {
+                            int richTypeGroup = richType.getGroup();
+                            if (richTypeGroup == RichTypeConstants.GROUP_CHAR_FORMAT) {
                                 // 1. 如果是，则将光标调整到上一个WRichEditor的最后，同时将此WRichEditor删除
                                 // 将此WRichEditor remove
                                 ((WRichEditorWrapperView) iRichCellView).addExtraEditable(editable);
@@ -310,9 +310,8 @@ public class WRichEditor extends EditText {
                                     clearFocus();
                                     ((ViewGroup) parent).removeView(mWrapperView);
                                 }
-                            } else if (richType.getGroup() == RichTypeConstants.GROUP_RESOURCE) {
+                            } else if (richTypeGroup == RichTypeConstants.GROUP_RESOURCE) {
                                 // 图片、音频、视频、横线、云盘
-                                // TODO
                                 // 1. 此view中的text是否为空，
                                 //  1.1 如果为空，判断此view的下一个view是否需要needAddEditor，
                                 if (editable == null || editable.length() == 0) {
@@ -332,6 +331,25 @@ public class WRichEditor extends EditText {
                                 } else {
                                     //  1.2 如果不为空，则将焦点至于上面的resource上
                                     removeFocusToResourceTypeAbove(index - 1);
+                                }
+                            } else if (richTypeGroup == RichTypeConstants.GROUP_LINE_FORMAT) {
+                                if (editable == null || editable.length() == 0) {
+                                    boolean needAddWRichEditorIfDeleted = mWRichEditorScrollView.needAddWRichEditor(index);
+                                    if (needAddWRichEditorIfDeleted) {
+                                        // 不删除，只将焦点至于上面的LineFormat上
+                                    } else {
+                                        // 删除，并将焦点至于上面的LineFormat上
+                                        ViewParent parent = mWrapperView.getParent();
+                                        if (parent != null && parent instanceof ViewGroup) {
+                                            setText("");
+                                            clearFocus();
+                                            ((ViewGroup) parent).removeView(mWrapperView);
+                                        }
+                                    }
+                                    removeFocusToLineFormatTypeAbove(index - 1);
+                                } else {
+                                    //  1.2 如果不为空，则将焦点至于上面的LineFormat上
+                                    removeFocusToLineFormatTypeAbove(index - 1);
                                 }
                             }
                         }
@@ -359,6 +377,15 @@ public class WRichEditor extends EditText {
             RichUtil.hideSoftKeyboard(getContext(), this);
             clearFocus();
             TypeUtil.selectOnlyOneResourceType(mWRichEditorScrollView, targetIndex);
+        }
+    }
+
+    private void removeFocusToLineFormatTypeAbove(int targetIndex) {
+        if (mWRichEditorScrollView != null) {
+            IRichCellView cellView = mWRichEditorScrollView.getCellViewByIndex(targetIndex);
+            if (cellView != null) {
+                cellView.setSelectMode(true);
+            }
         }
     }
 
