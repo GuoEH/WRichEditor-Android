@@ -295,12 +295,12 @@ public class WRichEditor extends EditText {
             int selectionStart = getSelectionStart();
             int selectionEnd = getSelectionEnd();
             if (selectionStart == selectionEnd && selectionStart == 0) {
-                if (mWRichEditorScrollView != null && mWRichEditorScrollView.mRichCellViewList != null && mWrapperView != null) {
-                    int index = mWRichEditorScrollView.mRichCellViewList.indexOf(mWrapperView);
+                if (mWRichEditorScrollView != null && mWrapperView != null) {
+                    int index = mWRichEditorScrollView.getCellViewIndex(mWrapperView);
                     Log.d("iii", "WRichEditor index in mWRichEditorView is : " + index);
                     if (index > 0) {
                         // 查看上一个是不是WRichEditor，
-                        IRichCellView iRichCellView = mWRichEditorScrollView.mRichCellViewList.get(index - 1);
+                        IRichCellView iRichCellView = mWRichEditorScrollView.getCellViewByIndex(index - 1);
 
                         if (iRichCellView != null) {
                             RichType richType = iRichCellView.getRichType();
@@ -316,7 +316,6 @@ public class WRichEditor extends EditText {
                                     setText("");
                                     clearFocus();
                                     ((ViewGroup) parent).removeView(mWrapperView);
-                                    mWRichEditorScrollView.mRichCellViewList.remove(mWrapperView);
                                 }
                             } else if (richType.getGroup() == RichTypeConstants.GROUP_RESOURCE) {
                                 // 图片、音频、视频、横线、云盘
@@ -334,7 +333,6 @@ public class WRichEditor extends EditText {
                                             setText("");
                                             clearFocus();
                                             ((ViewGroup) parent).removeView(mWrapperView);
-                                            mWRichEditorScrollView.mRichCellViewList.remove(mWrapperView);
                                         }
                                     }
                                     removeFocusToResourceTypeAbove(index - 1);

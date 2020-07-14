@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.Editable;
 import android.util.AttributeSet;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -34,8 +35,6 @@ import cn.carbs.wricheditor.library.utils.ViewUtil;
 public class WRichEditorScrollView extends ScrollView implements OnEditorFocusChangedListener {
 
     public static final String TAG = WRichEditorScrollView.class.getSimpleName();
-
-    public ArrayList<IRichCellView> mRichCellViewList = new ArrayList<>();
 
     public Set<RichType> mRichTypes = new HashSet<>();
 
@@ -101,18 +100,15 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
         richCell.setEditorFocusChangedListener(this);
         if (index == -1) {
             mLinearLayout.addView(richCell.getView(), lp);
-            mRichCellViewList.add(richCell);
         } else {
             mLinearLayout.addView(richCell.getView(), index, lp);
-            mRichCellViewList.add(index, richCell);
         }
     }
 
     /**
-     *
      * @param richType
      * @param open
-     * @param extra 存放 link 模式的 url
+     * @param extra    存放 link 模式的 url
      */
     public void updateTextByRichTypeChanged(RichType richType, boolean open, Object extra) {
         LogUtil.d(TAG, "updateTextByRichTypeChanged richType : " + richType.name() + ", open : " + open + ", extra : " + extra);
@@ -1068,24 +1064,15 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
         return false;
     }
 
-
-    public int getRichEditorWrapperViewIndex(WRichEditorWrapperView wrapperView) {
-        int cellViewSize = mRichCellViewList.size();
-        for (int i = 0; i < cellViewSize; i++) {
-            IRichCellView cellView = mRichCellViewList.get(i);
-            if (cellView == wrapperView) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
     public WRichEditorWrapperView findCurrentFocusedRichEditorWrapperView(int[] indexInCellViewList) {
         indexInCellViewList[0] = -1;
         WRichEditorWrapperView focusedWRichEditorWrapperView = null;
-        int cellViewSize = mRichCellViewList.size();
-        for (int i = 0; i < cellViewSize; i++) {
-            IRichCellView cellView = mRichCellViewList.get(i);
+        if (mLinearLayout == null) {
+            return focusedWRichEditorWrapperView;
+        }
+        int childCount = mLinearLayout.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            IRichCellView cellView = (IRichCellView) mLinearLayout.getChildAt(i);
             if (cellView != null && cellView.getView() != null) {
                 if (cellView.getRichType().getHasEditor()) {
                     WRichEditorWrapperView wRichEditorWrapperView = ((WRichEditorWrapperView) cellView.getView());
@@ -1176,13 +1163,43 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
     public WRichEditorWrapperView insertAWRichEditorWrapperWithRichType(WRichEditorWrapperView wrapperView, RichType richType, boolean needRequestFocusWhenAdded) {
         int index = -1;
         if (wrapperView != null) {
-            index = getRichEditorWrapperViewIndex(wrapperView) + 1;
+            index = getCellViewIndex(wrapperView) + 1;
         }
         return insertAWRichEditorWrapperWithRichType(index, richType, needRequestFocusWhenAdded);
     }
 
     public ViewGroup getContainerView() {
         return mLinearLayout;
+    }
+
+    public int getCellViewCount() {
+        if (mLinearLayout == null) {
+            return 0;
+        }
+        return mLinearLayout.getChildCount();
+    }
+
+    public int getCellViewIndex(IRichCellView cellView) {
+        if (mLinearLayout == null) {
+            return -1;
+        }
+        if (!(cellView instanceof View)) {
+            return -1;
+        }
+        return mLinearLayout.indexOfChild((View) cellView);
+    }
+
+    public IRichCellView getCellViewByIndex(int index) {
+        if (mLinearLayout == null) {
+            return null;
+        }
+        if (index < 0) {
+            return null;
+        }
+        if (index < 0 || mLinearLayout.getChildCount() <= index) {
+            return null;
+        }
+        return (IRichCellView) mLinearLayout.getChildAt(index);
     }
 
 }

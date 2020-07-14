@@ -76,12 +76,11 @@ public class RichImageView extends RelativeLayout implements IRichCellView, View
             TypeUtil.selectOnlyOneResourceType(mWRichEditorScrollView, this);
             RichUtil.removeAllEditorFocus(getContext(), mWRichEditorScrollView);
         } else if (id == R.id.iv_delete) {
-            if (mWRichEditorScrollView != null && mWRichEditorScrollView.mRichCellViewList != null) {
+            if (mWRichEditorScrollView != null) {
                 ViewParent parent = getParent();
                 if (parent != null && parent instanceof ViewGroup) {
                     clearFocus();
                     ((ViewGroup) parent).removeView(this);
-                    mWRichEditorScrollView.mRichCellViewList.remove(this);
                 }
             }
         } else if (v == this) {

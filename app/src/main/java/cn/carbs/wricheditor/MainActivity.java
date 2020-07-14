@@ -250,7 +250,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void onAddEditorTextClicked() {
         WRichEditorWrapperView editTextWrapperView = new WRichEditorWrapperView(MainActivity.this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        int size = mWRichEditorScrollView.mRichCellViewList == null ? 0 : mWRichEditorScrollView.mRichCellViewList.size();
+        int size = mWRichEditorScrollView.getCellViewCount();
         editTextWrapperView.getWRichEditor().setHint("CELL : " + size);
         if (size % 2 == 0) {
             editTextWrapperView.setBackgroundColor(0x10222222);

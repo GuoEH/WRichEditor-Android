@@ -116,12 +116,11 @@ public class RichLineView extends RelativeLayout implements IRichCellView, View.
             TypeUtil.selectOnlyOneResourceType(mWRichEditorScrollView, this);
         } else if (id == R.id.iv_delete) {
             // TODO merge
-            if (mWRichEditorScrollView != null && mWRichEditorScrollView.mRichCellViewList != null) {
+            if (mWRichEditorScrollView != null) {
                 ViewParent parent = getParent();
                 if (parent != null && parent instanceof ViewGroup) {
                     clearFocus();
                     ((ViewGroup) parent).removeView(this);
-                    mWRichEditorScrollView.mRichCellViewList.remove(this);
                 }
             }
         }
