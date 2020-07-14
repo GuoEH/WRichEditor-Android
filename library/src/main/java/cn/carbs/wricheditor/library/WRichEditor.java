@@ -8,7 +8,6 @@ import android.text.Spanned;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.EditText;
@@ -39,7 +38,6 @@ import cn.carbs.wricheditor.library.utils.TypeUtil;
 // getEditableText().getSpans(0, getEditableText().toString().length(), richSpan.getClass());
 // 因此最后导出的时候，是否需要合并？如何转换数据是个问题
 
-// TODO wangwang 去掉 IRichCellView
 @SuppressLint("AppCompatCustomView")
 public class WRichEditor extends EditText {
 
@@ -69,7 +67,6 @@ public class WRichEditor extends EditText {
     public WRichEditor(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
-
 
     // TODO 关于监听文字改变，有 onTextChanged 和 onSelectionChanged 两个可选
     // 1. onSelectionChanged 应该适合选中一段文字后改变字体，(TODO 好像onTextChanged也能监听)
@@ -217,7 +214,6 @@ public class WRichEditor extends EditText {
                     // 光标处于0位置，并且没有任何内容
                     currRichTypes = new HashSet<>(4);
                     currRichTypes.addAll(prevRichTypes);
-                    Log.d("xxx", "113");
                     TypeUtil.correctLineFormatGroupType(currRichTypes, mWrapperView);
                 } else {
                     // 光标处于0位置，但是EditText中包含内容
@@ -234,7 +230,6 @@ public class WRichEditor extends EditText {
             OnRichTypeChangedListener typeChangedListener = mWRichEditorScrollView.getOnRichTypeChangedListener();
             if (typeChangedListener != null) {
                 // TODO api设计是否需要优化？考虑到光标移动的情况，应该不需要
-                Log.d("xxx", "888");
                 if (currRichTypes == null) {
                     currRichTypes = new HashSet<>();
                 }
@@ -252,10 +247,8 @@ public class WRichEditor extends EditText {
 //    : WRichEditor onSelectionChanged selStart : 4 selEnd : 4 hasFocus : true
 //    : onSelectionChanged isCursorAutoChange : true
 //    : onKeyUp
-
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        Log.d("www", "onKeyUp");
         if (keyCode == KeyEvent.KEYCODE_ENTER) {
             // 响应 keycode，如果有 headline 类型的 RichType
             if (mWRichEditorScrollView != null) {
@@ -342,8 +335,6 @@ public class WRichEditor extends EditText {
                                 }
                             }
                         }
-                        // 2. 如果不是，则将焦点至于image、video、等资源上
-
                     }
                 }
             }
@@ -407,13 +398,8 @@ public class WRichEditor extends EditText {
             if (mWRichEditorScrollView == null) {
                 return;
             }
-
             // 将选中的部分进行更新，同时更新此View对应的
             updateSpanUI(richType, open, extra, selectionStart, selectionEnd, mWRichEditorScrollView.getRichTypes());
-            // 是不是想的太复杂了？
-
-            // TODO [难点] 切割data
-            updateSpanData(selectionStart, selectionEnd, mWRichEditorScrollView.getRichTypes());
         }
     }
 
@@ -423,15 +409,6 @@ public class WRichEditor extends EditText {
             return;
         }
         SpanUtil.setSpan(richType, open, extra, mRichAtomicDataList, getEditableText(), richTypes, start, end);
-    }
-
-    // TODO 插入数据时，应该修改data
-    private void updateSpanData(int start, int end, Set<RichType> richTypes) {
-        // 从 mRichAtomicDataList 找到start所在的位置
-
-        // 从 mRichAtomicDataList 找到end所在的位置
-
-
     }
 
     // SpannableStringBuilder
@@ -461,32 +438,17 @@ public class WRichEditor extends EditText {
         }
     }
 
-    // TODO 可以删除这个方法，用SpanUtil中的方法代替
-    // 将某个区间的富文本取出，然后只保留这部分富文本
-    public void subSpannableStringInclusiveExclusive(int start, int end) {
-
-        Editable editable = getText();
-        IRichSpan[] spans = editable.getSpans(start, end, IRichSpan.class);
-
-        List<SpanPart> list = new ArrayList<>();
-        for (IRichSpan span : spans) {
-            list.add(new SpanPart(editable.getSpanStart(span), editable.getSpanEnd(span), span));
-            editable.removeSpan(span);
-        }
-        mTextChangeValid = false;
-        setText(editable.subSequence(start, end).toString());
-        mTextChangeValid = true;
-        // 循环将格式赋给添加的这一段
-        for (SpanPart part : list) {
-            if (part.isValid()) {
-                getText().setSpan(part.getRichSpan(), part.getStart() - start, part.getEnd() - start, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            }
-        }
-    }
-
     public void requestFocusAndPutCursorToTail() {
         requestFocus();
         setSelection(getEditableText().toString().length());
+    }
+
+    public void setTextChangeValid(boolean textChangeValid) {
+        mTextChangeValid = textChangeValid;
+    }
+
+    public boolean getTextChangeValid() {
+        return mTextChangeValid;
     }
 
 }

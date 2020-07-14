@@ -180,8 +180,8 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                         // 肯定会以 Enter 键结尾
                         Editable editableText = focusedWRichEditor.getText();
                         List<SpanPart> spanPartsOutput0 = new ArrayList<>(32);
-                        String textWithoutFormat0 = SpanUtil.getSpannableStringInclusiveExclusive(editableText, 0, currentEditableLength - 1, spanPartsOutput0);
-                        SpanUtil.setSpannableInclusiveExclusive(focusedWRichEditor, textWithoutFormat0, spanPartsOutput0, 0);
+                        String textWithoutFormat = SpanUtil.getSpannableStringInclusiveExclusive(editableText, 0, currentEditableLength - 1, spanPartsOutput0);
+                        SpanUtil.setSpannableInclusiveExclusive(focusedWRichEditor, textWithoutFormat, spanPartsOutput0, 0);
                         insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 1, RichType.QUOTE, true);
                     } else if (quoteStart == 0) {
                         // 四种情况

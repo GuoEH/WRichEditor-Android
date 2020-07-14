@@ -27,12 +27,6 @@ line 等view 在删除时，需要merge一下，同时在别的editor获取焦�
 
 // TODO WRichEditor  设置lineHeight
 
-// bug
-当最后一个符号为换行符，并且添加引用时，需要注意，如果此时格式开启了加粗B等，上面的整行都变成了粗体，因为响应了TextChanged
-
-
-
-
 
 
 // bug

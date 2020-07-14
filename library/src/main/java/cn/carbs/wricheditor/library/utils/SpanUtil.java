@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import cn.carbs.wricheditor.library.WRichEditor;
 import cn.carbs.wricheditor.library.constants.CharConstant;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.interfaces.IRichSpan;
@@ -138,13 +139,15 @@ public class SpanUtil {
         return editable.subSequence(start, end).toString();
     }
 
-    public static void setSpannableInclusiveExclusive(EditText editText, String textWithoutFormat, List<SpanPart> spanParts, int offset) {
-        if (editText == null) {
+    public static void setSpannableInclusiveExclusive(WRichEditor wRichEditor, String textWithoutFormat, List<SpanPart> spanParts, int offset) {
+        if (wRichEditor == null) {
             return;
         }
-        editText.setText(textWithoutFormat);
+        wRichEditor.setTextChangeValid(false);
+        wRichEditor.setText(textWithoutFormat);
+        wRichEditor.setTextChangeValid(true);
         // 循环将格式赋给添加的这一段
-        Editable editableText = editText.getText();
+        Editable editableText = wRichEditor.getText();
         int editableLength = editableText.length();
         for (SpanPart part : spanParts) {
             if (part.isValid()) {
