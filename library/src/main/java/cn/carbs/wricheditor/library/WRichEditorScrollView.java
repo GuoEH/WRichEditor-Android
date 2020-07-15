@@ -1,11 +1,15 @@
 package cn.carbs.wricheditor.library;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.Editable;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
@@ -29,6 +33,7 @@ import cn.carbs.wricheditor.library.utils.OrderListUtil;
 import cn.carbs.wricheditor.library.utils.SpanUtil;
 import cn.carbs.wricheditor.library.utils.StrategyUtil;
 import cn.carbs.wricheditor.library.utils.ViewUtil;
+import cn.carbs.wricheditor.library.views.RichLineView;
 
 /**
  * 主视图，继承自ScrollView，富文本通过向其中不断添加子View实现
@@ -83,6 +88,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                 }
             }
         });
+        initInputKeyboardListener();
     }
 
     private void initAttrs(AttributeSet attrs) {
@@ -1286,6 +1292,73 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
             tailCellView = insertAWRichEditorWrapperWithRichType(-1, RichType.NONE, false);
         }
         return tailCellView;
+    }
+
+    public void insertLine() {
+
+        RichLineView richLineView = new RichLineView(getContext());
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.gravity = Gravity.CENTER_HORIZONTAL;
+
+        int[] focusedIndex = new int[1];
+        WRichEditorWrapperView focusedWrapperView = findCurrentOrRecentFocusedRichEditorWrapperView(focusedIndex);
+        if (focusedWrapperView != null
+                && focusedWrapperView.getWRichEditor() != null
+                && focusedWrapperView.getWRichEditor().hasFocus()
+                && focusedWrapperView.getWRichEditor().getEditableText().length() == 0) {
+            addRichCell(richLineView, lp, focusedIndex[0]);
+        } else {
+            addRichCell(richLineView, lp, focusedIndex[0] + 1);
+            if (needAddWRichEditor(focusedIndex[0] + 1)) {
+                insertAWRichEditorWrapperWithRichType(focusedIndex[0] + 2, RichType.NONE, true);
+            }
+        }
+    }
+
+    private ViewTreeObserver.OnGlobalLayoutListener mOnGlobalLayoutListener;
+
+    private void initInputKeyboardListener() {
+
+        final Context context = getContext();
+        if (context == null || !(context instanceof Activity)) {
+            return;
+        }
+
+        mOnGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Log.d("wangwang", "onGlobalLayout()");
+                int fullScreenHeight = CommonUtil.getFullScreenHeight((Activity) context);
+                int currScreenHeight = CommonUtil.getScreenHeightExcludeKeyboard((Activity) context);
+                int naviHeight = CommonUtil.getNavigationBarHeight((Activity) context);
+
+
+                Log.d("wangwang", "fullScreenHeight : " + fullScreenHeight);
+                Log.d("wangwang", "currScreenHeight : " + currScreenHeight);
+                Log.d("wangwang", "naviHeight : " + naviHeight);
+
+                if (currScreenHeight + naviHeight >= fullScreenHeight) {
+                    // 全屏状态
+                    onKeyboardHidden();
+                } else {
+                    // 软键盘弹起状态
+                    onKeyboardShown(currScreenHeight);
+                }
+            }
+        };
+
+        this.getViewTreeObserver().addOnGlobalLayoutListener(mOnGlobalLayoutListener);
+
+    }
+
+    // TODO
+    private void onKeyboardHidden() {
+        Log.d("wangwang", "onGlobalLayout() onKeyboardHidden");
+    }
+
+    // TODO
+    private void onKeyboardShown(int currScreenHeight) {
+        Log.d("wangwang", "onGlobalLayout() onKeyboardShown");
     }
 
 }

@@ -42,8 +42,9 @@
         android:layout_below="@id/title_bar"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:paddingBottom="44dp"
+        android:paddingBottom="108dp"
         app:editorColor="#FF513930"
+        android:clipToPadding="false"
         app:headlineTextSize="24dp"
         app:linkColor="#FF2196F3" />
 

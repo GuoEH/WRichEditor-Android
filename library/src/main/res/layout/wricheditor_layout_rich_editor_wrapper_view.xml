@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/fl_left_container_in_wrapper"
-        android:background="@null"
+        android:background="@drawable/wre_bg_wrich_editor"
         android:fallbackLineSpacing="false"
         android:lineHeight="@dimen/wrich_editor_line_height"
         android:lineSpacingExtra="@dimen/wrich_editor_padding_bottom"

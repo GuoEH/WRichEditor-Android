@@ -36,7 +36,16 @@ editor中none数据暂时没有
 editor中在image后面添加横线有空行
 
 // TODO
+添加line、image等 需要进一步封装
+
+// TODO
 选中image后，添加image会添加到image的前面
+
+// TODO
+方法注释、方法的排序
+
+// TODO
+输入完成后，上下滑动还需要继续打磨
 
 // ========== EXPERIENCE ===========
 1. 锤子便签：在quote时，会自动将所有的字符进行一次缩小，颜色变浅

@@ -192,6 +192,7 @@ public class WRichEditor extends EditText {
             mOnEditorFocusChangedListener.onEditorFocusChanged(mWrapperView, focused);
         }
         if (focused && mWRichEditorScrollView != null) {
+//            CommonUtil.showSoftKeyboard(getContext(), this);
             Set<RichType> currRichTypes = null;
             // todo 将上次的 RichTypes 存储到 ScrollView 中
             Set<RichType> prevRichTypes = mWRichEditorScrollView.getRichTypes();

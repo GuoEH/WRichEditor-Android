@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,6 +31,7 @@ import cn.carbs.wricheditor.library.callbacks.OnRichTypeChangedListener;
 import cn.carbs.wricheditor.library.models.cell.ImageCellData;
 import cn.carbs.wricheditor.library.models.cell.PanCellData;
 import cn.carbs.wricheditor.library.types.RichType;
+import cn.carbs.wricheditor.library.utils.CommonUtil;
 import cn.carbs.wricheditor.library.utils.DebugUtil;
 import cn.carbs.wricheditor.library.utils.ParserUtil;
 import cn.carbs.wricheditor.library.utils.TypeUtil;
@@ -117,6 +120,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mImageViewMap.put(RichType.QUOTE, mBtnQuote);
         mImageViewMap.put(RichType.LIST_UNORDERED, mBtnListUnordered);
         mImageViewMap.put(RichType.LIST_ORDERED, mBtnListOrdered);
+
+//        initInputKeyboardListener();
     }
 
     @Override
@@ -226,15 +231,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void onInsertLineClicked() {
-        int[] focusedIndex = new int[1];
-        mWRichEditorScrollView.findCurrentOrRecentFocusedRichEditorWrapperView(focusedIndex);
-        RichLineView richLineView = new RichLineView(MainActivity.this);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.gravity = Gravity.CENTER_HORIZONTAL;
-        mWRichEditorScrollView.addRichCell(richLineView, lp, focusedIndex[0] + 1);
-        if (mWRichEditorScrollView.needAddWRichEditor(focusedIndex[0] + 1)) {
-            mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(focusedIndex[0] + 2, RichType.NONE, true);
-        }
+        mWRichEditorScrollView.insertLine();
     }
 
     private void onInsertImageClicked() {
@@ -409,4 +406,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
+
 }
