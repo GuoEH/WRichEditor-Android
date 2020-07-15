@@ -8,12 +8,6 @@ import cn.carbs.wricheditor.library.types.RichType;
 
 public class VideoCellData implements IRichCellData {
 
-    private static Set<RichType> sRichTypes = new HashSet<>();
-
-    static {
-        sRichTypes.add(RichType.VIDEO);
-    }
-
     public String videoLocalUrl;
 
     public String videoNetUrl;
@@ -28,9 +22,8 @@ public class VideoCellData implements IRichCellData {
     }
 
     @Override
-    public Set<RichType> getType() {
-        return sRichTypes;
+    public RichType getType() {
+        return RichType.VIDEO;
     }
-
 
 }

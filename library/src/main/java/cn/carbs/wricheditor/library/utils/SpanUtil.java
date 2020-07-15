@@ -21,7 +21,7 @@ public class SpanUtil {
 
     public static final String TAG = SpanUtil.class.getSimpleName();
     // SPAN_INCLUSIVE_EXCLUSIVE
-    public static void setSpan(RichType richType, boolean open, Object extra, ArrayList<RichAtomicData> richAtomicDataList, Editable editable, Set<RichType> richTypes, int spanStart, int spanEnd) {
+    public static void setSpan(RichType richType, boolean open, Object extra, Editable editable, Set<RichType> richTypes, int spanStart, int spanEnd) {
         if (editable == null || spanStart < 0 || spanEnd < 0 || spanStart > spanEnd) {
             return;
         }

@@ -38,22 +38,10 @@ public class CursorUtil {
         int deltaTextLength = currentTextLength - getLastTextLength();
         int deltaCursorLocation = currentCursorLocation - getLastCursorLocation();
         if (deltaTextLength == deltaCursorLocation
-                && stringEqual(contentDescription, getLastWRichEditorContentDescription())) {
+                && CommonUtil.stringEqual(contentDescription, getLastWRichEditorContentDescription())) {
             return true;
         }
         return false;
-    }
-
-    public static boolean stringEqual(String a, String b) {
-        if (a == null) {
-            if (b == null) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return a.equals(b);
-        }
     }
 
     public static synchronized String getNewContentDescriptionForWRichEditor() {

@@ -1,7 +1,5 @@
 package cn.carbs.wricheditor.library.interfaces;
 
-import java.util.Set;
-
 import cn.carbs.wricheditor.library.types.RichType;
 
 /**
@@ -11,6 +9,6 @@ public interface IRichCellData {
 
     Object getData();
 
-    Set<RichType> getType();
+    RichType getType();
 
 }

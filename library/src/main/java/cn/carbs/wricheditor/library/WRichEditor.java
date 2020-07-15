@@ -22,13 +22,12 @@ import cn.carbs.wricheditor.library.callbacks.OnRichTypeChangedListener;
 import cn.carbs.wricheditor.library.constants.RichTypeConstants;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.interfaces.IRichSpan;
-import cn.carbs.wricheditor.library.models.RichAtomicData;
 import cn.carbs.wricheditor.library.models.SpanPart;
 import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.CursorUtil;
 import cn.carbs.wricheditor.library.utils.LogUtil;
 import cn.carbs.wricheditor.library.utils.OrderListUtil;
-import cn.carbs.wricheditor.library.utils.RichUtil;
+import cn.carbs.wricheditor.library.utils.CommonUtil;
 import cn.carbs.wricheditor.library.utils.SpanUtil;
 import cn.carbs.wricheditor.library.utils.StrategyUtil;
 import cn.carbs.wricheditor.library.utils.TypeUtil;
@@ -45,11 +44,6 @@ public class WRichEditor extends EditText {
     private WRichEditorScrollView mWRichEditorScrollView;
 
     private OnEditorFocusChangedListener mOnEditorFocusChangedListener;
-
-    // todo
-    // 1. 如果不使用数据呢？
-    // 2. 这种思路是以文字推进的角度来进行的，另一种思路是按照指定的span类型，按照整行的方式获取所有的span，参考knife 标记wangwang
-    private ArrayList<RichAtomicData> mRichAtomicDataList = new ArrayList<>();
 
     private WRichEditorWrapperView mWrapperView;
 
@@ -413,7 +407,7 @@ public class WRichEditor extends EditText {
 
     private void removeFocusToResourceTypeAbove(int targetIndex) {
         if (mWRichEditorScrollView != null && mWRichEditorScrollView.getContainerView() != null) {
-            RichUtil.hideSoftKeyboard(getContext(), this);
+            CommonUtil.hideSoftKeyboard(getContext(), this);
             Log.d("clearfocus", "clearFocus() 4");
             clearFocus();
             TypeUtil.selectOnlyOneResourceType(mWRichEditorScrollView, targetIndex);
@@ -475,7 +469,7 @@ public class WRichEditor extends EditText {
         if (start < 0 || end < 0) {
             return;
         }
-        SpanUtil.setSpan(richType, open, extra, mRichAtomicDataList, getEditableText(), richTypes, start, end);
+        SpanUtil.setSpan(richType, open, extra, getEditableText(), richTypes, start, end);
     }
 
     // SpannableStringBuilder

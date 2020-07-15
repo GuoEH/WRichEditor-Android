@@ -1,45 +1,4 @@
-package cn.carbs.wricheditor.library.utils;
-
-import android.app.Activity;
-import android.content.Context;
-import android.text.Editable;
-import android.util.Log;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-
-import java.util.ArrayList;
-
-import cn.carbs.wricheditor.library.WRichEditorScrollView;
-import cn.carbs.wricheditor.library.WRichEditorWrapperView;
-import cn.carbs.wricheditor.library.models.RichAtomicData;
-import cn.carbs.wricheditor.library.models.RichCellData;
-
-public class RichUtil {
-
-    public static void hideSoftKeyboard(Context context, View view) {
-        Log.d("wangwang", "hideSoftKeyboard");
-        LogUtil.printMethodStack();
-        if (view == null) {
-            return;
-        }
-        InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-    }
-
-    public static void removeAllEditorFocus(Context context, WRichEditorScrollView wRichEditorScrollView) {
-        if (wRichEditorScrollView != null) {
-            int[] index = new int[1];
-            WRichEditorWrapperView focusedWrapperView = wRichEditorScrollView.findCurrentOrRecentFocusedRichEditorWrapperView(index);
-            if (focusedWrapperView != null && focusedWrapperView.getWRichEditor() != null) {
-                RichUtil.hideSoftKeyboard(context, focusedWrapperView.getWRichEditor());
-                Log.d("clearfocus", "clearFocus() 0");
-                focusedWrapperView.getWRichEditor().clearFocus();
-            }
-        }
-    }
-
-
-    /**
+/**
      * 光标插入位置的定位，如果光标位于两个不同格式的数据之间，则返回前一个 RichAtomicData
      *
      * @param richCellData
@@ -48,7 +7,7 @@ public class RichUtil {
      * @param locationInAtomicDataList size应该为2，返回光标location的左右两个字对应列表所在的位置
      * @return
      */
-    public static RichAtomicData getCursorLocationData(RichCellData richCellData, Editable editable, int location, int[] locationInAtomicDataList) {
+    /*public static RichAtomicData getCursorLocationData(RichCellData richCellData, Editable editable, int location, int[] locationInAtomicDataList) {
         // todo 添加抛出异常
         if (richCellData == null || richCellData.atomicDataList == null) {
             return null;
@@ -57,7 +16,7 @@ public class RichUtil {
             throw new IllegalArgumentException("locationInAtomicDataList length should be two");
         }
         return getCursorLocationData(richCellData.atomicDataList, editable, location, locationInAtomicDataList);
-    }
+    }*/
 
     // TODO 需要先保证 atomicDataList 中所有的item数据都不能为空
     // TODO
@@ -133,5 +92,3 @@ public class RichUtil {
             atomicDataList.addAll(ret);
         }
     }
-
-}

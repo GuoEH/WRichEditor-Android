@@ -13,6 +13,6 @@ public class LogUtil {
     }
 
     public static void printMethodStack() {
-        Log.d("wangwang", Log.getStackTraceString(new Throwable()));
+        Log.d("method", Log.getStackTraceString(new Throwable()));
     }
 }

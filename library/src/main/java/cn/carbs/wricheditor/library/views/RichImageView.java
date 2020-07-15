@@ -17,7 +17,7 @@ import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
 import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.types.RichType;
-import cn.carbs.wricheditor.library.utils.RichUtil;
+import cn.carbs.wricheditor.library.utils.CommonUtil;
 import cn.carbs.wricheditor.library.utils.TypeUtil;
 
 // 不抽象，如果需要自定义，直接在外部自定义
@@ -76,7 +76,7 @@ public class RichImageView extends RelativeLayout implements IRichCellView, View
         int id = v.getId();
         if (id == R.id.wricheditor_rich_image_view_container) {
             TypeUtil.selectOnlyOneResourceType(mWRichEditorScrollView, this);
-            RichUtil.removeAllEditorFocus(getContext(), mWRichEditorScrollView);
+            CommonUtil.removeAllEditorFocus(getContext(), mWRichEditorScrollView);
         } else if (id == R.id.iv_delete) {
             if (mWRichEditorScrollView != null) {
                 ViewParent parent = getParent();
@@ -88,7 +88,7 @@ public class RichImageView extends RelativeLayout implements IRichCellView, View
             }
         } else if (v == this) {
             TypeUtil.selectOnlyOneResourceType(mWRichEditorScrollView, this);
-            RichUtil.removeAllEditorFocus(getContext(), mWRichEditorScrollView);
+            CommonUtil.removeAllEditorFocus(getContext(), mWRichEditorScrollView);
         }
     }
 

@@ -40,7 +40,9 @@ public enum RichType {
 
     AUDIO(false, RichTypeConstants.GROUP_RESOURCE),
 
-    NETDISK(false, RichTypeConstants.GROUP_RESOURCE);
+    NETDISK(false, RichTypeConstants.GROUP_RESOURCE),
+
+    LINE(false, RichTypeConstants.GROUP_RESOURCE),;
 
     private boolean hasEditor;
 

@@ -1,22 +1,16 @@
 package cn.carbs.wricheditor.library.models;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import android.text.Editable;
 
 import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.types.RichType;
 
-// 包含 粗体、斜体、列等等格式
 public class RichCellData implements IRichCellData {
 
-    private static Set<RichType> sRichTypes = new HashSet<>();
+    // NONE, QUOTE, LIST_ORDERED, LIST_UNORDERED
+    private RichType richType = RichType.NONE;
 
-    static {
-        sRichTypes.add(RichType.NONE);
-    }
-
-    public ArrayList<RichAtomicData> atomicDataList = new ArrayList<>();
+    public Editable editable;
 
     @Override
     public Object getData() {
@@ -24,9 +18,16 @@ public class RichCellData implements IRichCellData {
     }
 
     @Override
-    public Set<RichType> getType() {
-        // 需要更细粒度的区分
-        return sRichTypes;
+    public RichType getType() {
+        return richType;
+    }
+
+    public void setRichType(RichType richType) {
+        this.richType = richType;
+    }
+
+    public void setEditable(Editable editable) {
+        this.editable = editable;
     }
 
 
