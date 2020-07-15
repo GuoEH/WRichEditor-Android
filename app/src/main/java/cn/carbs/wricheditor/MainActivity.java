@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +27,7 @@ import cn.carbs.wricheditor.library.WRichEditorWrapperView;
 import cn.carbs.wricheditor.library.callbacks.OnRichTypeChangedListener;
 import cn.carbs.wricheditor.library.parser.Parser;
 import cn.carbs.wricheditor.library.types.RichType;
+import cn.carbs.wricheditor.library.utils.LogUtil;
 import cn.carbs.wricheditor.library.utils.TypeUtil;
 import cn.carbs.wricheditor.library.views.RichLineView;
 
@@ -67,6 +67,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mBtnAddEditor = findViewById(R.id.button_add_editor_text);
         mBtnAddEditor.setOnClickListener(this);
+        if (!LogUtil.DEBUG) {
+            mBtnAddEditor.setVisibility(View.GONE);
+        }
 
         mBtnBold = findViewById(R.id.button_bold);
         mBtnBold.setOnClickListener(this);
@@ -122,6 +125,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (wrapperView != null && wrapperView.getWRichEditor() != null) {
             wrapperView.getWRichEditor().requestFocus();
         }
+        mHasAddFirstEditor = true;
     }
 
     private void onBoldClicked() {
@@ -196,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String link = editText.getText().toString().trim();
+                String link = editText.getEditableText().toString().trim();
                 if (TextUtils.isEmpty(link)) {
                     return;
                 }
@@ -281,11 +285,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         WRichEditorWrapperView editTextWrapperView = new WRichEditorWrapperView(MainActivity.this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         int size = mWRichEditorScrollView.getCellViewCount();
-        editTextWrapperView.getWRichEditor().setHint("CELL : " + size);
-        if (size % 2 == 0) {
-            editTextWrapperView.setBackgroundColor(0x10222222);
-        } else {
-            editTextWrapperView.setBackgroundColor(0x18222222);
+        if (LogUtil.DEBUG) {
+            editTextWrapperView.getWRichEditor().setHint("CELL : " + size);
+            if (size % 2 == 0) {
+                editTextWrapperView.setBackgroundColor(0x10222222);
+            } else {
+                editTextWrapperView.setBackgroundColor(0x18222222);
+            }
         }
         mWRichEditorScrollView.addRichCell(editTextWrapperView, lp, -1);
     }
@@ -294,7 +300,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         WRichEditorWrapperView editTextWrapperView = new WRichEditorWrapperView(MainActivity.this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         mWRichEditorScrollView.addRichCell(editTextWrapperView, lp, -1);
-        editTextWrapperView.setBackgroundColor(0x66660000);
+        if (LogUtil.DEBUG) {
+            editTextWrapperView.setBackgroundColor(0x66660000);
+        }
         return editTextWrapperView;
     }
 
@@ -302,10 +310,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         WRichEditorWrapperView editorWrapperView =(WRichEditorWrapperView) mWRichEditorScrollView.getContainerView().getChildAt(0);
         WRichEditor wRichEditor = editorWrapperView.getWRichEditor();
         if (wRichEditor != null) {
-            Editable editable = wRichEditor.getText();
+            Editable editable = wRichEditor.getEditableText();
             StringBuilder sb = new StringBuilder();
             Parser.withinContent(sb, editable, 0, editable.length());
-            Log.d("wangwang", "html : " + sb.toString());
             Intent intent = new Intent(this, WebViewActivity.class);
             intent.putExtra(WebViewActivity.HTML, sb.toString());
             startActivity(intent);
@@ -370,11 +377,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (newTypes == null) {
             newTypes = new HashSet<>();
         }
-//        Log.d("www", "=== onRichTypeChanged === ");
-//        for (RichType item : newTypes) {
-//            Log.d("www", "RichType item : " + item.name());
-//        }
-
         for (Map.Entry<RichType, ImageView> entry : mImageViewMap.entrySet()) {
             if (newTypes.contains(entry.getKey())) {
                 setButtonTextColor(entry.getValue(), true);

@@ -181,7 +181,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                     if (quoteStart == currentEditableLength && quoteEnd == currentEditableLength) {
                         LogUtil.d(TAG, "QUOTE open 0");
                         // 肯定会以 Enter 键结尾
-                        Editable editableText = focusedWRichEditor.getText();
+                        Editable editableText = focusedWRichEditor.getEditableText();
                         List<SpanPart> spanPartsOutput0 = new ArrayList<>(32);
                         String textWithoutFormat = SpanUtil.getSpannableStringInclusiveExclusive(editableText, 0, currentEditableLength - 1, spanPartsOutput0);
                         SpanUtil.setSpannableInclusiveExclusive(focusedWRichEditor, textWithoutFormat, spanPartsOutput0, 0);
@@ -196,7 +196,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                             // A   B   C   D   E | F   G   '/n'
                             // H   I   J   K   L | M   N   ('/n')
                             // 如果光标不在队尾
-                            Editable editableText = focusedWRichEditor.getText();
+                            Editable editableText = focusedWRichEditor.getEditableText();
 
                             if (editableStr.endsWith(CharConstant.ENTER_STR)) {
                                 LogUtil.d(TAG, "QUOTE open 112");
@@ -221,7 +221,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                             // A   B   C | D   E | F   G   '/n'
                             // H   I   J   K   L   M   N   ('/n')
                             // 从起始0到quoteEnd，作为 focusedWRichEditor 的值，并置为quote状态
-                            Editable editableText = focusedWRichEditor.getText();
+                            Editable editableText = focusedWRichEditor.getEditableText();
                             List<SpanPart> spanPartsOutput0 = new ArrayList<>(32);
                             List<SpanPart> spanPartsOutput1 = new ArrayList<>(32);
                             // quoteEnd应该要减一，因为末尾不应该留着 Enter
@@ -248,7 +248,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                             // O   P   Q   R   S | T   U   ('/n')
                             // 光标前面有Enter，后面没有
 
-                            Editable editableText = focusedWRichEditor.getText();
+                            Editable editableText = focusedWRichEditor.getEditableText();
                             List<SpanPart> spanPartsOutput0 = new ArrayList<>(32);
                             List<SpanPart> spanPartsOutput1 = new ArrayList<>(32);
                             String textWithoutFormat0 = SpanUtil.getSpannableStringInclusiveExclusive(editableText, 0, quoteStart - 1, spanPartsOutput0);
@@ -284,7 +284,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                             // H   I   J   K | L   M   N   '/n'
                             // H   I   J   K   L   M | N   '/n'
                             // O   P   Q   R   S   T   U   ('/n')
-                            Editable editableText = focusedWRichEditor.getText();
+                            Editable editableText = focusedWRichEditor.getEditableText();
                             List<SpanPart> spanPartsOutput0 = new ArrayList<>(32);
                             List<SpanPart> spanPartsOutput1 = new ArrayList<>(32);
                             List<SpanPart> spanPartsOutput2 = new ArrayList<>(32);
@@ -352,7 +352,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                     if (quoteStart == currentEditableLength && quoteEnd == currentEditableLength) {
                         // 如果在最后
                         LogUtil.d(TAG, "QUOTE close 0");
-                        Editable editableText = focusedWRichEditor.getText();
+                        Editable editableText = focusedWRichEditor.getEditableText();
                         List<SpanPart> spanPartsOutput0 = new ArrayList<>(32);
                         String textWithoutFormat0 = SpanUtil.getSpannableStringInclusiveExclusive(editableText, 0, currentEditableLength - 1, spanPartsOutput0);
                         SpanUtil.setSpannableInclusiveExclusive(focusedWRichEditor, textWithoutFormat0, spanPartsOutput0, 0);
@@ -366,7 +366,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                             // 选中时
                             // A   B   C   D   E | F   G   '/n'
                             // H   I   J   K   L | M   N   ('/n')
-                            Editable editableText = focusedWRichEditor.getText();
+                            Editable editableText = focusedWRichEditor.getEditableText();
                             List<SpanPart> spanPartsOutput = new ArrayList<>(32);
 
                             if (editableStr.endsWith(CharConstant.ENTER_STR)) {
@@ -390,7 +390,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                             // H   I   J   K   L   M   N   ('/n')
                             // 从起始0到quoteEnd，作为 focusedWRichEditor 的值，并置为quote状态
 
-                            Editable editableText = focusedWRichEditor.getText();
+                            Editable editableText = focusedWRichEditor.getEditableText();
                             List<SpanPart> spanPartsOutput0 = new ArrayList<>(32);
                             List<SpanPart> spanPartsOutput1 = new ArrayList<>(32);
                             // 这里的quoteEnd应该要减一，因为末尾不应该留着 Enter
@@ -416,7 +416,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                             // O   P   Q   R   S | T   U   ('/n')
                             // 光标前面有Enter，后面没有
 
-                            Editable editableText = focusedWRichEditor.getText();
+                            Editable editableText = focusedWRichEditor.getEditableText();
                             List<SpanPart> spanPartsOutput0 = new ArrayList<>(32);
                             List<SpanPart> spanPartsOutput1 = new ArrayList<>(32);
                             // 这里的quoteEnd应该要减一，因为末尾不应该留着 Enter
@@ -448,7 +448,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                             // H   I   J   K | L   M   N   '/n'
                             // H   I   J   K   L   M | N   '/n'
                             // O   P   Q   R   S   T   U   ('/n')
-                            Editable editableText = focusedWRichEditor.getText();
+                            Editable editableText = focusedWRichEditor.getEditableText();
                             List<SpanPart> spanPartsOutput0 = new ArrayList<>(32);
                             List<SpanPart> spanPartsOutput1 = new ArrayList<>(32);
                             List<SpanPart> spanPartsOutput2 = new ArrayList<>(32);
@@ -523,7 +523,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                     if (unorderedStart == currentEditableLength && unorderedEnd == currentEditableLength) {
                         // 如果在最后
                         LogUtil.d(TAG, "LIST_UNORDERED open 0");
-                        Editable editableText = focusedWRichEditor.getText();
+                        Editable editableText = focusedWRichEditor.getEditableText();
                         List<SpanPart> spanPartsOutput = new ArrayList<>(32);
                         String textWithoutFormat0 = SpanUtil.getSpannableStringInclusiveExclusive(editableText, 0, currentEditableLength - 1, spanPartsOutput);
                         SpanUtil.setSpannableInclusiveExclusive(focusedWRichEditor, textWithoutFormat0, spanPartsOutput, 0);
@@ -792,7 +792,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
 
                     if (orderedStart == currentEditableLength && orderedEnd == currentEditableLength) {
                         // 如果在最后
-                        Editable editableText = focusedWRichEditor.getText();
+                        Editable editableText = focusedWRichEditor.getEditableText();
                         List<SpanPart> spanPartsOutput = new ArrayList<>(32);
                         String textWithoutFormat = SpanUtil.getSpannableStringInclusiveExclusive(editableText, 0, currentEditableLength - 1, spanPartsOutput);
                         SpanUtil.setSpannableInclusiveExclusive(focusedWRichEditor, textWithoutFormat, spanPartsOutput, 0);

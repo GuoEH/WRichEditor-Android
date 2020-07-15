@@ -147,7 +147,7 @@ public class SpanUtil {
         wRichEditor.setText(textWithoutFormat);
         wRichEditor.setTextChangeValid(true);
         // 循环将格式赋给添加的这一段
-        Editable editableText = wRichEditor.getText();
+        Editable editableText = wRichEditor.getEditableText();
         int editableLength = editableText.length();
         for (SpanPart part : spanParts) {
             if (part.isValid()) {
