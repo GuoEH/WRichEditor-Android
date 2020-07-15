@@ -6,6 +6,8 @@
 
     <dimen name="wrich_editor_padding_top">22dp</dimen>
 
+    <dimen name="wrich_editor_scroll_view_padding_top">16dp</dimen>
+
     <dimen name="wrich_editor_padding_bottom">22dp</dimen>
 
     <dimen name="wrich_editor_text_size">20dp</dimen>

@@ -24,7 +24,8 @@ headline失效
 cursor delete 时，如果当前行有文字，是否需要合并？
 
 // TODO
-点击ScrollView的空白处，将焦点至于最后一个Editor中
+ScrollView中的第0位置，添加自定义的HeaderView
+
 
 // ========== EXPERIENCE ===========
 1. 锤子便签：在quote时，会自动将所有的字符进行一次缩小，颜色变浅
@@ -37,3 +38,4 @@ cursor delete 时，如果当前行有文字，是否需要合并？
 2. 检查delete键是否连续，image等类型
 3. 首行改为Quote模式时，下一行不增加cell的问题
 4. ordered list 的体验增强，修改 needAddWRichEditor 方法
+5. 点击ScrollView的空白处，将焦点至于最后一个Editor中
