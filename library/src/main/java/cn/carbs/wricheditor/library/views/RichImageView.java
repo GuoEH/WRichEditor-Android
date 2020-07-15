@@ -14,14 +14,14 @@ import androidx.annotation.Nullable;
 import cn.carbs.wricheditor.library.R;
 import cn.carbs.wricheditor.library.WRichEditorScrollView;
 import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
-import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
+import cn.carbs.wricheditor.library.models.cell.ImageCellData;
 import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.CommonUtil;
 import cn.carbs.wricheditor.library.utils.TypeUtil;
 
 // 不抽象，如果需要自定义，直接在外部自定义
-public class RichImageView extends RelativeLayout implements IRichCellView, View.OnClickListener {
+public class RichImageView extends RelativeLayout implements IRichCellView<ImageCellData>, View.OnClickListener {
 
     protected boolean mSelectMode;
 
@@ -35,7 +35,7 @@ public class RichImageView extends RelativeLayout implements IRichCellView, View
 
     protected View mVDelete;
 
-    protected IRichCellData mRichCellData;
+    protected ImageCellData mCellData;
 
     protected OnEditorFocusChangedListener mOnEditorFocusChangedListener;
 
@@ -109,14 +109,15 @@ public class RichImageView extends RelativeLayout implements IRichCellView, View
         mWRichEditorScrollView = wRichEditorScrollView;
     }
 
+    // TODO
     @Override
-    public void setCellData(IRichCellData cellData) {
-        mRichCellData = cellData;
+    public void setCellData(ImageCellData cellData) {
+        mCellData = cellData;
     }
 
     @Override
-    public IRichCellData getCellData() {
-        return mRichCellData;
+    public ImageCellData getCellData() {
+        return mCellData;
     }
 
     @Override
@@ -126,6 +127,7 @@ public class RichImageView extends RelativeLayout implements IRichCellView, View
 
     /**
      * 不要在外部主动调用此函数
+     *
      * @param selectMode
      */
     @Override

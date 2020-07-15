@@ -25,10 +25,13 @@ import cn.carbs.wricheditor.library.WRichEditor;
 import cn.carbs.wricheditor.library.WRichEditorScrollView;
 import cn.carbs.wricheditor.library.WRichEditorWrapperView;
 import cn.carbs.wricheditor.library.callbacks.OnRichTypeChangedListener;
+import cn.carbs.wricheditor.library.models.cell.ImageCellData;
+import cn.carbs.wricheditor.library.models.cell.PanCellData;
 import cn.carbs.wricheditor.library.parser.Parser;
 import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.DebugUtil;
 import cn.carbs.wricheditor.library.utils.LogUtil;
+import cn.carbs.wricheditor.library.utils.ParserUtil;
 import cn.carbs.wricheditor.library.utils.TypeUtil;
 import cn.carbs.wricheditor.library.views.RichLineView;
 
@@ -238,7 +241,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER_HORIZONTAL;
         mWRichEditorScrollView.addRichCell(richImageView, lp, focusedIndex[0] + 1);
-        richImageView.setImageUrl("");
+
+        ImageCellData imageCellData = new ImageCellData();
+        imageCellData.imageLocalUrl = "file://test";
+        imageCellData.imageNetUrl = "http://www.test.com";
+        richImageView.setCellData(imageCellData);
+
         if (mWRichEditorScrollView.needAddWRichEditor(focusedIndex[0] + 1)) {
             mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(focusedIndex[0] + 2, RichType.NONE, true);
         }
@@ -259,7 +267,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER_HORIZONTAL;
         mWRichEditorScrollView.addRichCell(richPanView, lp, focusedIndex[0] + 1);
-        richPanView.setData(R.drawable.ic_file_type_word, "三国演义", "3M  来自:我的FTP");
+        PanCellData panCellData = new PanCellData();
+        panCellData.fileName = "三国演义.txt";
+        panCellData.fileType = "txt";
+        panCellData.fileTypeImageRes = R.drawable.ic_file_type_word;
+        panCellData.fileUrl = "http://www.test.com";
+        panCellData.fileSize = 2 * 1024 * 1000;
+        richPanView.setCellData(panCellData);
         if (mWRichEditorScrollView.needAddWRichEditor(focusedIndex[0] + 1)) {
             mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(focusedIndex[0] + 2, RichType.NONE, true);
         }
@@ -305,7 +319,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void exportToHtml() {
-        WRichEditorWrapperView editorWrapperView =(WRichEditorWrapperView) mWRichEditorScrollView.getContainerView().getChildAt(0);
+
+        String out = ParserUtil.parseToHtml(mWRichEditorScrollView).toString();
+
+        Intent intent = new Intent(this, WebViewActivity.class);
+        intent.putExtra(WebViewActivity.HTML, out);
+        startActivity(intent);
+
+        /*WRichEditorWrapperView editorWrapperView =(WRichEditorWrapperView) mWRichEditorScrollView.getContainerView().getChildAt(0);
         WRichEditor wRichEditor = editorWrapperView.getWRichEditor();
         if (wRichEditor != null) {
             Editable editable = wRichEditor.getEditableText();
@@ -314,7 +335,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(this, WebViewActivity.class);
             intent.putExtra(WebViewActivity.HTML, sb.toString());
             startActivity(intent);
-        }
+        }*/
     }
 
     private void importFromHtml() {

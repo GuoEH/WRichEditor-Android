@@ -13,19 +13,19 @@ import androidx.annotation.Nullable;
 import cn.carbs.wricheditor.library.R;
 import cn.carbs.wricheditor.library.WRichEditorScrollView;
 import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
-import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
+import cn.carbs.wricheditor.library.models.cell.LineCellData;
 import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.TypeUtil;
 
 // 不抽象，如果需要自定义，直接在外部自定义
-public class RichLineView extends RelativeLayout implements IRichCellView, View.OnClickListener {
+public class RichLineView extends RelativeLayout implements IRichCellView<LineCellData>, View.OnClickListener {
 
     private boolean mSelectMode;
 
     private WRichEditorScrollView mWRichEditorScrollView;
 
-    private IRichCellData mRichCellData;
+    private LineCellData mCellData;
 
     private OnEditorFocusChangedListener mOnEditorFocusChangedListener;
 
@@ -71,13 +71,16 @@ public class RichLineView extends RelativeLayout implements IRichCellView, View.
     }
 
     @Override
-    public void setCellData(IRichCellData cellData) {
-        mRichCellData = cellData;
+    public void setCellData(LineCellData cellData) {
+        mCellData = cellData;
     }
 
     @Override
-    public IRichCellData getCellData() {
-        return mRichCellData;
+    public LineCellData getCellData() {
+        if (mCellData == null) {
+            mCellData = new LineCellData();
+        }
+        return mCellData;
     }
 
     @Override

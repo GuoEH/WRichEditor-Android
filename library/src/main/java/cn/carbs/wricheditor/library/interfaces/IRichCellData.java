@@ -11,4 +11,8 @@ public interface IRichCellData {
 
     RichType getType();
 
+    String toHtml();
+
+//    void fromHtml();
+
 }

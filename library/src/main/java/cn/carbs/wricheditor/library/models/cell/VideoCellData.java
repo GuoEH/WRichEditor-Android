@@ -1,7 +1,4 @@
-package cn.carbs.wricheditor.library.models;
-
-import java.util.HashSet;
-import java.util.Set;
+package cn.carbs.wricheditor.library.models.cell;
 
 import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.types.RichType;
@@ -12,10 +9,6 @@ public class VideoCellData implements IRichCellData {
 
     public String videoNetUrl;
 
-    public String imageLocalUrl;
-
-    public String imageNetUrl;
-
     @Override
     public Object getData() {
         return this;
@@ -24,6 +17,14 @@ public class VideoCellData implements IRichCellData {
     @Override
     public RichType getType() {
         return RichType.VIDEO;
+    }
+
+    // TODO
+    @Override
+    public String toHtml() {
+        return "<div richType=\"" + getType().name()
+                + "\" url=\"" + videoLocalUrl
+                + "\"></div>";
     }
 
 }

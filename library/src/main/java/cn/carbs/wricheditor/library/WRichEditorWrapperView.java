@@ -18,6 +18,8 @@ import cn.carbs.wricheditor.library.callbacks.OnRichTypeChangedListener;
 import cn.carbs.wricheditor.library.configures.RichEditorConfig;
 import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
+import cn.carbs.wricheditor.library.models.cell.ImageCellData;
+import cn.carbs.wricheditor.library.models.cell.RichCellData;
 import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.CursorUtil;
 import cn.carbs.wricheditor.library.utils.TypeUtil;
@@ -26,11 +28,11 @@ import cn.carbs.wricheditor.library.utils.TypeUtil;
 // getEditableText().getSpans(0, getEditableText().toString().length(), richSpan.getClass());
 // 因此最后导出的时候，是否需要合并？如何转换数据是个问题
 @SuppressLint("AppCompatCustomView")
-public class WRichEditorWrapperView extends RelativeLayout implements IRichCellView {
+public class WRichEditorWrapperView extends RelativeLayout implements IRichCellView<RichCellData> {
 
     private WRichEditorScrollView mWRichEditorScrollView;
 
-    private IRichCellData mRichCellData;
+    private RichCellData mCellData;
 
     private ImageView mIVForQuoteOrUnorderList;
 
@@ -112,8 +114,8 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
     }
 
     @Override
-    public void setCellData(IRichCellData cellData) {
-        mRichCellData = cellData;
+    public void setCellData(RichCellData cellData) {
+        mCellData = cellData;
     }
 
     @Override
@@ -124,8 +126,14 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
     }
 
     @Override
-    public IRichCellData getCellData() {
-        return mRichCellData;
+    public RichCellData getCellData() {
+        if (mCellData == null) {
+            mCellData = new RichCellData();
+        }
+        if (mWRichEditor != null) {
+            mCellData.editable = mWRichEditor.getEditableText();
+        }
+        return mCellData;
     }
 
     @Override

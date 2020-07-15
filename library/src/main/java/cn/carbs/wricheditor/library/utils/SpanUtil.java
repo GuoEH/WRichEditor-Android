@@ -13,7 +13,6 @@ import cn.carbs.wricheditor.library.WRichEditor;
 import cn.carbs.wricheditor.library.constants.CharConstant;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.interfaces.IRichSpan;
-import cn.carbs.wricheditor.library.models.RichAtomicData;
 import cn.carbs.wricheditor.library.models.SpanPart;
 import cn.carbs.wricheditor.library.types.RichType;
 

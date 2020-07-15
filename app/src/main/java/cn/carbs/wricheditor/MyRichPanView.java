@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 
+import cn.carbs.wricheditor.library.models.cell.PanCellData;
 import cn.carbs.wricheditor.library.views.RichPanView;
 
 public class MyRichPanView extends RichPanView {
@@ -24,7 +25,25 @@ public class MyRichPanView extends RichPanView {
         super(context, attrs, defStyleAttr);
     }
 
-    public void setData(int panFileTypeImageRes, String fileName, String fileDescription) {
+    @Override
+    public void setCellData(PanCellData cellData) {
+        super.setCellData(cellData);
+        if (cellData != null) {
+            setData(cellData.fileTypeImageRes,
+                    cellData.fileName,
+                    convertFileSizeToDescription(cellData.fileSize));
+        }
+    }
+
+    // TODO
+    private String convertFileSizeToDescription(long fileSize) {
+        if (fileSize > 1024 * 1000) {
+            return "1M 来自:我的FTP";
+        }
+        return "1M 来自:我的FTP";
+    }
+
+    private void setData(int panFileTypeImageRes, String fileName, String fileDescription) {
 
         if (mIVFileType != null) {
             Glide

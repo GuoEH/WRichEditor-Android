@@ -29,6 +29,8 @@ ScrollView中的第0位置，添加自定义的HeaderView
 // TODO
 如果editor是第一个，删除时，应该将 LineFormat 删除掉
 
+// TODO
+editor中none数据暂时没有
 
 // ========== EXPERIENCE ===========
 1. 锤子便签：在quote时，会自动将所有的字符进行一次缩小，颜色变浅

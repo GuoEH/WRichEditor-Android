@@ -1,6 +1,7 @@
-package cn.carbs.wricheditor.library.models;
+package cn.carbs.wricheditor.library.models.cell;
 
 import android.text.Editable;
+import android.util.Log;
 
 import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.types.RichType;
@@ -30,5 +31,14 @@ public class RichCellData implements IRichCellData {
         this.editable = editable;
     }
 
+    // TODO
+    @Override
+    public String toHtml() {
+        String content = editable == null ? "" : editable.toString();
+        String html =  "<div>" + content + "</div>";
+//        String html = "fuuuuuuuuuuck";
+        Log.d("wert", "html -->" + html + "<---");
+        return html;
+    }
 
 }

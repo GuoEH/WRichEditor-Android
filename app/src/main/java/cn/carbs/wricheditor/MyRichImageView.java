@@ -19,6 +19,7 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 
+import cn.carbs.wricheditor.library.models.cell.ImageCellData;
 import cn.carbs.wricheditor.library.views.RichImageView;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
@@ -82,6 +83,14 @@ public class MyRichImageView extends RichImageView {
         }
     }
 
+    @Override
+    public void setCellData(ImageCellData cellData) {
+        super.setCellData(cellData);
+        if (cellData != null) {
+            setImageUrl(cellData.imageNetUrl);
+        }
+    }
+
     private void toShowDimEffect() {
         if (mImageViewCover == null) {
             return;
@@ -125,7 +134,8 @@ public class MyRichImageView extends RichImageView {
         translationAnimator.start();
     }
 
-    public void setImageUrl(String imageUrl) {
+    // TODO
+    private void setImageUrl(String imageUrl) {
 
         ImageView imageView = getImageView();
         imageView.setImageResource(R.drawable.image_picture);

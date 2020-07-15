@@ -14,14 +14,14 @@ import androidx.annotation.Nullable;
 import cn.carbs.wricheditor.library.R;
 import cn.carbs.wricheditor.library.WRichEditorScrollView;
 import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
-import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
+import cn.carbs.wricheditor.library.models.cell.PanCellData;
 import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.CommonUtil;
 import cn.carbs.wricheditor.library.utils.TypeUtil;
 
 // 不抽象，如果需要自定义，直接在外部自定义
-public class RichPanView extends RelativeLayout implements IRichCellView, View.OnClickListener {
+public class RichPanView extends RelativeLayout implements IRichCellView<PanCellData>, View.OnClickListener {
 
     protected boolean mSelectMode;
 
@@ -37,7 +37,7 @@ public class RichPanView extends RelativeLayout implements IRichCellView, View.O
 
     protected View mVDelete;
 
-    protected IRichCellData mRichCellData;
+    protected PanCellData mCellData;
 
     protected OnEditorFocusChangedListener mOnEditorFocusChangedListener;
 
@@ -105,13 +105,13 @@ public class RichPanView extends RelativeLayout implements IRichCellView, View.O
     }
 
     @Override
-    public void setCellData(IRichCellData cellData) {
-        mRichCellData = cellData;
+    public void setCellData(PanCellData cellData) {
+        mCellData = cellData;
     }
 
     @Override
-    public IRichCellData getCellData() {
-        return mRichCellData;
+    public PanCellData getCellData() {
+        return mCellData;
     }
 
     @Override

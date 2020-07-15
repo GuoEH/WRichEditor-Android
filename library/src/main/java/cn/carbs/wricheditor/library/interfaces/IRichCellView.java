@@ -9,17 +9,17 @@ import cn.carbs.wricheditor.library.types.RichType;
 /**
  * 每一个添加至ScrollView的子View
  */
-public interface IRichCellView {
+public interface IRichCellView <T extends IRichCellData> {
 
     View getView();
 
     void setWRichEditorScrollView(WRichEditorScrollView wRichEditorScrollView);
 
-    void setCellData(IRichCellData cellData);
+    void  setCellData(T cellData);
 
     void setEditorFocusChangedListener(OnEditorFocusChangedListener listener);
 
-    IRichCellData getCellData();
+    T getCellData();
 
     RichType getRichType();
 
