@@ -23,9 +23,12 @@ public class ImageCellData implements IRichCellData {
     @Override
     public String toHtml() {
 //        <div richType="AUDIO" url="xxx"></div>
-        return "<div richType=\"" + getType().name()
-                + "\" url=\"" + imageNetUrl
-                + "\"></div>";
+        return "<div richType=\"" + getType().name() + "\">" +
+                    "<picture><img src=\"" + imageNetUrl + "\"></picture>" +
+                "</div>";
+//        <picture>
+//           <img src="https://cdn.dribbble.com/users/60166/screenshots/13391936/media/96fbf3623d1154076b794e7ce47a61f5.jpg">
+//        </picture>
     }
 
 }

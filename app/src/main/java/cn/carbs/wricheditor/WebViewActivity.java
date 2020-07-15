@@ -1,25 +1,45 @@
 package cn.carbs.wricheditor;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.ViewUtils;
 
 import java.net.URLDecoder;
+
+import cn.carbs.wricheditor.library.utils.CommonUtil;
+import cn.carbs.wricheditor.library.utils.ViewUtil;
 
 public class WebViewActivity extends AppCompatActivity {
 
     public static final String HTML = "HTML";
 
     private static final String HTML_PREV = "<html lang=\"en\">" +
-            "<head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0\">" +
+            "<head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0\">" +
+            "<style>\n" +
+            "        *{\n" +
+            "            margin: 0;\n" +
+            "            padding: 0;\n" +
+            "        }\n" +
+            "        html{\n" +
+            "            height: 100%;\n" +
+            "        }\n" +
+            "        body{\n" +
+            "            height: 100%;\n" +
+            "        }\n" +
+            "    </style>" +
             "</head>" +
             "<body>" +
             "<p>";
-    private static final String HTML_POST ="</p></body></html>";
+    private static final String HTML_POST = "</p></body></html>";
 
     private WebView mWebView;
 
@@ -35,30 +55,52 @@ public class WebViewActivity extends AppCompatActivity {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setUseWideViewPort(true); //将图片调整到适合webview的大小
         webSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
-        webSettings.setSupportZoom(false); //支持缩放，默认为true。是下面那个的前提。
-        webSettings.setBuiltInZoomControls(false); //设置内置的缩放控件。若为false，则该WebView不可缩放
-        webSettings.setDisplayZoomControls(false); //隐藏原生的缩放控件
-        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK); //关闭webview中缓存
-        webSettings.setAllowFileAccess(true); //设置可以访问文件
-        webSettings.setJavaScriptCanOpenWindowsAutomatically(true); //支持通过JS打开新窗口
-        webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片
+        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
         webSettings.setDefaultTextEncodingName("utf-8");//设置编码格式
+//        webSettings.setLoadWithOverviewMode(true);
+//        webSettings.setDisplayZoomControls(false); //隐藏原生的缩放控件
+//        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK); //关闭webview中缓存
+//        webSettings.setAllowFileAccess(true); //设置可以访问文件
+//        webSettings.setJavaScriptCanOpenWindowsAutomatically(true); //支持通过JS打开新窗口
+//        webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片
+//        webSettings.setSupportZoom(true); //支持缩放，默认为true。是下面那个的前提。
+//        webSettings.setBuiltInZoomControls(false); //设置内置的缩放控件。若为false，则该WebView不可缩放
 
+        mWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                loadJS();
+            }
+        });
 
         mHTML = getIntent().getStringExtra(HTML);
-
-
         String text = HTML_PREV + mHTML + HTML_POST;
-
         mWebView.loadData(text, "text/html", "UTF-8");
-
         Log.d("wangwang", "html : " + text);
-        try {
-            String urlStr = URLDecoder.decode(text, "UTF-8");
-            Log.d("wangwang", "urlStr : " + urlStr);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    }
+
+    private void loadJS() {
+
+        int webViewDp = CommonUtil.getScreenWidthDP(this) - 32;
+        mWebView.loadUrl("javascript:(function(){"
+//                + " var divs = document.getElementsByTagName(\"div\");"
+//                + " for (var j = 0; j < divs.length; j++) {"
+//                + "     divs[j].style.margin = \"0px\";"
+//                + "     divs[j].style.padding = \"0px\";"
+//                + "     divs[j].style.width = document.body.clientWidth-10;"
+//                + " }"
+                + " var imgs = document.getElementsByTagName(\"img\");"
+                + " for (var i = 0; i < imgs.length; i++) {"
+                + "     var vkeyWords = /.gif$/;"
+                + "     if (!vkeyWords.test(imgs[i].src)) {"
+                + "         var hRatio =" + webViewDp + " / imgs[i].width;"
+                + "         imgs[i].height = imgs[i].height * hRatio;"//通过缩放比例来设置图片的高度
+                + "         imgs[i].width= " + webViewDp + ";"//设置图片的宽度
+                + "     }"
+                + " }"
+                + " })()");
 
     }
+
 }

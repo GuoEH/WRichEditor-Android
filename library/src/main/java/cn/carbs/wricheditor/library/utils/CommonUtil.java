@@ -2,7 +2,9 @@ package cn.carbs.wricheditor.library.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import cn.carbs.wricheditor.library.WRichEditorScrollView;
@@ -55,6 +57,22 @@ public class CommonUtil {
         } else {
             return a.equals(b);
         }
+    }
+
+    public static int getScreenWidthDP(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics dm = new DisplayMetrics();
+        if (wm != null && wm.getDefaultDisplay() != null) {
+            wm.getDefaultDisplay().getMetrics(dm);
+            return px2dp(context, dm.widthPixels);
+        } else {
+            return 0;
+        }
+    }
+
+    public static int px2dp(Context context, float pxValue) {
+        float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
     }
 
 }
