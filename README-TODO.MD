@@ -21,7 +21,10 @@ headline失效
 换行后cursor问题
 
 // TODO
-cursor delete 时，如果当前行有文字，不应该合并吗？
+cursor delete 时，如果当前行有文字，是否需要合并？
+
+// TODO
+点击ScrollView的空白处，将焦点至于最后一个Editor中
 
 // ========== EXPERIENCE ===========
 1. 锤子便签：在quote时，会自动将所有的字符进行一次缩小，颜色变浅

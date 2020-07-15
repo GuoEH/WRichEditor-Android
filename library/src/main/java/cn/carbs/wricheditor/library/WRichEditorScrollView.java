@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.Editable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -23,6 +24,7 @@ import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.models.SpanPart;
 import cn.carbs.wricheditor.library.models.SplitPart;
 import cn.carbs.wricheditor.library.types.RichType;
+import cn.carbs.wricheditor.library.utils.CommonUtil;
 import cn.carbs.wricheditor.library.utils.LogUtil;
 import cn.carbs.wricheditor.library.utils.OrderListUtil;
 import cn.carbs.wricheditor.library.utils.SpanUtil;
@@ -64,9 +66,24 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
     }
 
     private void init(Context context) {
+        setFillViewport(true);
         inflate(context, R.layout.wricheditor_layout_main_view, this);
         mLinearLayout = findViewById(R.id.wricheditor_main_view_container);
         RichEditorConfig.sHeadlineTextSize = ViewUtil.dp2px(getContext(), 24);
+        mLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IRichCellView cellView = addNoneTypeTailOptionally();
+                if (cellView instanceof WRichEditorWrapperView) {
+                    WRichEditor wRichEditor = ((WRichEditorWrapperView) cellView).getWRichEditor();
+                    if (wRichEditor != null) {
+                        wRichEditor.requestFocus();
+                        // 调起软键盘
+                        CommonUtil.showSoftKeyboard(getContext(), wRichEditor);
+                    }
+                }
+            }
+        });
     }
 
     private void initAttrs(AttributeSet attrs) {
@@ -1263,11 +1280,12 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
         return (IRichCellView) mLinearLayout.getChildAt(cellCount - 1);
     }
 
-    public void addNoneTypeTailOptionally() {
+    public IRichCellView addNoneTypeTailOptionally() {
         IRichCellView tailCellView = getTailCellView();
         if (tailCellView == null || tailCellView.getRichType() != RichType.NONE) {
-            insertAWRichEditorWrapperWithRichType(-1, RichType.NONE, false);
+            tailCellView = insertAWRichEditorWrapperWithRichType(-1, RichType.NONE, false);
         }
+        return tailCellView;
     }
 
 }

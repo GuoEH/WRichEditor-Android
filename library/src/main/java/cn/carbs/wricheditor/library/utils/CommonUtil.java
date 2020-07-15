@@ -18,6 +18,22 @@ public class CommonUtil {
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
+    public static void showSoftKeyboard(Context context, View view) {
+        if (view == null) {
+            return;
+        }
+        InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_FORCED);
+    }
+
+    public static boolean isKeyboardOpen(Context context) {
+        if (context == null) {
+            return false;
+        }
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        return imm.isActive();//isOpen若返回true，则表示输入法打开
+    }
+
     public static void removeAllEditorFocus(Context context, WRichEditorScrollView wRichEditorScrollView) {
         if (wRichEditorScrollView != null) {
             int[] index = new int[1];
