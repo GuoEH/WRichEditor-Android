@@ -90,6 +90,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
         RichEditorConfig.sLinkColor = array.getColor(R.styleable.WRichEditorScrollView_linkColor, RichEditorConfig.sLinkColor);
         RichEditorConfig.sLinkUnderline = array.getBoolean(R.styleable.WRichEditorScrollView_linkUnderline, RichEditorConfig.sLinkUnderline);
         RichEditorConfig.sHeadlineTextSize = array.getDimensionPixelSize(R.styleable.WRichEditorScrollView_headlineTextSize, RichEditorConfig.sHeadlineTextSize);
+        RichEditorConfig.sEditorColor = array.getColor(R.styleable.WRichEditorScrollView_editorColor, RichEditorConfig.sEditorColor);
         array.recycle();
     }
 

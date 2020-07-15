@@ -4,10 +4,8 @@ import android.util.Log;
 
 public class LogUtil {
 
-    public static final boolean DEBUG = true;
-
     public static void d(String tag, String message) {
-        if (DEBUG) {
+        if (DebugUtil.DEBUG) {
             Log.d(tag, message);
         }
     }

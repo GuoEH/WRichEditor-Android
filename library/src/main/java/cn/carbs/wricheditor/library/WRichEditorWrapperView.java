@@ -15,6 +15,7 @@ import java.util.Set;
 
 import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
 import cn.carbs.wricheditor.library.callbacks.OnRichTypeChangedListener;
+import cn.carbs.wricheditor.library.configures.RichEditorConfig;
 import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.types.RichType;
@@ -74,8 +75,8 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
         if (mWRichEditorScrollView != null) {
             mWRichEditor.setWRichEditorScrollView(mWRichEditorScrollView);
         }
-        // TODO 未检测
-        Log.d("qwe", "WRichEditorWrapperView init mRichType : " + mRichType);
+        Log.d("wangaa", "RichEditorConfig.sEditorColor : " + Integer.toHexString(RichEditorConfig.sEditorColor));
+        mWRichEditor.setTextColor(RichEditorConfig.sEditorColor);
         if (mRichType != RichType.NONE) {
             // 如果不是无状态的，即，可能为 QUOTE ORDERED_LIST UNORDERED_LIST
             if (mRichType == RichType.QUOTE) {

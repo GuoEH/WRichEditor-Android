@@ -12,7 +12,8 @@
         android:layout_marginRight="16dp"
         android:paddingBottom="44dp"
         app:headlineTextSize="24dp"
-        app:linkColor="#FF2196F3" />
+        app:linkColor="#FF2196F3"
+        app:editorColor="#FF513930"/>
 
     <HorizontalScrollView
         android:id="@+id/h_scroll"

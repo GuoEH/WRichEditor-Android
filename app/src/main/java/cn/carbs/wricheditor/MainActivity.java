@@ -27,6 +27,7 @@ import cn.carbs.wricheditor.library.WRichEditorWrapperView;
 import cn.carbs.wricheditor.library.callbacks.OnRichTypeChangedListener;
 import cn.carbs.wricheditor.library.parser.Parser;
 import cn.carbs.wricheditor.library.types.RichType;
+import cn.carbs.wricheditor.library.utils.DebugUtil;
 import cn.carbs.wricheditor.library.utils.LogUtil;
 import cn.carbs.wricheditor.library.utils.TypeUtil;
 import cn.carbs.wricheditor.library.views.RichLineView;
@@ -67,9 +68,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mBtnAddEditor = findViewById(R.id.button_add_editor_text);
         mBtnAddEditor.setOnClickListener(this);
-        if (!LogUtil.DEBUG) {
-            mBtnAddEditor.setVisibility(View.GONE);
-        }
 
         mBtnBold = findViewById(R.id.button_bold);
         mBtnBold.setOnClickListener(this);
@@ -285,7 +283,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         WRichEditorWrapperView editTextWrapperView = new WRichEditorWrapperView(MainActivity.this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         int size = mWRichEditorScrollView.getCellViewCount();
-        if (LogUtil.DEBUG) {
+        if (DebugUtil.DEBUG) {
             editTextWrapperView.getWRichEditor().setHint("CELL : " + size);
             if (size % 2 == 0) {
                 editTextWrapperView.setBackgroundColor(0x10222222);
@@ -300,7 +298,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         WRichEditorWrapperView editTextWrapperView = new WRichEditorWrapperView(MainActivity.this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         mWRichEditorScrollView.addRichCell(editTextWrapperView, lp, -1);
-        if (LogUtil.DEBUG) {
+        if (DebugUtil.DEBUG) {
             editTextWrapperView.setBackgroundColor(0x66660000);
         }
         return editTextWrapperView;
