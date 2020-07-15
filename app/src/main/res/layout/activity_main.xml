@@ -4,16 +4,54 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="24dp"
+            android:text="WRichEditor"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_export"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="导出"
+            android:textColor="#ffffffff"
+            android:textSize="16dp" />
+
+    </RelativeLayout>
+
     <cn.carbs.wricheditor.library.WRichEditorScrollView
         android:id="@+id/wrich_editor_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/title_bar"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:paddingBottom="44dp"
+        app:editorColor="#FF513930"
         app:headlineTextSize="24dp"
-        app:linkColor="#FF2196F3"
-        app:editorColor="#FF513930"/>
+        app:linkColor="#FF2196F3" />
+
+    <View
+        android:layout_below="@id/title_bar"
+        android:background="@drawable/shape_black_bg_gradient"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"/>
 
     <HorizontalScrollView
         android:id="@+id/h_scroll"

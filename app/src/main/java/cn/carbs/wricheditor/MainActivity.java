@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,10 +28,8 @@ import cn.carbs.wricheditor.library.WRichEditorWrapperView;
 import cn.carbs.wricheditor.library.callbacks.OnRichTypeChangedListener;
 import cn.carbs.wricheditor.library.models.cell.ImageCellData;
 import cn.carbs.wricheditor.library.models.cell.PanCellData;
-import cn.carbs.wricheditor.library.parser.Parser;
 import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.DebugUtil;
-import cn.carbs.wricheditor.library.utils.LogUtil;
 import cn.carbs.wricheditor.library.utils.ParserUtil;
 import cn.carbs.wricheditor.library.utils.TypeUtil;
 import cn.carbs.wricheditor.library.views.RichLineView;
@@ -56,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView mBtnImportFromHTML;
 
     private ImageView mBtnAddEditor;
+
+    private TextView tv_export;
 
     private HashMap<RichType, ImageView> mImageViewMap = new HashMap<>();
 
@@ -104,6 +105,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnExportToHTML.setOnClickListener(this);
         mBtnImportFromHTML = findViewById(R.id.button_import);
         mBtnImportFromHTML.setOnClickListener(this);
+        tv_export = findViewById(R.id.tv_export);
+        tv_export.setOnClickListener(this);
 
         mImageViewMap.put(RichType.BOLD, mBtnBold);
         mImageViewMap.put(RichType.ITALIC, mBtnItalic);
@@ -378,6 +381,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             exportToHtml();
         } else if (id == R.id.button_import) {
             importFromHtml();
+        } else if (id == R.id.tv_export) {
+            exportToHtml();
         } else if (id == R.id.button_add_editor_text) {
             onAddEditorTextClicked();
         }
