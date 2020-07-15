@@ -247,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         ImageCellData imageCellData = new ImageCellData();
         imageCellData.imageLocalUrl = "file://test";
-        imageCellData.imageNetUrl = "http://www.test.com";
+        imageCellData.imageNetUrl = "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1284023848,585277846&fm=11&gp=0.jpg";
         richImageView.setCellData(imageCellData);
 
         if (mWRichEditorScrollView.needAddWRichEditor(focusedIndex[0] + 1)) {

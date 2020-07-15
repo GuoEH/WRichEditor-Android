@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -52,26 +53,27 @@ public class MyRichImageView extends RichImageView {
             mImageViewCover.setAlpha(0f);
             mImageViewCover.setVisibility(View.VISIBLE);
 
-            Glide
-                    .with(this)
-                    .load(R.drawable.image_picture)
-                    .transform(new BlurTransformation(25, 5))
-                    .into(new CustomTarget<Drawable>() {
-                        @Override
-                        public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                            if (mImageViewCover != null) {
-                                mImageViewCover.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                                mImageViewCover.setImageDrawable(resource);
-                                toShowDimEffect();
+            if (getCellData() != null && !TextUtils.isEmpty(getCellData().imageNetUrl)) {
+                Glide
+                        .with(this)
+                        .load(getCellData().imageNetUrl)
+                        .transform(new BlurTransformation(25, 5))
+                        .into(new CustomTarget<Drawable>() {
+                            @Override
+                            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                                if (mImageViewCover != null) {
+//                                    mImageViewCover.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                                    mImageViewCover.setImageDrawable(resource);
+                                    toShowDimEffect();
+                                }
                             }
-                        }
 
-                        @Override
-                        public void onLoadCleared(@Nullable Drawable placeholder) {
+                            @Override
+                            public void onLoadCleared(@Nullable Drawable placeholder) {
 
-                        }
-                    });
-
+                            }
+                        });
+            }
         } else {
             // 模糊逐渐消失
             if (mImageViewCover.getVisibility() != View.VISIBLE) {
@@ -134,14 +136,10 @@ public class MyRichImageView extends RichImageView {
         translationAnimator.start();
     }
 
-    // TODO
     private void setImageUrl(String imageUrl) {
-
-        ImageView imageView = getImageView();
-        imageView.setImageResource(R.drawable.image_picture);
         Glide
                 .with(getContext())
-                .load(R.drawable.image_picture)
+                .load(imageUrl)
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -155,7 +153,7 @@ public class MyRichImageView extends RichImageView {
                         return false;
                     }
                 })
-                .into(imageView);
+                .into(getImageView());
     }
 
 
