@@ -45,6 +45,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView mBtnListUnordered;
     private ImageView mBtnInsertImage;
     private ImageView mBtnInsertLine;
+    private ImageView mBtnInsertAudio;
+    private ImageView mBtnInsertVideo;
+    private ImageView mBtnInsertPan;
     private ImageView mBtnExportToHTML;
     private ImageView mBtnImportFromHTML;
 
@@ -87,6 +90,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnListOrdered.setOnClickListener(this);
         mBtnListUnordered = findViewById(R.id.button_list_unordered);
         mBtnListUnordered.setOnClickListener(this);
+        mBtnInsertAudio = findViewById(R.id.button_audio);
+        mBtnInsertAudio.setOnClickListener(this);
+        mBtnInsertVideo = findViewById(R.id.button_video);
+        mBtnInsertVideo.setOnClickListener(this);
+        mBtnInsertPan = findViewById(R.id.button_pan);
+        mBtnInsertPan.setOnClickListener(this);
         mBtnExportToHTML = findViewById(R.id.button_export);
         mBtnExportToHTML.setOnClickListener(this);
         mBtnImportFromHTML = findViewById(R.id.button_import);
@@ -226,9 +235,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         MyRichImageView richImageView = new MyRichImageView(MainActivity.this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER_HORIZONTAL;
-        // TODO index
         mWRichEditorScrollView.addRichCell(richImageView, lp, focusedIndex[0] + 1);
         richImageView.setImageUrl("");
+        if (mWRichEditorScrollView.needAddWRichEditor(focusedIndex[0] + 1)) {
+            mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(focusedIndex[0] + 2, RichType.NONE, true);
+        }
+    }
+
+    private void onInsertAudioClicked() {
+        Toast.makeText(this, "I'm on it", Toast.LENGTH_SHORT).show();
+    }
+
+    private void onInsertVideoClicked() {
+        Toast.makeText(this, "I'm on it", Toast.LENGTH_SHORT).show();
+    }
+
+    private void onInsertPanClicked() {
+        int[] focusedIndex = new int[1];
+        mWRichEditorScrollView.findCurrentOrRecentFocusedRichEditorWrapperView(focusedIndex);
+        MyRichPanView richPanView = new MyRichPanView(MainActivity.this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.gravity = Gravity.CENTER_HORIZONTAL;
+        mWRichEditorScrollView.addRichCell(richPanView, lp, focusedIndex[0] + 1);
+        richPanView.setData(R.drawable.ic_file_type_word, "三国演义", "3M  来自:我的FTP");
         if (mWRichEditorScrollView.needAddWRichEditor(focusedIndex[0] + 1)) {
             mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(focusedIndex[0] + 2, RichType.NONE, true);
         }
@@ -313,6 +342,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             onListOrderedClicked();
         } else if (id == R.id.button_list_unordered) {
             onListUnorderedClicked();
+        } else if (id == R.id.button_audio) {
+            onInsertAudioClicked();
+        } else if (id == R.id.button_video) {
+            onInsertVideoClicked();
+        } else if (id == R.id.button_pan) {
+            onInsertPanClicked();
         } else if (id == R.id.button_export) {
             exportToHtml();
         } else if (id == R.id.button_import) {

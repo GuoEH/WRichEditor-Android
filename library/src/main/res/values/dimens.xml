@@ -13,4 +13,6 @@
     <dimen name="wrich_editor_image_view_padding">4dp</dimen>
 
     <dimen name="wrich_editor_image_view_margin_h">16dp</dimen>
+
+    <dimen name="wrich_editor_pan_view_margin_h">16dp</dimen>
 </resources>

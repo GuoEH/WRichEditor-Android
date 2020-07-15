@@ -172,6 +172,45 @@
                 android:src="@drawable/ic_type_picture" />
 
             <ImageView
+                android:id="@+id/button_audio"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/selector_format_buttons_unselect"
+                android:padding="8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_type_audio" />
+
+            <ImageView
+                android:id="@+id/button_video"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/selector_format_buttons_unselect"
+                android:padding="8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_type_video" />
+
+            <ImageView
+                android:id="@+id/button_pan"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/selector_format_buttons_unselect"
+                android:padding="8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_type_pan" />
+
+            <ImageView
                 android:id="@+id/button_export"
                 android:layout_width="36dp"
                 android:layout_height="36dp"

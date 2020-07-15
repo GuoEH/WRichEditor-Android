@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/wricheditor_rich_pan_view_container"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:layout_marginLeft="@dimen/wrich_editor_pan_view_margin_h"
+    android:layout_marginTop="2dp"
+    android:layout_marginRight="@dimen/wrich_editor_pan_view_margin_h"
+    android:layout_marginBottom="2dp"
+    android:padding="@dimen/wrich_editor_image_view_padding">
+
+    <RelativeLayout
+        android:background="#f0f0f0"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_file_type"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:id="@+id/tv_file_name"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:layout_toRightOf="@id/iv_file_type"
+            android:textColor="#ff333333"
+            android:textSize="14dp"
+            tools:text="水浒传" />
+
+        <TextView
+            android:id="@+id/tv_file_description"
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:layout_below="@id/tv_file_name"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="16dp"
+            android:layout_toRightOf="@id/iv_file_type"
+            android:textColor="#ff888888"
+            android:textSize="12dp"
+            tools:text="1.6M    来自:我的网盘" />
+
+        <ImageView
+            android:id="@+id/iv_delete"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/shape_wre_bg_black_round"
+            android:scaleType="centerInside"
+            android:src="@drawable/wre_ic_clear"
+            android:visibility="invisible" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
