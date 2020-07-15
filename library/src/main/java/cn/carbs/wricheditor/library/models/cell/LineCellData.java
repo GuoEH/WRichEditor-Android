@@ -15,12 +15,10 @@ public class LineCellData implements IRichCellData {
         return RichType.LINE;
     }
 
-    // TODO
     @Override
     public String toHtml() {
-//        <div richType="AUDIO" url="xxx"></div>
         return "<div richType=\"" + getType().name()
-                + "\"></div>";
+                + "\"><hr /></div>";
     }
 
 }

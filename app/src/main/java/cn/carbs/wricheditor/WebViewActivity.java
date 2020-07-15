@@ -1,22 +1,15 @@
 package cn.carbs.wricheditor;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.ViewUtils;
-
-import java.net.URLDecoder;
 
 import cn.carbs.wricheditor.library.utils.CommonUtil;
-import cn.carbs.wricheditor.library.utils.ViewUtil;
 
 public class WebViewActivity extends AppCompatActivity {
 
@@ -37,9 +30,8 @@ public class WebViewActivity extends AppCompatActivity {
             "        }\n" +
             "    </style>" +
             "</head>" +
-            "<body>" +
-            "<p>";
-    private static final String HTML_POST = "</p></body></html>";
+            "<body>";
+    private static final String HTML_POST = "</body></html>";
 
     private WebView mWebView;
 
@@ -81,7 +73,6 @@ public class WebViewActivity extends AppCompatActivity {
     }
 
     private void loadJS() {
-
         int webViewDp = CommonUtil.getScreenWidthDP(this) - 32;
         mWebView.loadUrl("javascript:(function(){"
 //                + " var divs = document.getElementsByTagName(\"div\");"
@@ -100,7 +91,5 @@ public class WebViewActivity extends AppCompatActivity {
                 + "     }"
                 + " }"
                 + " })()");
-
     }
-
 }

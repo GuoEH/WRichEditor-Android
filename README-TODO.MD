@@ -32,6 +32,12 @@ ScrollView中的第0位置，添加自定义的HeaderView
 // TODO
 editor中none数据暂时没有
 
+// TODO
+editor中在image后面添加横线有空行
+
+// TODO
+选中image后，添加image会添加到image的前面
+
 // ========== EXPERIENCE ===========
 1. 锤子便签：在quote时，会自动将所有的字符进行一次缩小，颜色变浅
 2. 换肤、主题、文字颜色
