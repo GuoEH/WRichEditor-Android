@@ -59,3 +59,4 @@ editor中在image后面添加横线有空行
 3. 首行改为Quote模式时，下一行不增加cell的问题
 4. ordered list 的体验增强，修改 needAddWRichEditor 方法
 5. 点击ScrollView的空白处，将焦点至于最后一个Editor中
+6. 点击某个Editor时，被软键盘遮挡后自动调整位置

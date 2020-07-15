@@ -97,6 +97,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
         RichEditorConfig.sLinkUnderline = array.getBoolean(R.styleable.WRichEditorScrollView_linkUnderline, RichEditorConfig.sLinkUnderline);
         RichEditorConfig.sHeadlineTextSize = array.getDimensionPixelSize(R.styleable.WRichEditorScrollView_headlineTextSize, RichEditorConfig.sHeadlineTextSize);
         RichEditorConfig.sEditorColor = array.getColor(R.styleable.WRichEditorScrollView_editorColor, RichEditorConfig.sEditorColor);
+        RichEditorConfig.sScrollBottomDeltaY = array.getDimensionPixelSize(R.styleable.WRichEditorScrollView_scrollBottomDeltaY, RichEditorConfig.sScrollBottomDeltaY);
         array.recycle();
     }
 
@@ -1031,6 +1032,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
 
     /**
      * 当前index后面是否需要加一个空的EditText
+     *
      * @param currentIndex 当前 CellView 所处的 index
      * @return
      */
@@ -1070,6 +1072,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
 
     /**
      * 当前index后面是否需要加一个空的EditText
+     *
      * @param currentIndex 当前 CellView 所处的 index
      * @return
      */
@@ -1353,12 +1356,47 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
 
     // TODO
     private void onKeyboardHidden() {
-        Log.d("wangwang", "onGlobalLayout() onKeyboardHidden");
+        Log.d("wangwang", "onGlobalLayout() onKeyboardHidden getScrollY() : " + getScrollY());
     }
 
     // TODO
-    private void onKeyboardShown(int currScreenHeight) {
-        Log.d("wangwang", "onGlobalLayout() onKeyboardShown");
+    private void onKeyboardShown(final int currScreenHeight) {
+        Log.d("wangwang", "onGlobalLayout() onKeyboardShown getScrollY() : " + getScrollY());
+
+        int[] focusedIndex = new int[1];
+        final WRichEditorWrapperView focusedWRichEditorWrapperView = findCurrentOrRecentFocusedRichEditorWrapperView(focusedIndex);
+        if (focusedWRichEditorWrapperView == null) {
+            return;
+        }
+        Log.d("wangwang", "onGlobalLayout() onKeyboardShown focusedWRichEditorWrapperView.getY() : " + focusedWRichEditorWrapperView.getY());
+
+        post(new Runnable() {
+            @Override
+            public void run() {
+                float deltaY = focusedWRichEditorWrapperView.getY() - getScrollY();
+                Log.d("wangwang", "post deltaY : " + deltaY
+                        + ", focusedWRichEditorWrapperView.getY() : " + focusedWRichEditorWrapperView.getY()
+                        + ", getScrollY() : " + getScrollY()
+                        + ", currScreenHeight : " + currScreenHeight
+                        + ", getScrollViewYInWindow() : " + getScrollViewYInWindow()
+                        + ", RichEditorConfig.sScrollBottomDeltaY : " + RichEditorConfig.sScrollBottomDeltaY);
+                // currScreenHeight - scrollView的top的Y值
+                // TODO
+                getScrollViewYInWindow();
+                int needTansY = (int) (deltaY - (currScreenHeight - getScrollViewYInWindow() - RichEditorConfig.sScrollBottomDeltaY));
+                if (needTansY > 0) {
+                    // 说明被隐藏
+                    Log.d("wangwang", "!!!遮挡了 needTansY : " + needTansY);
+                    WRichEditorScrollView.this.smoothScrollBy(0, needTansY);
+                }
+            }
+        });
+    }
+
+    private int getScrollViewYInWindow() {
+        int[] out = new int[2];
+        getLocationInWindow(out);
+        return out[1];
     }
 
 }

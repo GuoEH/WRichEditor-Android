@@ -42,17 +42,18 @@
         android:layout_below="@id/title_bar"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:paddingBottom="108dp"
-        app:editorColor="#FF513930"
         android:clipToPadding="false"
+        android:paddingBottom="42dp"
+        app:editorColor="#FF513930"
         app:headlineTextSize="24dp"
-        app:linkColor="#FF2196F3" />
+        app:linkColor="#FF2196F3"
+        app:scrollBottomDeltaY="80dp" />
 
     <View
-        android:layout_below="@id/title_bar"
-        android:background="@drawable/shape_black_bg_gradient"
         android:layout_width="match_parent"
-        android:layout_height="4dp"/>
+        android:layout_height="4dp"
+        android:layout_below="@id/title_bar"
+        android:background="@drawable/shape_black_bg_gradient" />
 
     <HorizontalScrollView
         android:id="@+id/h_scroll"

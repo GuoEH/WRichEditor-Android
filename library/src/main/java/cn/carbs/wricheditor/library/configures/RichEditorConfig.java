@@ -10,4 +10,6 @@ public class RichEditorConfig {
 
     public static int sHeadlineTextSize = 0;
 
+    public static int sScrollBottomDeltaY = 0;
+
 }
