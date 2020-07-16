@@ -35,4 +35,11 @@ public class SpanPart {
         return start < end;
     }
 
+    public boolean hit(int location) {
+        if (start <= location && location <= end) {
+            return true;
+        }
+        return false;
+    }
+
 }

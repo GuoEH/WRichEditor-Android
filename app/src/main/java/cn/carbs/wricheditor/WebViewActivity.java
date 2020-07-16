@@ -69,7 +69,7 @@ public class WebViewActivity extends AppCompatActivity {
         mHTML = getIntent().getStringExtra(HTML);
         String text = HTML_PREV + mHTML + HTML_POST;
         mWebView.loadData(text, "text/html", "UTF-8");
-        Log.d("wangwang", "html : " + text);
+        Log.d("wangwang", "exported html : " + mHTML);
     }
 
     private void loadJS() {

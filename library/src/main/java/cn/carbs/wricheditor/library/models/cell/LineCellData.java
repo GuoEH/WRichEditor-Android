@@ -17,8 +17,9 @@ public class LineCellData implements IRichCellData {
 
     @Override
     public String toHtml() {
-        return "<div richType=\"" + getType().name()
-                + "\"><hr /></div>";
+        return "<div richType=\"" + getType().name() + "\">" +
+                    "<br/><hr/><br/>" +
+                "</div>";
     }
 
 }

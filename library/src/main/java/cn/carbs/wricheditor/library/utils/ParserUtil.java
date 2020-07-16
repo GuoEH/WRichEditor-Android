@@ -36,7 +36,7 @@ public class ParserUtil {
                     continue;
                 }
                 Log.d("wangwang", "--- iRichCellData type : " + iRichCellData.getType().name());
-                Log.d("wangwang", "--- iRichCellData html : " + iRichCellData.toHtml());
+//                Log.d("wangwang", "--- iRichCellData html : " + iRichCellData.toHtml());
                 dataList.add(iRichCellData);
             }
         }

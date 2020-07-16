@@ -6,4 +6,10 @@ public interface IRichSpan {
 
     RichType getRichType();
 
+    int getMask();
+
+    String getHtmlTagStart();
+
+    String getHtmlTagEnd();
+
 }

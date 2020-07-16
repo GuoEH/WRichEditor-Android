@@ -6,16 +6,24 @@ import android.text.style.URLSpan;
 
 import cn.carbs.wricheditor.library.interfaces.IRichSpan;
 import cn.carbs.wricheditor.library.types.RichType;
+import cn.carbs.wricheditor.library.utils.HtmlUtil;
 
 public class LinkStyleSpan extends URLSpan implements IRichSpan {
+
+    public static final int MASK_SHIFT = 3;
+
+    public static final int MASK = 0x00000001 << MASK_SHIFT;
 
     private int linkColor;
     private boolean linkUnderline;
 
     private RichType type;
 
+    private String url;
+
     public LinkStyleSpan(String url, int linkColor, boolean linkUnderline) {
         super(url);
+        this.url = url;
         this.linkColor = linkColor;
         this.linkUnderline = linkUnderline;
         type = RichType.LINK;
@@ -43,5 +51,21 @@ public class LinkStyleSpan extends URLSpan implements IRichSpan {
     @Override
     public RichType getRichType() {
         return type;
+    }
+
+    @Override
+    public int getMask() {
+        return MASK;
+    }
+
+    // <a href="http://www.baidu.com/" target="_blank">link</a>
+    @Override
+    public String getHtmlTagStart() {
+        return HtmlUtil.getHtmlTagStartForLink(url);
+    }
+
+    @Override
+    public String getHtmlTagEnd() {
+        return HtmlUtil.getHtmlTagEndForLink();
     }
 }

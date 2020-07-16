@@ -6,8 +6,13 @@ import android.text.style.AbsoluteSizeSpan;
 
 import cn.carbs.wricheditor.library.interfaces.IRichSpan;
 import cn.carbs.wricheditor.library.types.RichType;
+import cn.carbs.wricheditor.library.utils.HtmlUtil;
 
 public class HeadlineSpan extends AbsoluteSizeSpan implements IRichSpan {
+
+    public static final int MASK_SHIFT = 1;
+
+    public static final int MASK = 0x00000001 << MASK_SHIFT;
 
     private RichType type;
 
@@ -25,5 +30,20 @@ public class HeadlineSpan extends AbsoluteSizeSpan implements IRichSpan {
     @Override
     public RichType getRichType() {
         return type;
+    }
+
+    @Override
+    public int getMask() {
+        return MASK;
+    }
+
+    @Override
+    public String getHtmlTagStart() {
+        return HtmlUtil.getHtmlTagStartForHeadline();
+    }
+
+    @Override
+    public String getHtmlTagEnd() {
+        return HtmlUtil.getHtmlTagEndForHeadline();
     }
 }

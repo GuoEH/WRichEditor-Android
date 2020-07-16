@@ -47,6 +47,9 @@ editor中在image后面添加横线有空行
 // TODO
 输入完成后，上下滑动还需要继续打磨
 
+// TODO
+统一getType和getRichType
+
 // ========== EXPERIENCE ===========
 1. 锤子便签：在quote时，会自动将所有的字符进行一次缩小，颜色变浅
 2. 换肤、主题、文字颜色
