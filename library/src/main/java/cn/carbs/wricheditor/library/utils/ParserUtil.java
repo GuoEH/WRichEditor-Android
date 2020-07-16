@@ -5,6 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import cn.carbs.wricheditor.library.WRichEditorScrollView;
 import cn.carbs.wricheditor.library.interfaces.IRichCellData;
@@ -14,6 +16,9 @@ public class ParserUtil {
 
     public static final String P_TAG_PREV = "<p>";
     public static final String P_TAG_POST = "</p>";
+
+    public static final String PATTERN_BODY_STR = "<body>.*</body>";
+    public static final Pattern PATTERN_BODY = Pattern.compile(PATTERN_BODY_STR);
 
     public static StringBuilder parseToHtml(WRichEditorScrollView scrollView) {
 
@@ -30,13 +35,10 @@ public class ParserUtil {
             View childView = containerView.getChildAt(i);
             if (childView instanceof IRichCellView) {
                 IRichCellView richCellView = (IRichCellView) childView;
-                Log.d("wangwang", "--- IRichCellView type : " + richCellView.getRichType().name());
                 IRichCellData iRichCellData = richCellView.getCellData();
                 if (iRichCellData == null) {
                     continue;
                 }
-                Log.d("wangwang", "--- iRichCellData type : " + iRichCellData.getType().name());
-//                Log.d("wangwang", "--- iRichCellData html : " + iRichCellData.toHtml());
                 dataList.add(iRichCellData);
             }
         }
@@ -46,6 +48,24 @@ public class ParserUtil {
         }
 
         return out;
+    }
+
+    public static void inflateFromHtml(WRichEditorScrollView scrollView, String html) {
+        if (html == null || html.trim().length() == 0) {
+            return;
+        }
+
+        String body = null;
+        Matcher m = PATTERN_BODY.matcher(html);
+        if (m.find()) {
+            String bodyHtml = m.group(0);
+            body = bodyHtml.substring(6, bodyHtml.length() - 7);
+        } else {
+            body = html;
+        }
+
+
+        Log.d("tttt", "======>  body : " + body);
     }
 
 }

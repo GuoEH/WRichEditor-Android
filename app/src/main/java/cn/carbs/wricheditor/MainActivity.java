@@ -121,6 +121,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
+        // TODO FOR TEST
+        importFromHtml();
         if (mHasAddFirstEditor) {
             return;
         }
@@ -304,7 +306,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void importFromHtml() {
-
+        ParserUtil.inflateFromHtml(null, "aaaaaa<body>abc</body>uuu");
     }
 
     @Override
