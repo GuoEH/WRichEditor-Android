@@ -12,7 +12,6 @@
         android:layout_marginLeft="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
-        android:hint="http(s)://"
-        android:singleLine="true"></EditText>
+        android:singleLine="true" />
 
 </LinearLayout>

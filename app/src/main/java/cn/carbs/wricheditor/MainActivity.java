@@ -235,21 +235,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void onInsertImageClicked() {
-        int[] focusedIndex = new int[1];
-        mWRichEditorScrollView.findCurrentOrRecentFocusedRichEditorWrapperView(focusedIndex);
         MyRichImageView richImageView = new MyRichImageView(MainActivity.this);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.gravity = Gravity.CENTER_HORIZONTAL;
-        mWRichEditorScrollView.addRichCell(richImageView, lp, focusedIndex[0] + 1);
-
         ImageCellData imageCellData = new ImageCellData();
         imageCellData.imageLocalUrl = "file://test";
         imageCellData.imageNetUrl = "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1284023848,585277846&fm=11&gp=0.jpg";
         richImageView.setCellData(imageCellData);
-
-        if (mWRichEditorScrollView.needAddWRichEditor(focusedIndex[0] + 1)) {
-            mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(focusedIndex[0] + 2, RichType.NONE, true);
-        }
+        mWRichEditorScrollView.insertImage(richImageView);
     }
 
     private void onInsertAudioClicked() {
@@ -261,12 +252,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void onInsertPanClicked() {
-        int[] focusedIndex = new int[1];
-        mWRichEditorScrollView.findCurrentOrRecentFocusedRichEditorWrapperView(focusedIndex);
         MyRichPanView richPanView = new MyRichPanView(MainActivity.this);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.gravity = Gravity.CENTER_HORIZONTAL;
-        mWRichEditorScrollView.addRichCell(richPanView, lp, focusedIndex[0] + 1);
         PanCellData panCellData = new PanCellData();
         panCellData.fileName = "三国演义.txt";
         panCellData.fileType = "txt";
@@ -274,9 +260,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         panCellData.fileUrl = "http://www.test.com";
         panCellData.fileSize = 2 * 1024 * 1000;
         richPanView.setCellData(panCellData);
-        if (mWRichEditorScrollView.needAddWRichEditor(focusedIndex[0] + 1)) {
-            mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(focusedIndex[0] + 2, RichType.NONE, true);
-        }
+        mWRichEditorScrollView.insertPan(richPanView);
     }
 
     private void onListUnorderedClicked() {
@@ -319,23 +303,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void exportToHtml() {
-
         String out = ParserUtil.parseToHtml(mWRichEditorScrollView).toString();
-
         Intent intent = new Intent(this, WebViewActivity.class);
         intent.putExtra(WebViewActivity.HTML, out);
         startActivity(intent);
-
-        /*WRichEditorWrapperView editorWrapperView =(WRichEditorWrapperView) mWRichEditorScrollView.getContainerView().getChildAt(0);
-        WRichEditor wRichEditor = editorWrapperView.getWRichEditor();
-        if (wRichEditor != null) {
-            Editable editable = wRichEditor.getEditableText();
-            StringBuilder sb = new StringBuilder();
-            Parser.withinContent(sb, editable, 0, editable.length());
-            Intent intent = new Intent(this, WebViewActivity.class);
-            intent.putExtra(WebViewActivity.HTML, sb.toString());
-            startActivity(intent);
-        }*/
     }
 
     private void importFromHtml() {
