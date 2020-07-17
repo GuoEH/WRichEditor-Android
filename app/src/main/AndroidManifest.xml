@@ -24,6 +24,9 @@
         <activity
             android:name=".WebViewActivity"
             android:theme="@style/NoActionBarThemeWithActivityAnim" />
+        <activity
+            android:name=".RestoreActivity"
+            android:theme="@style/NoActionBarThemeWithActivityAnim" />
     </application>
 
 </manifest>

@@ -121,8 +121,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-        // TODO FOR TEST
-        importFromHtml();
         if (mHasAddFirstEditor) {
             return;
         }
@@ -305,10 +303,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 
-    private void importFromHtml() {
-        ParserUtil.inflateFromHtml(null, "aaaaaa<body>abc</body>uuu");
-    }
-
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -344,7 +338,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (id == R.id.button_export) {
             exportToHtml();
         } else if (id == R.id.button_import) {
-            importFromHtml();
+//            importFromHtml();
         } else if (id == R.id.tv_export) {
             exportToHtml();
         } else if (id == R.id.button_add_editor_text) {

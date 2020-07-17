@@ -1,10 +1,13 @@
 package cn.carbs.wricheditor;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,13 +38,26 @@ public class WebViewActivity extends AppCompatActivity {
 
     private WebView mWebView;
 
+    private TextView mTVInflate;
+
     private String mHTML;
+
+    private String mText;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
         mWebView = findViewById(R.id.web_view);
+        mTVInflate = findViewById(R.id.tv_inflate);
+        mTVInflate.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WebViewActivity.this, RestoreActivity.class);
+                intent.putExtra(RestoreActivity.HTML, mText);
+                startActivity(intent);
+            }
+        });
 
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -67,9 +83,9 @@ public class WebViewActivity extends AppCompatActivity {
         });
 
         mHTML = getIntent().getStringExtra(HTML);
-        String text = HTML_PREV + mHTML + HTML_POST;
-        mWebView.loadData(text, "text/html", "UTF-8");
-        Log.d("wangwang", "exported html : " + mHTML);
+        mText = HTML_PREV + mHTML + HTML_POST;
+        mWebView.loadData(mText, "text/html", "UTF-8");
+        Log.d("wangwang", "WebViewActivity exported html : " + mHTML);
     }
 
     private void loadJS() {
