@@ -16,9 +16,7 @@ import java.util.Set;
 import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
 import cn.carbs.wricheditor.library.callbacks.OnRichTypeChangedListener;
 import cn.carbs.wricheditor.library.configures.RichEditorConfig;
-import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
-import cn.carbs.wricheditor.library.models.cell.ImageCellData;
 import cn.carbs.wricheditor.library.models.cell.RichCellData;
 import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.CursorUtil;
@@ -116,6 +114,11 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
     @Override
     public void setCellData(RichCellData cellData) {
         mCellData = cellData;
+    }
+
+    @Override
+    public void setHtmlData(RichType richType, String htmlContent) {
+
     }
 
     @Override

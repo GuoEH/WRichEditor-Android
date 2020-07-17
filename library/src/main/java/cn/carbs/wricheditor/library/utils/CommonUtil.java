@@ -18,6 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import cn.carbs.wricheditor.library.WRichEditorScrollView;
 import cn.carbs.wricheditor.library.WRichEditorWrapperView;
+import cn.carbs.wricheditor.library.types.RichType;
 
 public class CommonUtil {
 

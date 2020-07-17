@@ -27,7 +27,7 @@ public class RestoreActivity extends AppCompatActivity {
 
         Log.d("tttt", "RestoreActivity mHTML : " + mHTML);
 
-        ParserUtil.inflateFromHtml(mWRichEditorScrollView, mHTML);
+        ParserUtil.inflateFromHtml(this, mWRichEditorScrollView, mHTML);
 
     }
 

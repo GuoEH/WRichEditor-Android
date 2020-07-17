@@ -105,6 +105,11 @@ public class RichPanView extends RelativeLayout implements IRichCellView<PanCell
     }
 
     @Override
+    public void setHtmlData(RichType richType, String htmlContent) {
+
+    }
+
+    @Override
     public void setCellData(PanCellData cellData) {
         mCellData = cellData;
     }

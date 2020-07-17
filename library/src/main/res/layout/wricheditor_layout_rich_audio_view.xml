@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/wricheditor_rich_audio_view_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/wrich_editor_image_view_margin_h"
+    android:layout_marginTop="2dp"
+    android:layout_marginRight="@dimen/wrich_editor_image_view_margin_h"
+    android:layout_marginBottom="2dp"
+    android:padding="@dimen/wrich_editor_image_view_padding">
+
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:scaleType="fitCenter" />
+
+    <ImageView
+        android:id="@+id/image_view_cover"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:scaleType="fitXY"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/iv_delete"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignTop="@id/image_view"
+        android:layout_alignRight="@id/image_view"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/shape_wre_bg_black_round"
+        android:scaleType="centerInside"
+        android:src="@drawable/wre_ic_clear"
+        android:visibility="invisible" />
+
+</RelativeLayout>

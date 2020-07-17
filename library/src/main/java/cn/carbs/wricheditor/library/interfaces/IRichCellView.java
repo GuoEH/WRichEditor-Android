@@ -17,6 +17,9 @@ public interface IRichCellView <T extends IRichCellData> {
 
     void  setCellData(T cellData);
 
+    // <div richType="NONE">xxx</div> exclude div tag --> xxx
+    void setHtmlData(RichType richType, String htmlContent);
+
     void setEditorFocusChangedListener(OnEditorFocusChangedListener listener);
 
     T getCellData();

@@ -15,13 +15,13 @@ import cn.carbs.wricheditor.library.R;
 import cn.carbs.wricheditor.library.WRichEditorScrollView;
 import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
-import cn.carbs.wricheditor.library.models.cell.ImageCellData;
+import cn.carbs.wricheditor.library.models.cell.AudioCellData;
 import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.CommonUtil;
 import cn.carbs.wricheditor.library.utils.TypeUtil;
 
 // 不抽象，如果需要自定义，直接在外部自定义
-public class RichImageView extends RelativeLayout implements IRichCellView<ImageCellData>, View.OnClickListener {
+public class RichAudioView extends RelativeLayout implements IRichCellView<AudioCellData>, View.OnClickListener {
 
     protected boolean mSelectMode;
 
@@ -35,34 +35,28 @@ public class RichImageView extends RelativeLayout implements IRichCellView<Image
 
     protected View mVDelete;
 
-    protected ImageCellData mCellData;
+    protected AudioCellData mCellData;
 
     protected OnEditorFocusChangedListener mOnEditorFocusChangedListener;
 
-    protected int mImageWidth;
-    protected int mImageHeight;
-
-    protected int mImageViewWidth;
-    protected int mImageViewHeight;
-
-    public RichImageView(Context context) {
+    public RichAudioView(Context context) {
         super(context);
         init(context);
     }
 
-    public RichImageView(Context context, @Nullable AttributeSet attrs) {
+    public RichAudioView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public RichImageView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public RichAudioView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
 
     private void init(Context context) {
-        inflate(context, R.layout.wricheditor_layout_rich_image_view, this);
-        mVContainer = findViewById(R.id.wricheditor_rich_image_view_container);
+        inflate(context, R.layout.wricheditor_layout_rich_audio_view, this);
+        mVContainer = findViewById(R.id.wricheditor_rich_audio_view_container);
         mVContainer.setOnClickListener(this);
         mImageView = findViewById(R.id.image_view);
         mImageViewCover = findViewById(R.id.image_view_cover);
@@ -74,7 +68,7 @@ public class RichImageView extends RelativeLayout implements IRichCellView<Image
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if (id == R.id.wricheditor_rich_image_view_container) {
+        if (id == R.id.wricheditor_rich_audio_view_container) {
             TypeUtil.selectOnlyOneResourceType(mWRichEditorScrollView, this);
             CommonUtil.removeAllEditorFocus(getContext(), mWRichEditorScrollView);
         } else if (id == R.id.iv_delete) {
@@ -90,13 +84,6 @@ public class RichImageView extends RelativeLayout implements IRichCellView<Image
             TypeUtil.selectOnlyOneResourceType(mWRichEditorScrollView, this);
             CommonUtil.removeAllEditorFocus(getContext(), mWRichEditorScrollView);
         }
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        mImageViewWidth = getMeasuredWidth();
-        mImageViewHeight = 0;
     }
 
     @Override
@@ -116,12 +103,12 @@ public class RichImageView extends RelativeLayout implements IRichCellView<Image
 
     // TODO
     @Override
-    public void setCellData(ImageCellData cellData) {
+    public void setCellData(AudioCellData cellData) {
         mCellData = cellData;
     }
 
     @Override
-    public ImageCellData getCellData() {
+    public AudioCellData getCellData() {
         return mCellData;
     }
 
@@ -161,37 +148,6 @@ public class RichImageView extends RelativeLayout implements IRichCellView<Image
     @Override
     public void setEditorFocusChangedListener(OnEditorFocusChangedListener listener) {
         mOnEditorFocusChangedListener = listener;
-    }
-
-    public ImageView getImageView() {
-        return mImageView;
-    }
-
-    public void setImageWidthAndHeight(int imageWidth, int imageHeight) {
-        int measuredWidth = getMeasuredWidth();
-        if (measuredWidth > 0) {
-            mImageViewWidth = measuredWidth;
-        }
-
-        int imageViewWidth = mImageViewWidth
-                - getResources().getDimensionPixelSize(R.dimen.wrich_editor_image_view_padding) * 2
-                - getResources().getDimensionPixelSize(R.dimen.wrich_editor_image_view_margin_h) * 2;
-        int imageViewHeight = imageViewWidth * imageHeight / imageWidth;
-        setLayoutParamsForImageView(mImageView, imageViewWidth, imageViewHeight);
-        setLayoutParamsForImageView(mImageViewCover, imageViewWidth, imageViewHeight);
-    }
-
-    private void setLayoutParamsForImageView(View view, int viewWidth, int viewHeight) {
-        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) view.getLayoutParams();
-        if (lp == null) {
-            lp = new RelativeLayout.LayoutParams(viewWidth, viewHeight);
-            view.setLayoutParams(lp);
-        } else {
-            if (lp.height != viewHeight) {
-                lp.height = viewHeight;
-            }
-            view.setLayoutParams(lp);
-        }
     }
 
 }

@@ -16,12 +16,13 @@ import cn.carbs.wricheditor.library.WRichEditorScrollView;
 import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.models.cell.ImageCellData;
+import cn.carbs.wricheditor.library.models.cell.VideoCellData;
 import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.CommonUtil;
 import cn.carbs.wricheditor.library.utils.TypeUtil;
 
 // 不抽象，如果需要自定义，直接在外部自定义
-public class RichImageView extends RelativeLayout implements IRichCellView<ImageCellData>, View.OnClickListener {
+public class RichVideoView extends RelativeLayout implements IRichCellView<VideoCellData>, View.OnClickListener {
 
     protected boolean mSelectMode;
 
@@ -35,7 +36,7 @@ public class RichImageView extends RelativeLayout implements IRichCellView<Image
 
     protected View mVDelete;
 
-    protected ImageCellData mCellData;
+    protected VideoCellData mCellData;
 
     protected OnEditorFocusChangedListener mOnEditorFocusChangedListener;
 
@@ -45,24 +46,24 @@ public class RichImageView extends RelativeLayout implements IRichCellView<Image
     protected int mImageViewWidth;
     protected int mImageViewHeight;
 
-    public RichImageView(Context context) {
+    public RichVideoView(Context context) {
         super(context);
         init(context);
     }
 
-    public RichImageView(Context context, @Nullable AttributeSet attrs) {
+    public RichVideoView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public RichImageView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public RichVideoView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
 
     private void init(Context context) {
-        inflate(context, R.layout.wricheditor_layout_rich_image_view, this);
-        mVContainer = findViewById(R.id.wricheditor_rich_image_view_container);
+        inflate(context, R.layout.wricheditor_layout_rich_video_view, this);
+        mVContainer = findViewById(R.id.wricheditor_rich_video_view_container);
         mVContainer.setOnClickListener(this);
         mImageView = findViewById(R.id.image_view);
         mImageViewCover = findViewById(R.id.image_view_cover);
@@ -74,7 +75,7 @@ public class RichImageView extends RelativeLayout implements IRichCellView<Image
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if (id == R.id.wricheditor_rich_image_view_container) {
+        if (id == R.id.wricheditor_rich_video_view_container) {
             TypeUtil.selectOnlyOneResourceType(mWRichEditorScrollView, this);
             CommonUtil.removeAllEditorFocus(getContext(), mWRichEditorScrollView);
         } else if (id == R.id.iv_delete) {
@@ -116,12 +117,12 @@ public class RichImageView extends RelativeLayout implements IRichCellView<Image
 
     // TODO
     @Override
-    public void setCellData(ImageCellData cellData) {
+    public void setCellData(VideoCellData cellData) {
         mCellData = cellData;
     }
 
     @Override
-    public ImageCellData getCellData() {
+    public VideoCellData getCellData() {
         return mCellData;
     }
 
@@ -182,9 +183,9 @@ public class RichImageView extends RelativeLayout implements IRichCellView<Image
     }
 
     private void setLayoutParamsForImageView(View view, int viewWidth, int viewHeight) {
-        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) view.getLayoutParams();
+        LayoutParams lp = (LayoutParams) view.getLayoutParams();
         if (lp == null) {
-            lp = new RelativeLayout.LayoutParams(viewWidth, viewHeight);
+            lp = new LayoutParams(viewWidth, viewHeight);
             view.setLayoutParams(lp);
         } else {
             if (lp.height != viewHeight) {

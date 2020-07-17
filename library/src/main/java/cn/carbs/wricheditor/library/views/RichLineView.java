@@ -71,6 +71,11 @@ public class RichLineView extends RelativeLayout implements IRichCellView<LineCe
     }
 
     @Override
+    public void setHtmlData(RichType richType, String htmlContent) {
+
+    }
+
+    @Override
     public void setCellData(LineCellData cellData) {
         mCellData = cellData;
     }
