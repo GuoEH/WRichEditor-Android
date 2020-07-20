@@ -45,6 +45,8 @@ public class RichImageView extends RelativeLayout implements IRichCellView<Image
     protected int mImageViewWidth;
     protected int mImageViewHeight;
 
+    protected boolean mDataLoaded;
+
     public RichImageView(Context context) {
         super(context);
         init(context);

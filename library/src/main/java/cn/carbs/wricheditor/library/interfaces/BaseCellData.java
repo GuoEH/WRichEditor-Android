@@ -1,12 +1,12 @@
 package cn.carbs.wricheditor.library.interfaces;
 
+import cn.carbs.wricheditor.library.types.RichType;
+
 public abstract class BaseCellData implements IRichCellData {
 
     public static final String JSON_KEY_TYPE = "type";
 
     public static final String JSON_KEY_DATA = "data";
-
-    public String type;
 
     public IRichCellView cellView;
 

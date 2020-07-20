@@ -10,16 +10,21 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
 import cn.carbs.wricheditor.library.callbacks.OnRichTypeChangedListener;
 import cn.carbs.wricheditor.library.configures.RichEditorConfig;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
+import cn.carbs.wricheditor.library.interfaces.IRichSpan;
+import cn.carbs.wricheditor.library.models.ContentStyleWrapper;
 import cn.carbs.wricheditor.library.models.cell.RichCellData;
 import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.CursorUtil;
+import cn.carbs.wricheditor.library.utils.SpanUtil;
 import cn.carbs.wricheditor.library.utils.TypeUtil;
 
 // 注意，此方法是不会合并的
@@ -116,6 +121,37 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
         mCellData = cellData;
         if (mCellData != null) {
             mCellData.setIRichCellView(this);
+        }
+        Log.d("ggg", "setCellData() 1");
+        if (mCellData != null && mWRichEditor != null) {
+            Log.d("ggg", "setCellData() 2  mCellData : " + mCellData);
+            setTextForEditor(mCellData.wrappersList);
+        }
+    }
+
+    private void setTextForEditor(LinkedList<ContentStyleWrapper> wrappers) {
+        if (wrappers == null) {
+            return;
+        }
+
+        if (mWRichEditor == null) {
+            return;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (ContentStyleWrapper wrapper : wrappers) {
+            sb.append(wrapper.contentBuilder.toString());
+        }
+        mWRichEditor.setText(sb.toString());
+
+        ArrayList<IRichSpan> spans = new ArrayList<>(8);
+        int start = 0;
+        int end = 0;
+        Editable editable = mWRichEditor.getEditableText();
+        for (ContentStyleWrapper wrapper : wrappers) {
+            end = end + wrapper.contentBuilder.length();
+            SpanUtil.getSpanByMask(spans, wrapper.mask, wrapper.extra);
+            SpanUtil.setSpan(spans, editable, start, end);
+            start = end;
         }
     }
 

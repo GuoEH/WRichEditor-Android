@@ -43,7 +43,7 @@ public class RestoreActivity extends AppCompatActivity {
             mTVTitle.setText("Inflated by HTML");
             inflateByHtml();
         } else if (!TextUtils.isEmpty(mJSON)) {
-            Log.d("tttt", "RestoreActivity mJSON : " + mJSON);
+            Log.d("ggg", "RestoreActivity mJSON : " + mJSON);
             mTVTitle.setText("Inflated by JSON");
             inflateByJson();
         }

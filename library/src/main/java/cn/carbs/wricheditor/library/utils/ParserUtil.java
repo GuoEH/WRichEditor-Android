@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -153,67 +154,85 @@ public class ParserUtil {
 
     // TODO 由html转换回富文本编辑器比较复杂，因此先使用json的方式
     public static void inflateFromJson(Context context, WRichEditorScrollView scrollView, String json, CustomViewProvider provider) {
+        Log.d("ggg", "inflateFromJson() 1");
         if (json == null || json.trim().length() == 0 || scrollView == null) {
+            Log.d("ggg", "inflateFromJson() 2");
             return;
         }
 
+        LinkedList<BaseCellData> cellDataList = new LinkedList<>();
+
         try {
+            Log.d("ggg", "inflateFromJson() 3");
             JSONArray jsonArray = new JSONArray(json);
             int length = jsonArray.length();
-            ArrayList<BaseCellData> cellDataList = new ArrayList<>(length);
-
             for (int i = 0; i < length; i++) {
+                Log.d("ggg", "inflateFromJson() 4");
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 BaseCellData cellData = getCellDataByJSONObject(jsonObject);
                 if (cellData != null) {
+                    Log.d("ggg", "inflateFromJson() 5");
                     cellDataList.add(cellData);
                 }
             }
-
-//            for (String cellString : cellStringList) {
-//                IRichCellView cellView = inflateCellViewByCellHtml(context, cellString, provider);
-//                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//                scrollView.addRichCell(cellView, lp, -1);
-//            }
-//            scrollView.addNoneTypeTailOptionally();
-
-
         } catch (Exception e) {
             e.printStackTrace();
+            Log.d("ggg", "inflateFromJson() exception : " + e.getMessage());
         }
+
+        for (BaseCellData cellData : cellDataList) {
+            IRichCellView cellView = inflateCellViewByCellData(context, cellData, provider);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            scrollView.addRichCell(cellView, lp, -1);
+        }
+        scrollView.addNoneTypeTailOptionally();
     }
 
     private static BaseCellData getCellDataByJSONObject(JSONObject jsonObject) {
+        BaseCellData cellData = null;
         try {
+            Log.d("ggg", "getCellDataByJSONObject() 1  jsonObject : " + jsonObject.toString());
             String type = jsonObject.getString(BaseCellData.JSON_KEY_TYPE);
             RichType richType = RichType.valueOf(type);
-            BaseCellData cellData = null;
             if (richType == RichType.NONE) {
+                Log.d("ggg", "getCellDataByJSONObject() 2");
                 cellData = new RichCellData();
             } else if (richType == RichType.QUOTE) {
+                Log.d("ggg", "getCellDataByJSONObject() 3");
                 cellData = new RichCellData();
             } else if (richType == RichType.LIST_UNORDERED) {
+                Log.d("ggg", "getCellDataByJSONObject() 4");
                 cellData = new RichCellData();
             } else if (richType == RichType.LIST_ORDERED) {
+                Log.d("ggg", "getCellDataByJSONObject() 5");
                 cellData = new RichCellData();
             } else if (richType == RichType.IMAGE) {
+                Log.d("ggg", "getCellDataByJSONObject() 6");
                 cellData = new RichCellData();
             } else if (richType == RichType.VIDEO) {
+                Log.d("ggg", "getCellDataByJSONObject() 7");
                 cellData = new VideoCellData();
             } else if (richType == RichType.AUDIO) {
+                Log.d("ggg", "getCellDataByJSONObject() 8");
                 cellData = new AudioCellData();
             } else if (richType == RichType.NETDISK) {
+                Log.d("ggg", "getCellDataByJSONObject() 9");
                 cellData = new PanCellData();
             } else if (richType == RichType.LINE) {
+                Log.d("ggg", "getCellDataByJSONObject() 10");
                 cellData = new LineCellData();
             }
+            Log.d("ggg", "getCellDataByJSONObject() 11");
             if (cellData != null) {
+                // 数据填充
+                Log.d("ggg", "getCellDataByJSONObject() 12");
                 cellData.fromJson(jsonObject);
             }
         } catch (Exception e) {
             e.printStackTrace();
+            Log.d("ggg", "getCellDataByJSONObject() exception : " + e.getMessage());
         }
-        return null;
+        return cellData;
     }
 
     private static String getBodyContent(String bodyHtml) {
@@ -231,11 +250,62 @@ public class ParserUtil {
     private static IRichCellView inflateCellViewByCellHtml(Context context, String cellHtml, CustomViewProvider provider) {
         int[] cellContentHtmlStart = new int[1];
         RichType cellRichType = getRichTypeByCellHtml(cellHtml, cellContentHtmlStart);
-        return inflateCellViewByRichType(context, cellRichType, cellHtml, cellContentHtmlStart[0], provider);
+        return inflateCellViewByRichTypeAndHtml(context, cellRichType, cellHtml, cellContentHtmlStart[0], provider);
+    }
+
+    private static IRichCellView inflateCellViewByCellData(Context context, BaseCellData cellData, CustomViewProvider provider) {
+        RichType richType = cellData.getType();
+        if (richType == null || context == null) {
+            return null;
+        }
+        IRichCellView iRichCellView = null;
+        if (richType == RichType.NONE) {
+            // 普通的富文本
+            iRichCellView = new WRichEditorWrapperView(context);
+        } else if (richType == RichType.QUOTE) {
+            iRichCellView = new WRichEditorWrapperView(context);
+        } else if (richType == RichType.LIST_UNORDERED) {
+            iRichCellView = new WRichEditorWrapperView(context);
+        } else if (richType == RichType.LIST_ORDERED) {
+            iRichCellView = new WRichEditorWrapperView(context);
+        } else if (richType == RichType.IMAGE) {
+            if (provider == null || provider.getCellViewByRichType(richType) == null) {
+                iRichCellView = new RichImageView(context);
+            } else {
+                iRichCellView = provider.getCellViewByRichType(richType);
+            }
+        } else if (richType == RichType.LINE) {
+            if (provider == null || provider.getCellViewByRichType(richType) == null) {
+                iRichCellView = new RichLineView(context);
+            } else {
+                iRichCellView = provider.getCellViewByRichType(richType);
+            }
+        } else if (richType == RichType.VIDEO) {
+            if (provider == null || provider.getCellViewByRichType(richType) == null) {
+                iRichCellView = new RichVideoView(context);
+            } else {
+                iRichCellView = provider.getCellViewByRichType(richType);
+            }
+        } else if (richType == RichType.AUDIO) {
+            if (provider == null || provider.getCellViewByRichType(richType) == null) {
+                iRichCellView = new RichAudioView(context);
+            } else {
+                iRichCellView = provider.getCellViewByRichType(richType);
+            }
+        } else if (richType == RichType.NETDISK) {
+            if (provider == null || provider.getCellViewByRichType(richType) == null) {
+                iRichCellView = new RichPanView(context);
+            } else {
+                iRichCellView = provider.getCellViewByRichType(richType);
+            }
+        }
+        // TODO 这里为View填充数据
+        iRichCellView.setCellData(cellData);
+        return iRichCellView;
     }
 
     // TODO 注册自定义 CellView
-    private static IRichCellView inflateCellViewByRichType(Context context, RichType richType, String cellHtml, int contentStart, CustomViewProvider provider) {
+    private static IRichCellView inflateCellViewByRichTypeAndHtml(Context context, RichType richType, String cellHtml, int contentStart, CustomViewProvider provider) {
         if (richType == null || context == null) {
             return null;
         }

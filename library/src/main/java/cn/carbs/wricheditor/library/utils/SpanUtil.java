@@ -10,10 +10,17 @@ import java.util.List;
 import java.util.Set;
 
 import cn.carbs.wricheditor.library.WRichEditor;
+import cn.carbs.wricheditor.library.configures.RichEditorConfig;
 import cn.carbs.wricheditor.library.constants.CharConstant;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.interfaces.IRichSpan;
 import cn.carbs.wricheditor.library.models.SpanPart;
+import cn.carbs.wricheditor.library.spannables.BoldStyleSpan;
+import cn.carbs.wricheditor.library.spannables.HeadlineSpan;
+import cn.carbs.wricheditor.library.spannables.ItalicStyleSpan;
+import cn.carbs.wricheditor.library.spannables.LinkStyleSpan;
+import cn.carbs.wricheditor.library.spannables.StrikeThroughStyleSpan;
+import cn.carbs.wricheditor.library.spannables.UnderlineStyleSpan;
 import cn.carbs.wricheditor.library.types.RichType;
 
 public class SpanUtil {
@@ -82,6 +89,20 @@ public class SpanUtil {
 
         for (RichType richType : richTypes) {
             editable.setSpan(TypeUtil.getSpanByType(richType, object), spanStart, spanEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        }
+    }
+
+    public static void setSpan(List<IRichSpan> richSpans, Editable editable, int spanStart, int spanEnd) {
+        if (editable == null || spanStart < 0 || spanEnd < 0 || spanStart >= spanEnd) {
+            return;
+        }
+
+        if (richSpans == null || richSpans.size() == 0) {
+            return;
+        }
+
+        for (IRichSpan span : richSpans) {
+            editable.setSpan(span, spanStart, spanEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
     }
 
@@ -164,6 +185,33 @@ public class SpanUtil {
                 }
                 editableText.setSpan(part.getRichSpan(), start, end, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             }
+        }
+    }
+
+    public static void getSpanByMask(ArrayList<IRichSpan> spans, int mask, String extra) {
+
+        if (spans == null) {
+            return;
+        }
+        spans.clear();
+
+        if ((mask & BoldStyleSpan.MASK) >> BoldStyleSpan.MASK_SHIFT == 1) {
+            spans.add(new BoldStyleSpan());
+        }
+        if ((mask & HeadlineSpan.MASK) >> HeadlineSpan.MASK_SHIFT == 1) {
+            spans.add(new HeadlineSpan(RichEditorConfig.sHeadlineTextSize));
+        }
+        if ((mask & ItalicStyleSpan.MASK) >> ItalicStyleSpan.MASK_SHIFT == 1) {
+            spans.add(new ItalicStyleSpan());
+        }
+        if ((mask & LinkStyleSpan.MASK) >> LinkStyleSpan.MASK_SHIFT == 1) {
+            spans.add(new LinkStyleSpan(extra, RichEditorConfig.sLinkColor, RichEditorConfig.sLinkUnderline));
+        }
+        if ((mask & StrikeThroughStyleSpan.MASK) >> StrikeThroughStyleSpan.MASK_SHIFT == 1) {
+            spans.add(new StrikeThroughStyleSpan());
+        }
+        if ((mask & UnderlineStyleSpan.MASK) >> UnderlineStyleSpan.MASK_SHIFT == 1) {
+            spans.add(new UnderlineStyleSpan());
         }
     }
 

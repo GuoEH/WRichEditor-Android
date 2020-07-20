@@ -7,7 +7,6 @@ import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -88,8 +87,16 @@ public class MyRichImageView extends RichImageView {
     @Override
     public void setCellData(ImageCellData cellData) {
         super.setCellData(cellData);
-        if (cellData != null) {
-            setImageUrl(cellData.imageNetUrl);
+        if (!mDataLoaded && getCellData() != null && getImageView() != null) {
+            loadImageUrl(getCellData().imageNetUrl);
+        }
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        if (!mDataLoaded && getCellData() != null && getImageView() != null) {
+            loadImageUrl(getCellData().imageNetUrl);
         }
     }
 
@@ -136,18 +143,21 @@ public class MyRichImageView extends RichImageView {
         translationAnimator.start();
     }
 
-    private void setImageUrl(String imageUrl) {
+    private void loadImageUrl(String imageUrl) {
+        mDataLoaded = true;
         Glide
                 .with(getContext())
                 .load(imageUrl)
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        mDataLoaded = false;
                         return false;
                     }
 
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        mDataLoaded = true;
                         setImageWidthAndHeight(resource.getIntrinsicWidth(), resource.getIntrinsicHeight());
                         resource.getIntrinsicHeight();
                         return false;

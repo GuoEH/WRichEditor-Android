@@ -9,6 +9,8 @@ public class ContentStyleWrapper {
 
     public int mask;
 
+    public String extra;
+
     public ContentStyleWrapper(int mask) {
         this.mask = mask;
     }
@@ -37,5 +39,9 @@ public class ContentStyleWrapper {
 
     public int getContentLength() {
         return contentBuilder.length();
+    }
+
+    public void setExtra(String extra) {
+        this.extra = extra;
     }
 }

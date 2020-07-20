@@ -1,18 +1,19 @@
 package cn.carbs.wricheditor.library.models.cell;
 
 import android.text.Editable;
+import android.text.TextUtils;
 import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 import cn.carbs.wricheditor.library.interfaces.BaseCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichSpan;
 import cn.carbs.wricheditor.library.models.ContentStyleWrapper;
+import cn.carbs.wricheditor.library.spannables.LinkStyleSpan;
 import cn.carbs.wricheditor.library.types.RichType;
 
 public class RichCellData extends BaseCellData {
@@ -70,10 +71,8 @@ public class RichCellData extends BaseCellData {
             return this;
         }
         try {
-            String type = json.getString(BaseCellData.JSON_KEY_TYPE);
-            richType = RichType.valueOf(type);
+            richType = RichType.valueOf(json.getString(BaseCellData.JSON_KEY_TYPE));
             wrappersList = getWrapperListByJson(json);
-
             // TODO test
             for (int i = 0; i < wrappersList.size(); i++) {
                 Log.d("json", "wrappersList item i : " + i + "  mask : " + wrappersList.get(i).mask + "  text : " + wrappersList.get(i).contentBuilder);
@@ -118,13 +117,16 @@ public class RichCellData extends BaseCellData {
         String editableString = editable.toString();
 
         LinkedList<ContentStyleWrapper> wrappersList = new LinkedList();
+
+        String[] urlForLink = new String[1];
         for (int cursor = 0; cursor < editableLength; cursor++) {
 
             // 1. 首先检查cursor所在的位置的mask
             IRichSpan[] currRichSpans = editable.getSpans(cursor, cursor + 1, IRichSpan.class);
             int mask = 0;
             if (currRichSpans.length != 0) {
-                mask = getSpansMask(currRichSpans);
+                urlForLink[0] = "";
+                mask = getSpansMask(currRichSpans, urlForLink);
             }
 
             // 2. 如果队列最后一个的mask（即前一个字符的mask）等于当前的mask，则直接添加，避免转换成html时相同格式的字符串被分成多段
@@ -140,14 +142,19 @@ public class RichCellData extends BaseCellData {
                 // 与之前的格式相同，append 内容即可
                 lastWrapper.append(editableString.substring(cursor, cursor + 1));
             } else {
-                wrappersList.add(new ContentStyleWrapper(mask, editableString.substring(cursor, cursor + 1)));
+                lastWrapper = new ContentStyleWrapper(mask, editableString.substring(cursor, cursor + 1));
+                wrappersList.add(lastWrapper);
+            }
+            // TODO
+            if (!TextUtils.isEmpty(urlForLink[0])) {
+                lastWrapper.extra = urlForLink[0];
             }
         }
         return wrappersList;
     }
 
     public LinkedList<ContentStyleWrapper> getWrapperListByJson(JSONObject json) {
-        LinkedList<ContentStyleWrapper> wrappers = new LinkedList<>();;
+        LinkedList<ContentStyleWrapper> wrappers = new LinkedList<>();
         try {
             JSONObject data = json.getJSONObject(JSON_KEY_DATA);
             JSONArray array = data.getJSONArray(JSON_KEY_LIST);
@@ -164,13 +171,16 @@ public class RichCellData extends BaseCellData {
         return wrappers;
     }
 
-    public int getSpansMask(IRichSpan[] currRichSpans) {
+    public int getSpansMask(IRichSpan[] currRichSpans, String[] urlForLink) {
         int mask = 0;
         for (IRichSpan item : currRichSpans) {
             int start = editable.getSpanStart(item);
             int end = editable.getSpanEnd(item);
             if (start < end) {
                 mask = item.getMask() | mask;
+                if (mask == LinkStyleSpan.MASK) {
+                    urlForLink[0] = ((LinkStyleSpan) item).getURL();
+                }
             }
         }
         return mask;
@@ -191,7 +201,7 @@ public class RichCellData extends BaseCellData {
             }
         }
 
-        return  "{" +
+        return "{" +
                 "\"" + JSON_KEY_TYPE + "\": " + "\"" + type + "\"," +
                 "\"" + JSON_KEY_DATA + "\": " +
                 "{" +
