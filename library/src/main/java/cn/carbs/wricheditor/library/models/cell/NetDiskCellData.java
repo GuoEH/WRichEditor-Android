@@ -19,11 +19,6 @@ public class NetDiskCellData extends BaseCellData {
     public int fileTypeImageRes;
 
     @Override
-    public Object getData() {
-        return this;
-    }
-
-    @Override
     public RichType getType() {
         return RichType.NETDISK;
     }

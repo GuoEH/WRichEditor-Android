@@ -9,11 +9,6 @@ import cn.carbs.wricheditor.library.types.RichType;
 public class LineCellData extends BaseCellData {
 
     @Override
-    public Object getData() {
-        return this;
-    }
-
-    @Override
     public RichType getType() {
         return RichType.LINE;
     }

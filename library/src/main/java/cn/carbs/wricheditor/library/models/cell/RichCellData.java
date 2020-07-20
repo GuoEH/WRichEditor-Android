@@ -31,12 +31,6 @@ public class RichCellData extends BaseCellData {
 
     public LinkedList<ContentStyleWrapper> wrappersList;
 
-
-    @Override
-    public Object getData() {
-        return this;
-    }
-
     @Override
     public RichType getType() {
         return richType;

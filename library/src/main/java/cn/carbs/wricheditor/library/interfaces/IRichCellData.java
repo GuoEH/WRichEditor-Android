@@ -9,8 +9,6 @@ import cn.carbs.wricheditor.library.types.RichType;
  */
 public interface IRichCellData {
 
-    Object getData();
-
     RichType getType();
 
     String toHtml();

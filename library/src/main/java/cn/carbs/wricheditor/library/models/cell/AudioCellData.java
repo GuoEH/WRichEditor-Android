@@ -15,11 +15,6 @@ public class AudioCellData extends BaseCellData {
     public long duration;
 
     @Override
-    public Object getData() {
-        return this;
-    }
-
-    @Override
     public RichType getType() {
         return RichType.AUDIO;
     }

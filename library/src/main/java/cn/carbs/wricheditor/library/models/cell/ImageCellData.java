@@ -13,11 +13,6 @@ public class ImageCellData extends BaseCellData {
     public String imageNetUrl;
 
     @Override
-    public Object getData() {
-        return this;
-    }
-
-    @Override
     public RichType getType() {
         return RichType.IMAGE;
     }

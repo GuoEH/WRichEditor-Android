@@ -14,11 +14,6 @@ public class VideoCellData extends BaseCellData {
     public String videoNetUrl;
 
     @Override
-    public Object getData() {
-        return this;
-    }
-
-    @Override
     public RichType getType() {
         return RichType.VIDEO;
     }
