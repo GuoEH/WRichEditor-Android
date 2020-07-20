@@ -255,7 +255,7 @@ public class ParserUtil {
     }
 
     private static IRichCellView inflateCellViewByCellData(Context context, BaseCellData cellData, CustomViewProvider provider) {
-        RichType richType = cellData.getType();
+        RichType richType = cellData.getRichType();
         if (richType == null || context == null) {
             return null;
         }

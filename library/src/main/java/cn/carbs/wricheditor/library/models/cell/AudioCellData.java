@@ -15,7 +15,7 @@ public class AudioCellData extends BaseCellData {
     public long duration;
 
     @Override
-    public RichType getType() {
+    public RichType getRichType() {
         return RichType.AUDIO;
     }
 
@@ -23,14 +23,14 @@ public class AudioCellData extends BaseCellData {
     public String toHtml() {
         // TODO
 //        <div richType="AUDIO" url="xxx"></div>
-        return "<div richType=\"" + getType().name()
+        return "<div richType=\"" + getRichType().name()
                 + "\" url=\"" + audioNetUrl
                 + "\"></div>";
     }
 
     @Override
     public String toJson() {
-        return getJson(getType().name(), audioNetUrl, duration);
+        return getJson(getRichType().name(), audioNetUrl, duration);
     }
 
     @Override

@@ -48,9 +48,6 @@ editor中在image后面添加横线有空行
 输入完成后，上下滑动还需要继续打磨
 
 // TODO
-统一getType和getRichType
-
-// TODO
 转换为html时，将分号等转义
 
 // TODO

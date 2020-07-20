@@ -9,20 +9,20 @@ import cn.carbs.wricheditor.library.types.RichType;
 public class LineCellData extends BaseCellData {
 
     @Override
-    public RichType getType() {
+    public RichType getRichType() {
         return RichType.LINE;
     }
 
     @Override
     public String toHtml() {
-        return "<div richType=\"" + getType().name() + "\">" +
+        return "<div richType=\"" + getRichType().name() + "\">" +
                     "<br/><hr/><br/>" +
                 "</div>";
     }
 
     @Override
     public String toJson() {
-        return getJson(getType().name());
+        return getJson(getRichType().name());
     }
 
     @Override

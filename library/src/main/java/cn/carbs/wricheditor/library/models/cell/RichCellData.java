@@ -32,7 +32,7 @@ public class RichCellData extends BaseCellData {
     public LinkedList<ContentStyleWrapper> wrappersList;
 
     @Override
-    public RichType getType() {
+    public RichType getRichType() {
         return richType;
     }
 
@@ -48,7 +48,7 @@ public class RichCellData extends BaseCellData {
     public String toHtml() {
 
         String content = getHtmlContentStringByEditable(editable);
-        String html = "<div richType=\"" + getType().name() + "\">" +
+        String html = "<div richType=\"" + getRichType().name() + "\">" +
                 content +
                 "</div>";
         return html;
@@ -56,7 +56,7 @@ public class RichCellData extends BaseCellData {
 
     @Override
     public String toJson() {
-        return getJson(getType().name(), editable);
+        return getJson(getRichType().name(), editable);
     }
 
     @Override
@@ -85,7 +85,7 @@ public class RichCellData extends BaseCellData {
         }
 
         // TODO 不同的格式，需要对应不同的样式
-        RichType richType = getType();
+        RichType richType = getRichType();
         if (richType == RichType.NONE) {
 
         } else if (richType == RichType.QUOTE) {

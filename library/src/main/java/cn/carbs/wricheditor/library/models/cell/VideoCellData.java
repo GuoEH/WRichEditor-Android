@@ -14,21 +14,21 @@ public class VideoCellData extends BaseCellData {
     public String videoNetUrl;
 
     @Override
-    public RichType getType() {
+    public RichType getRichType() {
         return RichType.VIDEO;
     }
 
     // TODO
     @Override
     public String toHtml() {
-        return "<div richType=\"" + getType().name()
+        return "<div richType=\"" + getRichType().name()
                 + "\" url=\"" + videoLocalUrl
                 + "\"></div>";
     }
 
     @Override
     public String toJson() {
-        return getJson(getType().name(), videoNetUrl);
+        return getJson(getRichType().name(), videoNetUrl);
     }
 
     @Override
