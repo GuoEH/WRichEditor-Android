@@ -1,7 +1,9 @@
 package cn.carbs.wricheditor;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,28 +17,55 @@ public class RestoreActivity extends AppCompatActivity {
 
     public static final String HTML = "HTML";
 
+    public static final String JSON = "JSON";
+
     private WRichEditorScrollView mWRichEditorScrollView;
 
     private String mHTML;
+
+    private String mJSON;
+
+    private TextView mTVTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restore);
 
+        mTVTitle = findViewById(R.id.tv_title);
         mWRichEditorScrollView = findViewById(R.id.wrich_editor_view);
 
         mHTML = getIntent().getStringExtra(HTML);
+        mJSON = getIntent().getStringExtra(JSON);
 
-        Log.d("tttt", "RestoreActivity mHTML : " + mHTML);
+        if (!TextUtils.isEmpty(mHTML)) {
+            Log.d("tttt", "RestoreActivity mHTML : " + mHTML);
+            mTVTitle.setText("Inflated by HTML");
+            inflateByHtml();
+        } else if (!TextUtils.isEmpty(mJSON)) {
+            Log.d("tttt", "RestoreActivity mJSON : " + mJSON);
+            mTVTitle.setText("Inflated by JSON");
+            inflateByJson();
+        }
 
+    }
+
+    private void inflateByHtml() {
         ParserUtil.inflateFromHtml(this, mWRichEditorScrollView, mHTML, new CustomViewProvider() {
             @Override
             public IRichCellView getCellViewByRichType(RichType richType) {
                 return null;
             }
         });
+    }
 
+    private void inflateByJson() {
+        ParserUtil.inflateFromJson(this, mWRichEditorScrollView, mJSON, new CustomViewProvider() {
+            @Override
+            public IRichCellView getCellViewByRichType(RichType richType) {
+                return null;
+            }
+        });
     }
 
 

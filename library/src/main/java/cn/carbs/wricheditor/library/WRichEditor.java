@@ -147,6 +147,9 @@ public class WRichEditor extends EditText {
                     }
                     typeChangedListener.onRichTypeChanged(prevRichTypes, currRichTypes);
                 }
+                // TODO 待验证，主动改变cursor位置后的
+                prevRichTypes.clear();
+                prevRichTypes.addAll(currRichTypes);
             }
         }
 

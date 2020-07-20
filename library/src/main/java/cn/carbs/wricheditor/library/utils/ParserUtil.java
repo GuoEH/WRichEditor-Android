@@ -6,14 +6,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import cn.carbs.wricheditor.library.WRichEditorScrollView;
 import cn.carbs.wricheditor.library.WRichEditorWrapperView;
+import cn.carbs.wricheditor.library.interfaces.BaseCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
+import cn.carbs.wricheditor.library.models.cell.AudioCellData;
+import cn.carbs.wricheditor.library.models.cell.LineCellData;
+import cn.carbs.wricheditor.library.models.cell.PanCellData;
+import cn.carbs.wricheditor.library.models.cell.RichCellData;
+import cn.carbs.wricheditor.library.models.cell.VideoCellData;
 import cn.carbs.wricheditor.library.providers.CustomViewProvider;
 import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.views.RichAudioView;
@@ -142,6 +151,71 @@ public class ParserUtil {
         scrollView.addNoneTypeTailOptionally();
     }
 
+    // TODO 由html转换回富文本编辑器比较复杂，因此先使用json的方式
+    public static void inflateFromJson(Context context, WRichEditorScrollView scrollView, String json, CustomViewProvider provider) {
+        if (json == null || json.trim().length() == 0 || scrollView == null) {
+            return;
+        }
+
+        try {
+            JSONArray jsonArray = new JSONArray(json);
+            int length = jsonArray.length();
+            ArrayList<BaseCellData> cellDataList = new ArrayList<>(length);
+
+            for (int i = 0; i < length; i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                BaseCellData cellData = getCellDataByJSONObject(jsonObject);
+                if (cellData != null) {
+                    cellDataList.add(cellData);
+                }
+            }
+
+//            for (String cellString : cellStringList) {
+//                IRichCellView cellView = inflateCellViewByCellHtml(context, cellString, provider);
+//                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                scrollView.addRichCell(cellView, lp, -1);
+//            }
+//            scrollView.addNoneTypeTailOptionally();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static BaseCellData getCellDataByJSONObject(JSONObject jsonObject) {
+        try {
+            String type = jsonObject.getString(BaseCellData.JSON_KEY_TYPE);
+            RichType richType = RichType.valueOf(type);
+            BaseCellData cellData = null;
+            if (richType == RichType.NONE) {
+                cellData = new RichCellData();
+            } else if (richType == RichType.QUOTE) {
+                cellData = new RichCellData();
+            } else if (richType == RichType.LIST_UNORDERED) {
+                cellData = new RichCellData();
+            } else if (richType == RichType.LIST_ORDERED) {
+                cellData = new RichCellData();
+            } else if (richType == RichType.IMAGE) {
+                cellData = new RichCellData();
+            } else if (richType == RichType.VIDEO) {
+                cellData = new VideoCellData();
+            } else if (richType == RichType.AUDIO) {
+                cellData = new AudioCellData();
+            } else if (richType == RichType.NETDISK) {
+                cellData = new PanCellData();
+            } else if (richType == RichType.LINE) {
+                cellData = new LineCellData();
+            }
+            if (cellData != null) {
+                cellData.fromJson(jsonObject);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     private static String getBodyContent(String bodyHtml) {
         if (bodyHtml == null) {
             return "";
@@ -150,13 +224,6 @@ public class ParserUtil {
             return bodyHtml.substring(6, bodyHtml.length() - 7);
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        return "";
-    }
-
-    private static String getRichTypeCellContent(String richTypeHtml) {
-        if (richTypeHtml == null) {
-            return "";
         }
         return "";
     }

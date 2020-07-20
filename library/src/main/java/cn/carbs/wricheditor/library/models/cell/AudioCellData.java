@@ -35,29 +35,16 @@ public class AudioCellData extends BaseCellData {
 
     @Override
     public String toJson() {
-        if (adapter != null) {
-            return adapter.toJson(this);
-        }
         return getJson(getType().name(), audioNetUrl, duration);
     }
 
     @Override
-    public IRichCellData inflate(IRichCellData data) {
-        if (data instanceof AudioCellData) {
-            audioNetUrl = ((AudioCellData) data).audioNetUrl;
-            duration = ((AudioCellData) data).duration;
-        }
-        return this;
-    }
-
-    @Override
-    public IRichCellData fromJson(String json) {
-        if (adapter != null) {
-            return inflate(adapter.fromJson(json));
+    public IRichCellData fromJson(JSONObject json) {
+        if (json == null) {
+            return this;
         }
         try {
-            JSONObject obj = new JSONObject(json);
-            JSONObject data = obj.getJSONObject("data");
+            JSONObject data = json.getJSONObject(JSON_KEY_DATA);
             audioNetUrl = data.getString("url");
             duration = data.getLong("duration");
         } catch (Exception e) {
@@ -68,8 +55,8 @@ public class AudioCellData extends BaseCellData {
 
     public String getJson(String type, String url, long duration) {
         return "{" +
-                "\"type\": " + "\"" + type + "\"," +
-                "\"data\": " +
+                "\"" + JSON_KEY_TYPE + "\": " + "\"" + type + "\"," +
+                "\"" + JSON_KEY_DATA + "\": " +
                 "{" +
                 "\"url\": " + "\"" + url + "\"," +
                 "\"duration\": " + duration +

@@ -3,6 +3,10 @@ package cn.carbs.wricheditor.library.models.cell;
 import android.text.Editable;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import cn.carbs.wricheditor.library.interfaces.BaseCellData;
@@ -13,10 +17,19 @@ import cn.carbs.wricheditor.library.types.RichType;
 
 public class RichCellData extends BaseCellData {
 
+    public static final String JSON_KEY_LIST = "list";
+
+    public static final String JSON_KEY_MASK = "mask";
+
+    public static final String JSON_KEY_TEXT = "text";
+
     // NONE, QUOTE, LIST_ORDERED, LIST_UNORDERED
     private RichType richType = RichType.NONE;
 
     public Editable editable;
+
+    public LinkedList<ContentStyleWrapper> wrappersList;
+
 
     @Override
     public Object getData() {
@@ -48,43 +61,28 @@ public class RichCellData extends BaseCellData {
 
     @Override
     public String toJson() {
-        if (adapter != null) {
-            return adapter.toJson(this);
-        }
         return getJson(getType().name(), editable);
     }
 
     @Override
-    public IRichCellData fromJson(String json) {
-        if (adapter != null) {
-            return inflate(adapter.fromJson(json));
+    public IRichCellData fromJson(JSONObject json) {
+        if (json == null) {
+            return this;
         }
-
-//        cellView 转换
-
-
-        // TODO
         try {
-//            JSONObject obj = new JSONObject(json);
-//            JSONObject data = obj.getJSONObject("data");
-//            fileUrl = data.getString("url");
-//            fileName = data.getString("name");
-//            fileSize = data.getLong("size");
-//            fileType = data.getString("type");
-            // TODO 根据fileType设置图标
+            String type = json.getString(BaseCellData.JSON_KEY_TYPE);
+            richType = RichType.valueOf(type);
+            wrappersList = getWrapperListByJson(json);
+
+            // TODO test
+            for (int i = 0; i < wrappersList.size(); i++) {
+                Log.d("json", "wrappersList item i : " + i + "  mask : " + wrappersList.get(i).mask + "  text : " + wrappersList.get(i).contentBuilder);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
-    }
-
-    @Override
-    public IRichCellData inflate(IRichCellData data) {
-        if (data instanceof RichCellData) {
-            editable = ((RichCellData) data).editable;
-            // TODO 根据fileType设置图标
-        }
-        return this;
     }
 
     private String getHtmlContentStringByEditable(Editable editable) {
@@ -148,6 +146,24 @@ public class RichCellData extends BaseCellData {
         return wrappersList;
     }
 
+    public LinkedList<ContentStyleWrapper> getWrapperListByJson(JSONObject json) {
+        LinkedList<ContentStyleWrapper> wrappers = new LinkedList<>();;
+        try {
+            JSONObject data = json.getJSONObject(JSON_KEY_DATA);
+            JSONArray array = data.getJSONArray(JSON_KEY_LIST);
+            int length = array.length();
+            for (int i = 0; i < length; i++) {
+                JSONObject jsonObject = array.getJSONObject(i);
+                int mask = jsonObject.getInt(JSON_KEY_MASK);
+                String text = jsonObject.getString(JSON_KEY_TEXT);
+                wrappers.add(new ContentStyleWrapper(mask, text));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return wrappers;
+    }
+
     public int getSpansMask(IRichSpan[] currRichSpans) {
         int mask = 0;
         for (IRichSpan item : currRichSpans) {
@@ -175,18 +191,16 @@ public class RichCellData extends BaseCellData {
             }
         }
 
-        String x =  "{" +
-                "\"type\": " + "\"" + type + "\"," +
-                "\"data\": " +
+        return  "{" +
+                "\"" + JSON_KEY_TYPE + "\": " + "\"" + type + "\"," +
+                "\"" + JSON_KEY_DATA + "\": " +
                 "{" +
-                "\"list\": " +
+                "\"" + JSON_KEY_LIST + "\": " +
                 "[" +
                 sbJsonList.toString() +
                 "]" +
                 "}" +
                 "}";
-        Log.d("json", "RichCellData : " + x);
-        return x;
     }
 
 }

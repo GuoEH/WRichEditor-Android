@@ -38,20 +38,16 @@ public class PanCellData extends BaseCellData {
 
     @Override
     public String toJson() {
-        if (adapter != null) {
-            return adapter.toJson(this);
-        }
         return getJson(getType().name(), fileUrl, fileName, fileSize, fileType);
     }
 
     @Override
-    public IRichCellData fromJson(String json) {
-        if (adapter != null) {
-            return inflate(adapter.fromJson(json));
+    public IRichCellData fromJson(JSONObject json) {
+        if (json == null) {
+            return this;
         }
         try {
-            JSONObject obj = new JSONObject(json);
-            JSONObject data = obj.getJSONObject("data");
+            JSONObject data = json.getJSONObject(JSON_KEY_DATA);
             fileUrl = data.getString("url");
             fileName = data.getString("name");
             fileSize = data.getLong("size");
@@ -63,22 +59,10 @@ public class PanCellData extends BaseCellData {
         return this;
     }
 
-    @Override
-    public IRichCellData inflate(IRichCellData data) {
-        if (data instanceof PanCellData) {
-            fileUrl = ((PanCellData) data).fileUrl;
-            fileName = ((PanCellData) data).fileName;
-            fileType = ((PanCellData) data).fileType;
-            fileSize = ((PanCellData) data).fileSize;
-            // TODO 根据fileType设置图标
-        }
-        return this;
-    }
-
     public String getJson(String type, String url, String name, long size, String fileType) {
         return "{" +
-                "\"type\": " + "\"" + type + "\"," +
-                "\"data\": " +
+                "\"" + JSON_KEY_TYPE + "\": " + "\"" + type + "\"," +
+                "\"" + JSON_KEY_DATA + "\": " +
                 "{" +
                 "\"url\": " + "\"" + url + "\"," +
                 "\"name\": " + "\"" + name + "\"," +

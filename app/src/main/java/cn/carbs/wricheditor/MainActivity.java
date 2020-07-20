@@ -308,6 +308,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void exportToJson() {
         String out = ParserUtil.parseToJson(mWRichEditorScrollView).toString();
         Log.d("json", "parseToJson : " + out);
+        Intent intent = new Intent(this, RestoreActivity.class);
+        intent.putExtra(RestoreActivity.JSON, out);
+        startActivity(intent);
+
     }
 
     @Override

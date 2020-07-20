@@ -42,7 +42,7 @@ public enum RichType {
 
     NETDISK(false, RichTypeConstants.GROUP_RESOURCE),
 
-    LINE(false, RichTypeConstants.GROUP_RESOURCE),;
+    LINE(false, RichTypeConstants.GROUP_RESOURCE);
 
     private boolean hasEditor;
 

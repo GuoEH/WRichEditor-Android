@@ -53,6 +53,16 @@ editor中在image后面添加横线有空行
 // TODO
 转换为html时，将分号等转义
 
+// TODO
+转换成json时，如果有引号的问题
+
+// TODO
+adapter暂时去掉
+
+// TODO
+统一 NETDISK pan，将pan 改为 NETDISK
+
+
 // ========== EXPERIENCE ===========
 1. 锤子便签：在quote时，会自动将所有的字符进行一次缩小，颜色变浅
 2. 换肤、主题、文字颜色

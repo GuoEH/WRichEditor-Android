@@ -33,20 +33,16 @@ public class VideoCellData extends BaseCellData {
 
     @Override
     public String toJson() {
-        if (adapter != null) {
-            return adapter.toJson(this);
-        }
         return getJson(getType().name(), videoNetUrl);
     }
 
     @Override
-    public IRichCellData fromJson(String json) {
-        if (adapter != null) {
-            return inflate(adapter.fromJson(json));
+    public IRichCellData fromJson(JSONObject json) {
+        if (json == null) {
+            return this;
         }
         try {
-            JSONObject obj = new JSONObject(json);
-            JSONObject data = obj.getJSONObject("data");
+            JSONObject data = json.getJSONObject(JSON_KEY_DATA);
             videoNetUrl = data.getString("url");
         } catch (Exception e) {
             e.printStackTrace();
@@ -54,18 +50,10 @@ public class VideoCellData extends BaseCellData {
         return this;
     }
 
-    @Override
-    public IRichCellData inflate(IRichCellData data) {
-        if (data instanceof VideoCellData) {
-            videoNetUrl = ((VideoCellData) data).videoNetUrl;
-        }
-        return this;
-    }
-
     public String getJson(String type, String url) {
         return "{" +
-                "\"type\": " + "\"" + type + "\"," +
-                "\"data\": " +
+                "\"" + JSON_KEY_TYPE + "\": " + "\"" + type + "\"," +
+                "\"" + JSON_KEY_DATA + "\": " +
                 "{" +
                 "\"url\": " + "\"" + url + "\"" +
                 "}" +

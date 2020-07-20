@@ -30,29 +30,17 @@ public class ImageCellData extends BaseCellData {
     }
 
     @Override
-    public IRichCellData inflate(IRichCellData data) {
-        if (data instanceof ImageCellData) {
-            imageNetUrl = ((ImageCellData) data).imageNetUrl;
-        }
-        return this;
-    }
-
-    @Override
     public String toJson() {
-        if (adapter != null) {
-            return adapter.toJson(this);
-        }
         return getJson(getType().name(), imageNetUrl);
     }
 
     @Override
-    public IRichCellData fromJson(String json) {
-        if (adapter != null) {
-            return inflate(adapter.fromJson(json));
+    public IRichCellData fromJson(JSONObject json) {
+        if (json == null) {
+            return this;
         }
         try {
-            JSONObject obj = new JSONObject(json);
-            JSONObject data = obj.getJSONObject("data");
+            JSONObject data = json.getJSONObject(JSON_KEY_DATA);
             imageNetUrl = data.getString("url");
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,8 +50,8 @@ public class ImageCellData extends BaseCellData {
 
     public String getJson(String type, String url) {
         return "{" +
-                "\"type\": " + "\"" + type + "\"," +
-                "\"data\": " +
+                "\"" + JSON_KEY_TYPE + "\": " + "\"" + type + "\"," +
+                "\"" + JSON_KEY_DATA + "\": " +
                 "{" +
                 "\"url\": " + "\"" + url + "\"" +
                 "}" +

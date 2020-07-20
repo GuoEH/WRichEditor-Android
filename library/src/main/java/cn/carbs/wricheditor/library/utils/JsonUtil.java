@@ -1,6 +1,9 @@
 package cn.carbs.wricheditor.library.utils;
 
+import android.util.Log;
+
 import cn.carbs.wricheditor.library.models.ContentStyleWrapper;
+import cn.carbs.wricheditor.library.models.cell.RichCellData;
 import cn.carbs.wricheditor.library.spannables.BoldStyleSpan;
 import cn.carbs.wricheditor.library.spannables.HeadlineSpan;
 import cn.carbs.wricheditor.library.spannables.ItalicStyleSpan;
@@ -16,10 +19,16 @@ public class JsonUtil {
         if (wrapper == null || wrapper.getContentLength() == 0) {
             return "";
         }
+        // TODO
+
+        String string = wrapper.contentBuilder.toString();
+        Log.d("json", "string0 : " + string);
+        string = string.replaceAll("\"", "\\\\\"");
+        Log.d("json", "string1 : " + string);
 
         return "{" +
-                "\"mask\": " + wrapper.mask + "," +
-                "\"text\": " + "\"" + wrapper.contentBuilder.toString() + "\"" +
+                "\"" + RichCellData.JSON_KEY_MASK + "\": " + wrapper.mask + "," +
+                "\"" + RichCellData.JSON_KEY_TEXT + "\": " + "\"" + string + "\"" +
                 "}";
     }
 

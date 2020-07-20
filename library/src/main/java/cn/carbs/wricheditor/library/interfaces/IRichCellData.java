@@ -1,5 +1,7 @@
 package cn.carbs.wricheditor.library.interfaces;
 
+import org.json.JSONObject;
+
 import cn.carbs.wricheditor.library.types.RichType;
 
 /**
@@ -15,12 +17,6 @@ public interface IRichCellData {
 
     String toJson();
 
-    IRichCellData fromJson(String str);
-
-    void setCellDataJsonAdapter(ICellDataJsonAdapter adapter);
-
-    ICellDataJsonAdapter getCellDataJsonAdapter();
-
-    IRichCellData inflate(IRichCellData data);
+    IRichCellData fromJson(JSONObject jsonObject);
 
 }
