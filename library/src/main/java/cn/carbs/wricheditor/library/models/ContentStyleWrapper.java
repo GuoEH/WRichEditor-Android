@@ -41,7 +41,8 @@ public class ContentStyleWrapper {
         return contentBuilder.length();
     }
 
-    public void setExtra(String extra) {
+    public ContentStyleWrapper setExtra(String extra) {
         this.extra = extra;
+        return this;
     }
 }

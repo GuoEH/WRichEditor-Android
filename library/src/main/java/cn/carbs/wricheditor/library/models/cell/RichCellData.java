@@ -163,7 +163,8 @@ public class RichCellData extends BaseCellData {
                 JSONObject jsonObject = array.getJSONObject(i);
                 int mask = jsonObject.getInt(JSON_KEY_MASK);
                 String text = jsonObject.getString(JSON_KEY_TEXT);
-                wrappers.add(new ContentStyleWrapper(mask, text));
+                String extra = jsonObject.optString(JSON_KEY_MASK);
+                wrappers.add(new ContentStyleWrapper(mask, text).setExtra(extra));
             }
         } catch (Exception e) {
             e.printStackTrace();

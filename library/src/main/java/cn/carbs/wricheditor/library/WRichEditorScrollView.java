@@ -18,7 +18,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import cn.carbs.wricheditor.library.callbacks.OnDataTransportListener;
 import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
 import cn.carbs.wricheditor.library.callbacks.OnRichTypeChangedListener;
 import cn.carbs.wricheditor.library.configures.RichEditorConfig;
@@ -49,8 +48,6 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
     public Set<RichType> mRichTypes = new HashSet<>();
 
     private LinearLayout mLinearLayout;
-
-    private OnDataTransportListener mOnDataTransportListener;
 
     private OnRichTypeChangedListener mOnRichTypeChangedListener;
 
@@ -1181,18 +1178,6 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
             return (WRichEditorWrapperView) mLastFocusedRichCellView;
         }
         return null;
-    }
-
-    public void importData(OnDataTransportListener listener) {
-        // TODO
-        mOnDataTransportListener = listener;
-
-    }
-
-    public void exportData(OnDataTransportListener listener) {
-        // TODO
-        mOnDataTransportListener = listener;
-
     }
 
     public void setRichTypes(Set<RichType> currRichTypes) {

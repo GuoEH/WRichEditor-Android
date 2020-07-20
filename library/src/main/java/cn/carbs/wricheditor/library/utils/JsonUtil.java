@@ -1,15 +1,9 @@
 package cn.carbs.wricheditor.library.utils;
 
-import android.util.Log;
+import android.text.TextUtils;
 
 import cn.carbs.wricheditor.library.models.ContentStyleWrapper;
 import cn.carbs.wricheditor.library.models.cell.RichCellData;
-import cn.carbs.wricheditor.library.spannables.BoldStyleSpan;
-import cn.carbs.wricheditor.library.spannables.HeadlineSpan;
-import cn.carbs.wricheditor.library.spannables.ItalicStyleSpan;
-import cn.carbs.wricheditor.library.spannables.LinkStyleSpan;
-import cn.carbs.wricheditor.library.spannables.StrikeThroughStyleSpan;
-import cn.carbs.wricheditor.library.spannables.UnderlineStyleSpan;
 
 public class JsonUtil {
 
@@ -22,14 +16,20 @@ public class JsonUtil {
         // TODO
 
         String string = wrapper.contentBuilder.toString();
-        Log.d("json", "string0 : " + string);
         string = string.replaceAll("\"", "\\\\\"");
-        Log.d("json", "string1 : " + string);
 
-        return "{" +
-                "\"" + RichCellData.JSON_KEY_MASK + "\": " + wrapper.mask + "," +
-                "\"" + RichCellData.JSON_KEY_TEXT + "\": " + "\"" + string + "\"" +
-                "}";
+        if (TextUtils.isEmpty(wrapper.extra)) {
+            return "{" +
+                    "\"" + RichCellData.JSON_KEY_MASK + "\": " + wrapper.mask + "," +
+                    "\"" + RichCellData.JSON_KEY_TEXT + "\": " + "\"" + string + "\"" +
+                    "}";
+        } else {
+            return "{" +
+                    "\"" + RichCellData.JSON_KEY_MASK + "\": " + wrapper.mask + "," +
+                    "\"" + RichCellData.JSON_KEY_EXTRA + "\": " + "\"" + wrapper.extra + "\"," +
+                    "\"" + RichCellData.JSON_KEY_TEXT + "\": " + "\"" + string + "\"" +
+                    "}";
+        }
     }
 
 }
