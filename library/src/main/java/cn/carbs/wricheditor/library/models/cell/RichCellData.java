@@ -124,8 +124,8 @@ public class RichCellData extends BaseCellData {
             // 1. 首先检查cursor所在的位置的mask
             IRichSpan[] currRichSpans = editable.getSpans(cursor, cursor + 1, IRichSpan.class);
             int mask = 0;
+            urlForLink[0] = "";
             if (currRichSpans.length != 0) {
-                urlForLink[0] = "";
                 mask = getSpansMask(currRichSpans, urlForLink);
             }
 

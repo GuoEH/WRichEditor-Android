@@ -1,5 +1,6 @@
 package cn.carbs.wricheditor.library.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
@@ -186,6 +187,7 @@ public class ParserUtil {
             scrollView.addRichCell(cellView, lp, -1);
         }
         scrollView.addNoneTypeTailOptionally();
+
     }
 
     private static BaseCellData getCellDataByJSONObject(JSONObject jsonObject) {

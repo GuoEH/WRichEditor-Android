@@ -1,13 +1,16 @@
 package cn.carbs.wricheditor;
 
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import cn.carbs.wricheditor.library.WRichEditorScrollView;
+import cn.carbs.wricheditor.library.WRichEditorWrapperView;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.providers.CustomViewProvider;
 import cn.carbs.wricheditor.library.types.RichType;
@@ -26,6 +29,8 @@ public class RestoreActivity extends AppCompatActivity {
     private String mJSON;
 
     private TextView mTVTitle;
+
+    private TextView mTVTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,16 @@ public class RestoreActivity extends AppCompatActivity {
             inflateByJson();
         }
 
+        mTVTest = findViewById(R.id.text_view_test);
+
+        mTVTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WRichEditorWrapperView wRichEditorWrapperView = (WRichEditorWrapperView) mWRichEditorScrollView.getContainerView().getChildAt(0);
+                Editable editable = wRichEditorWrapperView.getWRichEditor().getEditableText();
+                mTVTest.setText(editable);
+            }
+        });
     }
 
     private void inflateByHtml() {

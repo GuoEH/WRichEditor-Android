@@ -122,9 +122,7 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
         if (mCellData != null) {
             mCellData.setIRichCellView(this);
         }
-        Log.d("ggg", "setCellData() 1");
         if (mCellData != null && mWRichEditor != null) {
-            Log.d("ggg", "setCellData() 2  mCellData : " + mCellData);
             setTextForEditor(mCellData.wrappersList);
         }
     }

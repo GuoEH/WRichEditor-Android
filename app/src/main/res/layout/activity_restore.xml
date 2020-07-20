@@ -43,4 +43,12 @@
         android:layout_below="@id/title_bar"
         android:background="@drawable/shape_black_bg_gradient" />
 
+    <TextView
+        android:padding="16dp"
+        android:text="测试"
+        android:id="@+id/text_view_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+
 </RelativeLayout>
