@@ -25,8 +25,6 @@ import cn.carbs.wricheditor.library.constants.CharConstant;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.models.SpanPart;
 import cn.carbs.wricheditor.library.models.SplitPart;
-import cn.carbs.wricheditor.library.models.cell.ImageCellData;
-import cn.carbs.wricheditor.library.models.cell.PanCellData;
 import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.CommonUtil;
 import cn.carbs.wricheditor.library.utils.LogUtil;
@@ -36,7 +34,7 @@ import cn.carbs.wricheditor.library.utils.StrategyUtil;
 import cn.carbs.wricheditor.library.utils.ViewUtil;
 import cn.carbs.wricheditor.library.views.RichImageView;
 import cn.carbs.wricheditor.library.views.RichLineView;
-import cn.carbs.wricheditor.library.views.RichPanView;
+import cn.carbs.wricheditor.library.views.RichNetDiskView;
 
 /**
  * 主视图，继承自ScrollView，富文本通过向其中不断添加子View实现
@@ -1318,12 +1316,12 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
         }
     }
 
-    public void insertPan(RichPanView richPanView) {
+    public void insertNetDisk(RichNetDiskView richNetDiskView) {
         int[] focusedIndex = new int[1];
         findCurrentOrRecentFocusedRichEditorWrapperView(focusedIndex);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER_HORIZONTAL;
-        addRichCell(richPanView, lp, focusedIndex[0] + 1);
+        addRichCell(richNetDiskView, lp, focusedIndex[0] + 1);
         if (needAddWRichEditor(focusedIndex[0] + 1)) {
             insertAWRichEditorWrapperWithRichType(focusedIndex[0] + 2, RichType.NONE, true);
         }

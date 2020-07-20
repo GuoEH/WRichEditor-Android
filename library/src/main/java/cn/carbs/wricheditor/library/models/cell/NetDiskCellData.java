@@ -6,7 +6,7 @@ import cn.carbs.wricheditor.library.interfaces.BaseCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.types.RichType;
 
-public class PanCellData extends BaseCellData {
+public class NetDiskCellData extends BaseCellData {
 
     public String fileUrl;
 

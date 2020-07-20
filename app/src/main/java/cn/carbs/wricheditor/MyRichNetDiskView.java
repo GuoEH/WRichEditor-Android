@@ -8,25 +8,25 @@ import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 
-import cn.carbs.wricheditor.library.models.cell.PanCellData;
-import cn.carbs.wricheditor.library.views.RichPanView;
+import cn.carbs.wricheditor.library.models.cell.NetDiskCellData;
+import cn.carbs.wricheditor.library.views.RichNetDiskView;
 
-public class MyRichPanView extends RichPanView {
+public class MyRichNetDiskView extends RichNetDiskView {
 
-    public MyRichPanView(Context context) {
+    public MyRichNetDiskView(Context context) {
         super(context);
     }
 
-    public MyRichPanView(Context context, @Nullable AttributeSet attrs) {
+    public MyRichNetDiskView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public MyRichPanView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public MyRichNetDiskView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @Override
-    public void setCellData(PanCellData cellData) {
+    public void setCellData(NetDiskCellData cellData) {
         super.setCellData(cellData);
         if (cellData != null) {
             setData(cellData.fileTypeImageRes,
@@ -65,6 +65,6 @@ public class MyRichPanView extends RichPanView {
     @Override
     public void onContainerViewClicked() {
         super.onContainerViewClicked();
-        Toast.makeText(getContext(), "PAN clicked", Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "NetDisk clicked", Toast.LENGTH_LONG).show();
     }
 }

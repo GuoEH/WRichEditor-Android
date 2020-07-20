@@ -15,13 +15,13 @@ import cn.carbs.wricheditor.library.R;
 import cn.carbs.wricheditor.library.WRichEditorScrollView;
 import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
-import cn.carbs.wricheditor.library.models.cell.PanCellData;
+import cn.carbs.wricheditor.library.models.cell.NetDiskCellData;
 import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.CommonUtil;
 import cn.carbs.wricheditor.library.utils.TypeUtil;
 
 // 不抽象，如果需要自定义，直接在外部自定义
-public class RichPanView extends RelativeLayout implements IRichCellView<PanCellData>, View.OnClickListener {
+public class RichNetDiskView extends RelativeLayout implements IRichCellView<NetDiskCellData>, View.OnClickListener {
 
     protected boolean mSelectMode;
 
@@ -37,21 +37,21 @@ public class RichPanView extends RelativeLayout implements IRichCellView<PanCell
 
     protected View mVDelete;
 
-    protected PanCellData mCellData;
+    protected NetDiskCellData mCellData;
 
     protected OnEditorFocusChangedListener mOnEditorFocusChangedListener;
 
-    public RichPanView(Context context) {
+    public RichNetDiskView(Context context) {
         super(context);
         init(context);
     }
 
-    public RichPanView(Context context, @Nullable AttributeSet attrs) {
+    public RichNetDiskView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public RichPanView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public RichNetDiskView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
@@ -110,12 +110,12 @@ public class RichPanView extends RelativeLayout implements IRichCellView<PanCell
     }
 
     @Override
-    public void setCellData(PanCellData cellData) {
+    public void setCellData(NetDiskCellData cellData) {
         mCellData = cellData;
     }
 
     @Override
-    public PanCellData getCellData() {
+    public NetDiskCellData getCellData() {
         return mCellData;
     }
 

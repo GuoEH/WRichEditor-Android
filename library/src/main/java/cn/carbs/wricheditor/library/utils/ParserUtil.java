@@ -1,6 +1,5 @@
 package cn.carbs.wricheditor.library.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
@@ -22,7 +21,7 @@ import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.models.cell.AudioCellData;
 import cn.carbs.wricheditor.library.models.cell.LineCellData;
-import cn.carbs.wricheditor.library.models.cell.PanCellData;
+import cn.carbs.wricheditor.library.models.cell.NetDiskCellData;
 import cn.carbs.wricheditor.library.models.cell.RichCellData;
 import cn.carbs.wricheditor.library.models.cell.VideoCellData;
 import cn.carbs.wricheditor.library.providers.CustomViewProvider;
@@ -30,7 +29,7 @@ import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.views.RichAudioView;
 import cn.carbs.wricheditor.library.views.RichImageView;
 import cn.carbs.wricheditor.library.views.RichLineView;
-import cn.carbs.wricheditor.library.views.RichPanView;
+import cn.carbs.wricheditor.library.views.RichNetDiskView;
 import cn.carbs.wricheditor.library.views.RichVideoView;
 
 public class ParserUtil {
@@ -219,7 +218,7 @@ public class ParserUtil {
                 cellData = new AudioCellData();
             } else if (richType == RichType.NETDISK) {
                 Log.d("ggg", "getCellDataByJSONObject() 9");
-                cellData = new PanCellData();
+                cellData = new NetDiskCellData();
             } else if (richType == RichType.LINE) {
                 Log.d("ggg", "getCellDataByJSONObject() 10");
                 cellData = new LineCellData();
@@ -296,7 +295,7 @@ public class ParserUtil {
             }
         } else if (richType == RichType.NETDISK) {
             if (provider == null || provider.getCellViewByRichType(richType) == null) {
-                iRichCellView = new RichPanView(context);
+                iRichCellView = new RichNetDiskView(context);
             } else {
                 iRichCellView = provider.getCellViewByRichType(richType);
             }
@@ -347,7 +346,7 @@ public class ParserUtil {
             }
         } else if (richType == RichType.NETDISK) {
             if (provider == null || provider.getCellViewByRichType(richType) == null) {
-                iRichCellView = new RichPanView(context);
+                iRichCellView = new RichNetDiskView(context);
             } else {
                 iRichCellView = provider.getCellViewByRichType(richType);
             }

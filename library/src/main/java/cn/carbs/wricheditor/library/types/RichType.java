@@ -33,15 +33,19 @@ public enum RichType {
     // 无序列表
     LIST_UNORDERED(true, RichTypeConstants.GROUP_LINE_FORMAT),
 
-    // 多媒体类型，采用自定义view
+    // 多媒体类型，图像
     IMAGE(false, RichTypeConstants.GROUP_RESOURCE),
 
+    // 多媒体类型，视频
     VIDEO(false, RichTypeConstants.GROUP_RESOURCE),
 
+    // 多媒体类型，音频
     AUDIO(false, RichTypeConstants.GROUP_RESOURCE),
 
+    // 多媒体类型，网盘
     NETDISK(false, RichTypeConstants.GROUP_RESOURCE),
 
+    // 横线
     LINE(false, RichTypeConstants.GROUP_RESOURCE);
 
     private boolean hasEditor;

@@ -26,7 +26,7 @@ import cn.carbs.wricheditor.library.WRichEditorScrollView;
 import cn.carbs.wricheditor.library.WRichEditorWrapperView;
 import cn.carbs.wricheditor.library.callbacks.OnRichTypeChangedListener;
 import cn.carbs.wricheditor.library.models.cell.ImageCellData;
-import cn.carbs.wricheditor.library.models.cell.PanCellData;
+import cn.carbs.wricheditor.library.models.cell.NetDiskCellData;
 import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.DebugUtil;
 import cn.carbs.wricheditor.library.utils.ParserUtil;
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView mBtnInsertLine;
     private ImageView mBtnInsertAudio;
     private ImageView mBtnInsertVideo;
-    private ImageView mBtnInsertPan;
+    private ImageView mBtnInsertNetDisk;
     private ImageView mBtnExportToHTML;
     private ImageView mBtnImportFromHTML;
 
@@ -97,8 +97,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnInsertAudio.setOnClickListener(this);
         mBtnInsertVideo = findViewById(R.id.button_video);
         mBtnInsertVideo.setOnClickListener(this);
-        mBtnInsertPan = findViewById(R.id.button_pan);
-        mBtnInsertPan.setOnClickListener(this);
+        mBtnInsertNetDisk = findViewById(R.id.button_pan);
+        mBtnInsertNetDisk.setOnClickListener(this);
         mBtnExportToHTML = findViewById(R.id.button_export);
         mBtnExportToHTML.setOnClickListener(this);
         mBtnImportFromHTML = findViewById(R.id.button_import);
@@ -247,16 +247,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toast.makeText(this, "I'm on it", Toast.LENGTH_SHORT).show();
     }
 
-    private void onInsertPanClicked() {
-        MyRichPanView richPanView = new MyRichPanView(MainActivity.this);
-        PanCellData panCellData = new PanCellData();
-        panCellData.fileName = "三国演义.txt";
-        panCellData.fileType = "txt";
-        panCellData.fileTypeImageRes = R.drawable.ic_file_type_word;
-        panCellData.fileUrl = "http://www.test.com";
-        panCellData.fileSize = 2 * 1024 * 1000;
-        richPanView.setCellData(panCellData);
-        mWRichEditorScrollView.insertPan(richPanView);
+    private void onInsertNetDiskClicked() {
+        MyRichNetDiskView richNetDiskView = new MyRichNetDiskView(MainActivity.this);
+        NetDiskCellData netDiskCellData = new NetDiskCellData();
+        netDiskCellData.fileName = "三国演义.txt";
+        netDiskCellData.fileType = "txt";
+        netDiskCellData.fileTypeImageRes = R.drawable.ic_file_type_word;
+        netDiskCellData.fileUrl = "http://www.test.com";
+        netDiskCellData.fileSize = 2 * 1024 * 1000;
+        richNetDiskView.setCellData(netDiskCellData);
+        mWRichEditorScrollView.insertNetDisk(richNetDiskView);
     }
 
     private void onListUnorderedClicked() {
@@ -345,7 +345,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (id == R.id.button_video) {
             onInsertVideoClicked();
         } else if (id == R.id.button_pan) {
-            onInsertPanClicked();
+            onInsertNetDiskClicked();
         } else if (id == R.id.button_export) {
             exportToHtml();
         } else if (id == R.id.button_import) {
