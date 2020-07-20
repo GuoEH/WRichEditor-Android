@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -121,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
+        test();
         if (mHasAddFirstEditor) {
             return;
         }
@@ -303,6 +305,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 
+    private void exportToJson() {
+        String out = ParserUtil.parseToJson(mWRichEditorScrollView).toString();
+        Log.d("json", "parseToJson : " + out);
+    }
+
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -340,7 +347,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (id == R.id.button_import) {
 //            importFromHtml();
         } else if (id == R.id.tv_export) {
-            exportToHtml();
+            exportToJson();
         } else if (id == R.id.button_add_editor_text) {
             onAddEditorTextClicked();
         }
@@ -366,6 +373,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 setButtonTextColor(entry.getValue(), false);
             }
         }
+    }
+
+    public void test() {
+
+    }
+
+    public static class Data {
+        public String url;
     }
 
 }

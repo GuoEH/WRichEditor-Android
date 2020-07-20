@@ -24,6 +24,10 @@ import cn.carbs.wricheditor.library.views.RichVideoView;
 
 public class ParserUtil {
 
+    public static final String P_JSON_PREV = "[";
+    public static final String P_JSON_POST = "]";
+
+
     public static final String P_TAG_PREV = "<p>";
     public static final String P_TAG_POST = "</p>";
 
@@ -66,7 +70,43 @@ public class ParserUtil {
         return out;
     }
 
-    //
+    public static StringBuilder parseToJson(WRichEditorScrollView scrollView) {
+
+        StringBuilder out = new StringBuilder();
+
+        if (scrollView == null || scrollView.getContainerView() == null) {
+            return out;
+        }
+
+        ViewGroup containerView = scrollView.getContainerView();
+        int childCount = containerView.getChildCount();
+        ArrayList<IRichCellData> dataList = new ArrayList<>(childCount);
+        for (int i = 0; i < childCount; i++) {
+            View childView = containerView.getChildAt(i);
+            if (childView instanceof IRichCellView) {
+                IRichCellView richCellView = (IRichCellView) childView;
+                IRichCellData iRichCellData = richCellView.getCellData();
+                if (iRichCellData == null) {
+                    continue;
+                }
+                dataList.add(iRichCellData);
+            }
+        }
+
+        int listCount = dataList.size();
+
+        out.append(P_JSON_PREV);
+        for (int j = 0; j < listCount; j++) {
+            out.append(dataList.get(j).toJson());
+            if (j < listCount - 1) {
+                out.append(",");
+            }
+        }
+        out.append(P_JSON_POST);
+        return out;
+    }
+
+    // TODO 由html转换回富文本编辑器比较复杂，因此先使用json的方式
     public static void inflateFromHtml(Context context, WRichEditorScrollView scrollView, String html, CustomViewProvider provider) {
         if (html == null || html.trim().length() == 0 || scrollView == null) {
             return;

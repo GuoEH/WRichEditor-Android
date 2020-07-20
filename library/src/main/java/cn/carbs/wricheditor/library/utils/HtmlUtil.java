@@ -22,27 +22,27 @@ public class HtmlUtil {
 
         if ((wrapper.mask & BoldStyleSpan.MASK) >> BoldStyleSpan.MASK_SHIFT == 1) {
             sbPrev.append(getHtmlTagStartForBold());
-            sbPost.append(getHtmlTagEndForBold());
+            sbPost.insert(0, getHtmlTagEndForBold());
         }
         if ((wrapper.mask & HeadlineSpan.MASK) >> HeadlineSpan.MASK_SHIFT == 1) {
             sbPrev.append(getHtmlTagStartForHeadline());
-            sbPost.append(getHtmlTagEndForHeadline());
+            sbPost.insert(0, getHtmlTagEndForHeadline());
         }
         if ((wrapper.mask & ItalicStyleSpan.MASK) >> ItalicStyleSpan.MASK_SHIFT == 1) {
             sbPrev.append(getHtmlTagStartForItalic());
-            sbPost.append(getHtmlTagEndForItalic());
+            sbPost.insert(0, getHtmlTagEndForItalic());
         }
         if ((wrapper.mask & LinkStyleSpan.MASK) >> LinkStyleSpan.MASK_SHIFT == 1) {
             sbPrev.append(getHtmlTagStartForLink(content));
-            sbPost.append(getHtmlTagEndForLink());
+            sbPost.insert(0, getHtmlTagEndForLink());
         }
         if ((wrapper.mask & StrikeThroughStyleSpan.MASK) >> StrikeThroughStyleSpan.MASK_SHIFT == 1) {
             sbPrev.append(getHtmlTagStartForStrikeThrough());
-            sbPost.append(getHtmlTagEndForStrikeThrough());
+            sbPost.insert(0, getHtmlTagEndForStrikeThrough());
         }
         if ((wrapper.mask & UnderlineStyleSpan.MASK) >> UnderlineStyleSpan.MASK_SHIFT == 1) {
             sbPrev.append(getHtmlTagStartForUnderline());
-            sbPost.append(getHtmlTagEndForUnderline());
+            sbPost.insert(0, getHtmlTagEndForUnderline());
         }
         return sbPrev.toString() + content + sbPost.toString();
     }

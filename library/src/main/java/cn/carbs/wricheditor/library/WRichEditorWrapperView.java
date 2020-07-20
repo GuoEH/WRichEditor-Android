@@ -114,6 +114,9 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
     @Override
     public void setCellData(RichCellData cellData) {
         mCellData = cellData;
+        if (mCellData != null) {
+            mCellData.setIRichCellView(this);
+        }
     }
 
     @Override

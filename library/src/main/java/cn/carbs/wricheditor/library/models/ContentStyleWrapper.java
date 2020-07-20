@@ -1,6 +1,7 @@
 package cn.carbs.wricheditor.library.models;
 
 import cn.carbs.wricheditor.library.utils.HtmlUtil;
+import cn.carbs.wricheditor.library.utils.JsonUtil;
 
 public class ContentStyleWrapper {
 
@@ -28,6 +29,10 @@ public class ContentStyleWrapper {
 
     public String toHtmlString() {
         return HtmlUtil.getHtmlByContentStyleWrapper(this);
+    }
+
+    public String toJsonString() {
+        return JsonUtil.getJsonStringByContentStyleWrapper(this);
     }
 
     public int getContentLength() {

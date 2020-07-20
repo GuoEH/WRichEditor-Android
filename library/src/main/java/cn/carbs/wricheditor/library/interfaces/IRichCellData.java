@@ -13,6 +13,14 @@ public interface IRichCellData {
 
     String toHtml();
 
-//    void fromHtml();
+    String toJson();
+
+    IRichCellData fromJson(String str);
+
+    void setCellDataJsonAdapter(ICellDataJsonAdapter adapter);
+
+    ICellDataJsonAdapter getCellDataJsonAdapter();
+
+    IRichCellData inflate(IRichCellData data);
 
 }

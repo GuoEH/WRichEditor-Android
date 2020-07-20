@@ -50,12 +50,18 @@ editor中在image后面添加横线有空行
 // TODO
 统一getType和getRichType
 
+// TODO
+转换为html时，将分号等转义
+
 // ========== EXPERIENCE ===========
 1. 锤子便签：在quote时，会自动将所有的字符进行一次缩小，颜色变浅
 2. 换肤、主题、文字颜色
 3. MarkDown 格式
 4. 锤子便签：待办事项
 5. RichVideoView RichAudioView
+6. 暂时不支持HTML标签
+7. 本地存储+本地还原
+8. HTML存储+HTML还原
 
 // ========== FIXED ===========
 1. 选中某段文字后，点击某个格式，只会响应此变化的格式，之前已经选中的格式不能带入

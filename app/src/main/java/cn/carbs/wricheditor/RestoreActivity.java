@@ -6,6 +6,9 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
 import cn.carbs.wricheditor.library.WRichEditorScrollView;
+import cn.carbs.wricheditor.library.interfaces.IRichCellView;
+import cn.carbs.wricheditor.library.providers.CustomViewProvider;
+import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.ParserUtil;
 
 public class RestoreActivity extends AppCompatActivity {
@@ -27,7 +30,12 @@ public class RestoreActivity extends AppCompatActivity {
 
         Log.d("tttt", "RestoreActivity mHTML : " + mHTML);
 
-        ParserUtil.inflateFromHtml(this, mWRichEditorScrollView, mHTML);
+        ParserUtil.inflateFromHtml(this, mWRichEditorScrollView, mHTML, new CustomViewProvider() {
+            @Override
+            public IRichCellView getCellViewByRichType(RichType richType) {
+                return null;
+            }
+        });
 
     }
 
