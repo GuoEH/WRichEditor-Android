@@ -11,6 +11,12 @@
 
     <dimen name="wrich_editor_padding_bottom">18dp</dimen>
 
+    <dimen name="wrich_editor_quote_margin_top">8dp</dimen>
+
+    <dimen name="wrich_editor_ordered_list_margin_top">11dp</dimen>
+
+    <dimen name="wrich_editor_unordered_list_margin_top">14dp</dimen>
+
     <!-- other -->
 
     <dimen name="wrich_editor_scroll_view_padding_top">16dp</dimen>

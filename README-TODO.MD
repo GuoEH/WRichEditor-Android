@@ -27,6 +27,7 @@ cursor delete 时，如果当前行有文字，是否需要合并？
 1. 使用HTML还原富文本
 2. 如果editor是第一个，删除时，应该将 LineFormat 删除掉
 3. ScrollView中的第0位置，添加自定义的HeaderView
+4. 有序无序列表间距与普通文字的行间距不同
 
 // ========== EXPERIENCE ===========
 1. 锤子便签：在quote时，会自动将所有的字符进行一次缩小，颜色变浅

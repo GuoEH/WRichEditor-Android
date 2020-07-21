@@ -6,6 +6,7 @@ import android.text.Editable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import cn.carbs.wricheditor.library.interfaces.IRichSpan;
 import cn.carbs.wricheditor.library.models.ContentStyleWrapper;
 import cn.carbs.wricheditor.library.models.cell.RichCellData;
 import cn.carbs.wricheditor.library.types.RichType;
+import cn.carbs.wricheditor.library.utils.CommonUtil;
 import cn.carbs.wricheditor.library.utils.CursorUtil;
 import cn.carbs.wricheditor.library.utils.SpanUtil;
 import cn.carbs.wricheditor.library.utils.TypeUtil;
@@ -307,6 +309,10 @@ public class WEditTextWrapperView extends RelativeLayout implements IRichCellVie
         if (open) {
             if (mIVForQuoteOrUnorderedList != null) {
                 mIVForQuoteOrUnorderedList.setImageResource(R.drawable.ic_quote_icon);
+                FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mIVForQuoteOrUnorderedList.getLayoutParams();
+                if (lp != null) {
+                    lp.topMargin = getContext().getResources().getDimensionPixelSize(R.dimen.wrich_editor_quote_margin_top);
+                }
                 mIVForQuoteOrUnorderedList.setVisibility(View.VISIBLE);
             }
             // TODO 添加一个字体的附加，比如颜色变浅，字体变小
@@ -326,6 +332,10 @@ public class WEditTextWrapperView extends RelativeLayout implements IRichCellVie
         if (open) {
             if (mIVForQuoteOrUnorderedList != null) {
                 mIVForQuoteOrUnorderedList.setImageResource(R.drawable.ic_list_unorder_icon);
+                FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mIVForQuoteOrUnorderedList.getLayoutParams();
+                if (lp != null) {
+                    lp.topMargin = getContext().getResources().getDimensionPixelSize(R.dimen.wrich_editor_unordered_list_margin_top);
+                }
                 mIVForQuoteOrUnorderedList.setVisibility(View.VISIBLE);
             }
         } else {
