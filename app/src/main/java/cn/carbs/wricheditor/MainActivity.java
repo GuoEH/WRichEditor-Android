@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -233,7 +232,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void onInsertImageClicked() {
         MyRichImageView richImageView = new MyRichImageView(MainActivity.this);
         ImageCellData imageCellData = new ImageCellData();
-        imageCellData.imageLocalUrl = "file://test";
         imageCellData.imageNetUrl = "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1284023848,585277846&fm=11&gp=0.jpg";
         richImageView.setCellData(imageCellData);
         mWRichEditorScrollView.insertImage(richImageView);
@@ -307,11 +305,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void exportToJson() {
         String out = ParserUtil.parseToJson(mWRichEditorScrollView).toString();
-        Log.d("json", "parseToJson : " + out);
         Intent intent = new Intent(this, RestoreActivity.class);
         intent.putExtra(RestoreActivity.JSON, out);
         startActivity(intent);
-
     }
 
     @Override

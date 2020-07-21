@@ -32,7 +32,7 @@ public class LineCellData extends BaseCellData {
 
     public String getJson(String type) {
         return "{" +
-                "\"" + JSON_KEY_TYPE + "\": " + "\"" + type + "\"," +
+                "\"" + JSON_KEY_TYPE + "\": " + "\"" + type + "\"" +
                 "}";
     }
 

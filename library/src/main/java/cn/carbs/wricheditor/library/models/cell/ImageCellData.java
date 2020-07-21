@@ -1,5 +1,7 @@
 package cn.carbs.wricheditor.library.models.cell;
 
+import android.util.Log;
+
 import org.json.JSONObject;
 
 import cn.carbs.wricheditor.library.interfaces.BaseCellData;
@@ -7,8 +9,6 @@ import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.types.RichType;
 
 public class ImageCellData extends BaseCellData {
-
-    public String imageLocalUrl;
 
     public String imageNetUrl;
 
@@ -37,8 +37,10 @@ public class ImageCellData extends BaseCellData {
         try {
             JSONObject data = json.getJSONObject(JSON_KEY_DATA);
             imageNetUrl = data.getString("url");
+            Log.d("ggg", "---> fromJson imageNetUrl : " + imageNetUrl);
         } catch (Exception e) {
             e.printStackTrace();
+            Log.d("ggg", "---> exception : e : " + e.getMessage());
         }
         return this;
     }
@@ -51,5 +53,12 @@ public class ImageCellData extends BaseCellData {
                 "\"url\": " + "\"" + url + "\"" +
                 "}" +
                 "}";
+    }
+
+    @Override
+    public String toString() {
+        return "ImageCellData{" +
+                "imageNetUrl='" + imageNetUrl + '\'' +
+                '}';
     }
 }

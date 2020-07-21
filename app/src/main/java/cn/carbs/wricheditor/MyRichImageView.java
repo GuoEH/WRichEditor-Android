@@ -143,7 +143,7 @@ public class MyRichImageView extends RichImageView {
         translationAnimator.start();
     }
 
-    private void loadImageUrl(String imageUrl) {
+    protected void loadImageUrl(String imageUrl) {
         mDataLoaded = true;
         Glide
                 .with(getContext())

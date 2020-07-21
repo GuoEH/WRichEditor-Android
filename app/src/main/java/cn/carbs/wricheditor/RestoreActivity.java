@@ -78,6 +78,11 @@ public class RestoreActivity extends AppCompatActivity {
         ParserUtil.inflateFromJson(this, mWRichEditorScrollView, mJSON, new CustomViewProvider() {
             @Override
             public IRichCellView getCellViewByRichType(RichType richType) {
+
+                if (richType == RichType.IMAGE) {
+                    return new MyRichImageView(RestoreActivity.this);
+                }
+
                 return null;
             }
         });

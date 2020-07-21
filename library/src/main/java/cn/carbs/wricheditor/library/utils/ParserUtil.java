@@ -20,6 +20,7 @@ import cn.carbs.wricheditor.library.interfaces.BaseCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.models.cell.AudioCellData;
+import cn.carbs.wricheditor.library.models.cell.ImageCellData;
 import cn.carbs.wricheditor.library.models.cell.LineCellData;
 import cn.carbs.wricheditor.library.models.cell.NetDiskCellData;
 import cn.carbs.wricheditor.library.models.cell.RichCellData;
@@ -209,7 +210,7 @@ public class ParserUtil {
                 cellData = new RichCellData();
             } else if (richType == RichType.IMAGE) {
                 Log.d("ggg", "getCellDataByJSONObject() 6");
-                cellData = new RichCellData();
+                cellData = new ImageCellData();
             } else if (richType == RichType.VIDEO) {
                 Log.d("ggg", "getCellDataByJSONObject() 7");
                 cellData = new VideoCellData();

@@ -45,7 +45,7 @@
         android:clipToPadding="false"
         android:paddingBottom="42dp"
         app:editorColor="#FF513930"
-        app:headlineTextSize="24dp"
+        app:headlineTextSize="18dp"
         app:linkColor="#FF2196F3"
         app:scrollBottomDeltaY="80dp" />
 

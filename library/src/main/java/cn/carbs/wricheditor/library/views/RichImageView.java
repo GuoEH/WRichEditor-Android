@@ -116,10 +116,25 @@ public class RichImageView extends RelativeLayout implements IRichCellView<Image
 
     }
 
-    // TODO
     @Override
     public void setCellData(ImageCellData cellData) {
         mCellData = cellData;
+        if (!mDataLoaded && getCellData() != null && getImageView() != null) {
+            loadImageUrl(getCellData().imageNetUrl);
+        }
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        if (!mDataLoaded && getCellData() != null && getImageView() != null) {
+            loadImageUrl(getCellData().imageNetUrl);
+        }
+    }
+
+    // sdk中为了避免引入第三方图片加载框架,因此采用了空实现
+    protected void loadImageUrl(String imageUrl) {
+
     }
 
     @Override

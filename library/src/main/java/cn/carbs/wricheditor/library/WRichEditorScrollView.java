@@ -72,7 +72,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
         setFillViewport(true);
         inflate(context, R.layout.wricheditor_layout_main_view, this);
         mLinearLayout = findViewById(R.id.wricheditor_main_view_container);
-        RichEditorConfig.sHeadlineTextSize = ViewUtil.dp2px(getContext(), 24);
+        RichEditorConfig.sHeadlineTextSize = ViewUtil.dp2px(getContext(), 18);
         mLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
