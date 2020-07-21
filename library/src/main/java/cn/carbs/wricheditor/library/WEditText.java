@@ -41,7 +41,7 @@ public class WEditText extends EditText {
 
     public static final String TAG = WEditText.class.getSimpleName();
 
-    private WRichEditorScrollView mWRichEditorScrollView;
+    private WRichEditor mWRichEditor;
 
     private OnEditorFocusChangedListener mOnEditorFocusChangedListener;
 
@@ -78,7 +78,7 @@ public class WEditText extends EditText {
             return;
         }
 
-        if (mWRichEditorScrollView == null) {
+        if (mWRichEditor == null) {
             return;
         }
         LogUtil.d(TAG, "WRichEditor onTextChanged hint : " + getHint()
@@ -90,7 +90,7 @@ public class WEditText extends EditText {
                 + ", lengthAfter : " + lengthAfter);
         // 回调返回的 text 和 getEditableText() 不一定一致，SpannableStringBuilder中的textWatcher的内置问题
         if (getParent() != null && getEditableText().toString().equals(text.toString())) {
-            SpanUtil.setSpan(mWRichEditorScrollView.mRichTypes, text, getEditableText(), start, start + lengthAfter);
+            SpanUtil.setSpan(mWRichEditor.mRichTypes, text, getEditableText(), start, start + lengthAfter);
         }
     }
 
@@ -112,11 +112,11 @@ public class WEditText extends EditText {
                 // 强设置失效，格式改为顺应上下文
                 RichEditorConfig.sStrongSet = false;
             }
-            if (hasFocus() && mWRichEditorScrollView != null) {
+            if (hasFocus() && mWRichEditor != null) {
                 Log.d("www", "111");
                 Set<RichType> currRichTypes = null;
                 // todo 将上次的 RichTypes 存储到 ScrollView 中
-                Set<RichType> prevRichTypes = mWRichEditorScrollView.getRichTypes();
+                Set<RichType> prevRichTypes = mWRichEditor.getRichTypes();
                 if (selEnd == 0) {
                     Log.d("www", "112");
                     // 光标处于0位置
@@ -138,7 +138,7 @@ public class WEditText extends EditText {
                     currRichTypes = getRichTypesByTextContextOrStrongSet(prevRichTypes, editableText, selEnd - 1);
                 }
                 // TODO
-                OnRichTypeChangedListener typeChangedListener = mWRichEditorScrollView.getOnRichTypeChangedListener();
+                OnRichTypeChangedListener typeChangedListener = mWRichEditor.getOnRichTypeChangedListener();
                 if (typeChangedListener != null) {
                     // TODO api设计是否需要优化？考虑到光标移动的情况，应该不需要
                     Log.d("www", "888");
@@ -194,11 +194,11 @@ public class WEditText extends EditText {
         if (mOnEditorFocusChangedListener != null) {
             mOnEditorFocusChangedListener.onEditorFocusChanged(mWrapperView, focused);
         }
-        if (focused && mWRichEditorScrollView != null) {
+        if (focused && mWRichEditor != null) {
 //            CommonUtil.showSoftKeyboard(getContext(), this);
             Set<RichType> currRichTypes = null;
             // todo 将上次的 RichTypes 存储到 ScrollView 中
-            Set<RichType> prevRichTypes = mWRichEditorScrollView.getRichTypes();
+            Set<RichType> prevRichTypes = mWRichEditor.getRichTypes();
             int selEnd = getSelectionEnd();
 
             Editable editableText = getEditableText();
@@ -224,7 +224,7 @@ public class WEditText extends EditText {
                 currRichTypes = getRichTypesByTextContextOrStrongSet(prevRichTypes, editableText, selEnd - 1);
             }
             // TODO
-            OnRichTypeChangedListener typeChangedListener = mWRichEditorScrollView.getOnRichTypeChangedListener();
+            OnRichTypeChangedListener typeChangedListener = mWRichEditor.getOnRichTypeChangedListener();
             if (typeChangedListener != null) {
                 // TODO api设计是否需要优化？考虑到光标移动的情况，应该不需要
                 if (currRichTypes == null) {
@@ -235,7 +235,7 @@ public class WEditText extends EditText {
                 }
                 typeChangedListener.onRichTypeChanged(prevRichTypes, currRichTypes);
             }
-            TypeUtil.removeAllResourceTypeFocus(mWRichEditorScrollView);
+            TypeUtil.removeAllResourceTypeFocus(mWRichEditor);
         }
     }
 
@@ -249,12 +249,12 @@ public class WEditText extends EditText {
         if (keyCode == KeyEvent.KEYCODE_ENTER) {
             Log.d("www", "onKeyUp KEYCODE_ENTER");
             // 响应 keycode，如果有 headline 类型的 RichType
-            if (mWRichEditorScrollView != null) {
-                Set<RichType> richTypes = mWRichEditorScrollView.getRichTypes();
+            if (mWRichEditor != null) {
+                Set<RichType> richTypes = mWRichEditor.getRichTypes();
                 if (richTypes != null) {
                     boolean changed = TypeUtil.removeCertainRichType(richTypes, RichType.HEADLINE);
                     if (changed) {
-                        OnRichTypeChangedListener typeChangedListener = mWRichEditorScrollView.getOnRichTypeChangedListener();
+                        OnRichTypeChangedListener typeChangedListener = mWRichEditor.getOnRichTypeChangedListener();
                         if (typeChangedListener != null) {
                             // TODO api设计是否需要优化？考虑到光标移动的情况，应该不需要
                             typeChangedListener.onRichTypeChanged(TypeUtil.assembleRichTypes(richTypes, RichType.HEADLINE), richTypes);
@@ -262,7 +262,7 @@ public class WEditText extends EditText {
                     }
                 }
             }
-            if (mWRichEditorScrollView != null && mWrapperView != null) {
+            if (mWRichEditor != null && mWrapperView != null) {
                 RichType richType = mWrapperView.getRichType();
                 if (richType == RichType.LIST_UNORDERED) {
                     // 如果是无序列表
@@ -278,10 +278,10 @@ public class WEditText extends EditText {
 
                         spanPartsOutput.clear();
                         String textWithoutFormatItemEndRight = SpanUtil.getSpannableStringInclusiveExclusive(editable, cursorEnd, editable.length(), spanPartsOutput);
-                        WEditTextWrapperView richEditorWrapperView = mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(mWrapperView, RichType.LIST_UNORDERED, true);
+                        WEditTextWrapperView richEditorWrapperView = mWRichEditor.insertAWRichEditorWrapperWithRichType(mWrapperView, RichType.LIST_UNORDERED, true);
                         SpanUtil.setSpannableInclusiveExclusive(richEditorWrapperView.getWRichEditor(), textWithoutFormatItemEndRight, spanPartsOutput, -cursorEnd);
                     } else {
-                        mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(mWrapperView, RichType.LIST_UNORDERED, true);
+                        mWRichEditor.insertAWRichEditorWrapperWithRichType(mWrapperView, RichType.LIST_UNORDERED, true);
                     }
                     return true;
                 } else if (richType == RichType.LIST_ORDERED) {
@@ -298,12 +298,12 @@ public class WEditText extends EditText {
 
                         spanPartsOutput.clear();
                         String textWithoutFormatItemEndRight = SpanUtil.getSpannableStringInclusiveExclusive(editable, cursorEnd, editable.length(), spanPartsOutput);
-                        WEditTextWrapperView richEditorWrapperView = mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(mWrapperView, RichType.LIST_ORDERED, true);
+                        WEditTextWrapperView richEditorWrapperView = mWRichEditor.insertAWRichEditorWrapperWithRichType(mWrapperView, RichType.LIST_ORDERED, true);
                         SpanUtil.setSpannableInclusiveExclusive(richEditorWrapperView.getWRichEditor(), textWithoutFormatItemEndRight, spanPartsOutput, -cursorEnd);
                     } else {
-                        mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(mWrapperView, RichType.LIST_ORDERED, true);
+                        mWRichEditor.insertAWRichEditorWrapperWithRichType(mWrapperView, RichType.LIST_ORDERED, true);
                     }
-                    OrderListUtil.updateOrderListNumbersAfterViewsChanged(mWRichEditorScrollView.getContainerView());
+                    OrderListUtil.updateOrderListNumbersAfterViewsChanged(mWRichEditor.getContainerView());
                     return true;
                 }
             }
@@ -318,11 +318,11 @@ public class WEditText extends EditText {
             int selectionStart = getSelectionStart();
             int selectionEnd = getSelectionEnd();
             if (selectionStart == selectionEnd && selectionStart == 0) {
-                if (mWRichEditorScrollView != null && mWrapperView != null) {
-                    int index = mWRichEditorScrollView.getCellViewIndex(mWrapperView);
+                if (mWRichEditor != null && mWrapperView != null) {
+                    int index = mWRichEditor.getCellViewIndex(mWrapperView);
                     if (index > 0) {
                         // 查看上一个是不是WRichEditor，
-                        IRichCellView iRichCellView = mWRichEditorScrollView.getCellViewByIndex(index - 1);
+                        IRichCellView iRichCellView = mWRichEditor.getCellViewByIndex(index - 1);
 
                         if (iRichCellView != null) {
                             RichType richType = iRichCellView.getRichType();
@@ -358,7 +358,7 @@ public class WEditText extends EditText {
 //                                    if (needAddWRichEditorIfDeleted) {
                                         // 依然删除，将焦点至于上面的resource上
                                         // 判断最后一个view是否为NONE
-                                        mWRichEditorScrollView.addNoneTypeTailOptionally();
+                                        mWRichEditor.addNoneTypeTailOptionally();
 //                                    } else {
                                         // 删除，并将焦点至于上面的resource上
 
@@ -382,7 +382,7 @@ public class WEditText extends EditText {
 //                                    } else {
                                         // 删除，并将焦点至于上面的LineFormat上
 //                                    }
-                                    mWRichEditorScrollView.addNoneTypeTailOptionally();
+                                    mWRichEditor.addNoneTypeTailOptionally();
                                     removeFocusToLineFormatTypeAbove(index - 1);
                                 } else {
                                     //  1.2 如果不为空，则将焦点至于上面的LineFormat上
@@ -395,7 +395,7 @@ public class WEditText extends EditText {
             }
         } else if (keyCode == KeyEvent.KEYCODE_ENTER) {
             Log.d("www", "onKeyDown KEYCODE_ENTER");
-            if (mWRichEditorScrollView != null && mWrapperView != null) {
+            if (mWRichEditor != null && mWrapperView != null) {
                 RichType richType = mWrapperView.getRichType();
                 if (richType == RichType.LIST_UNORDERED) {
                     // 如果是无序列表，KeyDown的时候不响应enter
@@ -410,17 +410,17 @@ public class WEditText extends EditText {
     }
 
     private void removeFocusToResourceTypeAbove(int targetIndex) {
-        if (mWRichEditorScrollView != null && mWRichEditorScrollView.getContainerView() != null) {
+        if (mWRichEditor != null && mWRichEditor.getContainerView() != null) {
             CommonUtil.hideSoftKeyboard(getContext(), this);
             Log.d("clearfocus", "clearFocus() 4");
             clearFocus();
-            TypeUtil.selectOnlyOneResourceType(mWRichEditorScrollView, targetIndex);
+            TypeUtil.selectOnlyOneResourceType(mWRichEditor, targetIndex);
         }
     }
 
     private void removeFocusToLineFormatTypeAbove(int targetIndex) {
-        if (mWRichEditorScrollView != null) {
-            IRichCellView cellView = mWRichEditorScrollView.getCellViewByIndex(targetIndex);
+        if (mWRichEditor != null) {
+            IRichCellView cellView = mWRichEditor.getCellViewByIndex(targetIndex);
             if (cellView != null) {
                 cellView.setSelectMode(true);
             }
@@ -432,8 +432,8 @@ public class WEditText extends EditText {
     }
 
 
-    public void setWRichEditorScrollView(WRichEditorScrollView wRichEditorScrollView) {
-        mWRichEditorScrollView = wRichEditorScrollView;
+    public void setWRichEditorScrollView(WRichEditor wRichEditor) {
+        mWRichEditor = wRichEditor;
     }
 
     public void setEditorFocusChangedListener(OnEditorFocusChangedListener listener) {
@@ -456,15 +456,15 @@ public class WEditText extends EditText {
             // TODO 后面输入的字体将按照对应的设定字体进行
             // 当前没有选中字体
             if (richType == RichType.HEADLINE) {
-                updateSpanUI(richType, open, extra, selectionStart, selectionEnd, mWRichEditorScrollView.getRichTypes());
+                updateSpanUI(richType, open, extra, selectionStart, selectionEnd, mWRichEditor.getRichTypes());
             }
             return;
         } else {
-            if (mWRichEditorScrollView == null) {
+            if (mWRichEditor == null) {
                 return;
             }
             // 将选中的部分进行更新，同时更新此View对应的
-            updateSpanUI(richType, open, extra, selectionStart, selectionEnd, mWRichEditorScrollView.getRichTypes());
+            updateSpanUI(richType, open, extra, selectionStart, selectionEnd, mWRichEditor.getRichTypes());
         }
     }
 

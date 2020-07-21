@@ -37,9 +37,9 @@ import cn.carbs.wricheditor.library.views.RichNetDiskView;
 /**
  * 主视图，继承自ScrollView，富文本通过向其中不断添加子View实现
  */
-public class WRichEditorScrollView extends ScrollView implements OnEditorFocusChangedListener {
+public class WRichEditor extends ScrollView implements OnEditorFocusChangedListener {
 
-    public static final String TAG = WRichEditorScrollView.class.getSimpleName();
+    public static final String TAG = WRichEditor.class.getSimpleName();
 
     public Set<RichType> mRichTypes = new HashSet<>();
 
@@ -49,18 +49,18 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
 
     private IRichCellView mLastFocusedRichCellView;
 
-    public WRichEditorScrollView(Context context) {
+    public WRichEditor(Context context) {
         super(context);
         init(context);
     }
 
-    public WRichEditorScrollView(Context context, AttributeSet attrs) {
+    public WRichEditor(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
         initAttrs(attrs);
     }
 
-    public WRichEditorScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public WRichEditor(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
         initAttrs(attrs);
@@ -89,12 +89,12 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
     }
 
     private void initAttrs(AttributeSet attrs) {
-        TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.WRichEditorScrollView);
-        RichEditorConfig.sLinkColor = array.getColor(R.styleable.WRichEditorScrollView_linkColor, RichEditorConfig.sLinkColor);
-        RichEditorConfig.sLinkUnderline = array.getBoolean(R.styleable.WRichEditorScrollView_linkUnderline, RichEditorConfig.sLinkUnderline);
-        RichEditorConfig.sHeadlineTextSize = array.getDimensionPixelSize(R.styleable.WRichEditorScrollView_headlineTextSize, RichEditorConfig.sHeadlineTextSize);
-        RichEditorConfig.sEditorColor = array.getColor(R.styleable.WRichEditorScrollView_editorColor, RichEditorConfig.sEditorColor);
-        RichEditorConfig.sScrollBottomDeltaY = array.getDimensionPixelSize(R.styleable.WRichEditorScrollView_scrollBottomDeltaY, RichEditorConfig.sScrollBottomDeltaY);
+        TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.WRichEditor);
+        RichEditorConfig.sLinkColor = array.getColor(R.styleable.WRichEditor_linkColor, RichEditorConfig.sLinkColor);
+        RichEditorConfig.sLinkUnderline = array.getBoolean(R.styleable.WRichEditor_linkUnderline, RichEditorConfig.sLinkUnderline);
+        RichEditorConfig.sHeadlineTextSize = array.getDimensionPixelSize(R.styleable.WRichEditor_headlineTextSize, RichEditorConfig.sHeadlineTextSize);
+        RichEditorConfig.sEditorColor = array.getColor(R.styleable.WRichEditor_editorColor, RichEditorConfig.sEditorColor);
+        RichEditorConfig.sScrollBottomDeltaY = array.getDimensionPixelSize(R.styleable.WRichEditor_scrollBottomDeltaY, RichEditorConfig.sScrollBottomDeltaY);
         array.recycle();
     }
 
@@ -1394,7 +1394,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
                 if (needTansY > 0) {
                     // 说明被隐藏
                     Log.d("wangwang", "!!!遮挡了 needTansY : " + needTansY);
-                    WRichEditorScrollView.this.smoothScrollBy(0, needTansY);
+                    WRichEditor.this.smoothScrollBy(0, needTansY);
                 }
             }
         });

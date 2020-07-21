@@ -33,7 +33,7 @@ import cn.carbs.wricheditor.library.utils.TypeUtil;
 @SuppressLint("AppCompatCustomView")
 public class WEditTextWrapperView extends RelativeLayout implements IRichCellView<RichCellData> {
 
-    private WRichEditorScrollView mWRichEditorScrollView;
+    private WRichEditor mWRichEditor;
 
     private RichCellData mCellData;
 
@@ -77,8 +77,8 @@ public class WEditTextWrapperView extends RelativeLayout implements IRichCellVie
         mWEditText = findViewById(R.id.w_rich_editor);
         mWEditText.setWRichEditorWrapperView(this);
         mWEditText.setContentDescription(CursorUtil.getNewContentDescriptionForWRichEditor());
-        if (mWRichEditorScrollView != null) {
-            mWEditText.setWRichEditorScrollView(mWRichEditorScrollView);
+        if (mWRichEditor != null) {
+            mWEditText.setWRichEditorScrollView(mWRichEditor);
         }
         Log.d("wangaa", "RichEditorConfig.sEditorColor : " + Integer.toHexString(RichEditorConfig.sEditorColor));
         mWEditText.setTextColor(RichEditorConfig.sEditorColor);
@@ -103,11 +103,11 @@ public class WEditTextWrapperView extends RelativeLayout implements IRichCellVie
     }
 
     @Override
-    public void setWRichEditorScrollView(WRichEditorScrollView wRichEditorScrollView) {
-        mWRichEditorScrollView = wRichEditorScrollView;
-        Log.d("ppp", "editor setWRichEditorView mWRichEditorView == null ? " + (mWRichEditorScrollView == null));
+    public void setWRichEditorScrollView(WRichEditor wRichEditor) {
+        mWRichEditor = wRichEditor;
+        Log.d("ppp", "editor setWRichEditorView mWRichEditorView == null ? " + (mWRichEditor == null));
         if (mWEditText != null) {
-            mWEditText.setWRichEditorScrollView(mWRichEditorScrollView);
+            mWEditText.setWRichEditorScrollView(mWRichEditor);
         }
     }
 
@@ -343,12 +343,12 @@ public class WEditTextWrapperView extends RelativeLayout implements IRichCellVie
     }
 
     public void onResourceRichTypeChanged(RichType selectedResourceType) {
-        if (mWRichEditorScrollView == null) {
+        if (mWRichEditor == null) {
             return;
         }
 
-        Set<RichType> prevRichTypes = mWRichEditorScrollView.getRichTypes();
-        OnRichTypeChangedListener typeChangedListener = mWRichEditorScrollView.getOnRichTypeChangedListener();
+        Set<RichType> prevRichTypes = mWRichEditor.getRichTypes();
+        OnRichTypeChangedListener typeChangedListener = mWRichEditor.getOnRichTypeChangedListener();
 
         Set<RichType> currRichTypes = new HashSet<>(4);
 

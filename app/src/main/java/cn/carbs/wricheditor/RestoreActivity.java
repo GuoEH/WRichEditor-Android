@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import cn.carbs.wricheditor.library.WRichEditorScrollView;
+import cn.carbs.wricheditor.library.WRichEditor;
 import cn.carbs.wricheditor.library.WEditTextWrapperView;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.providers.CustomViewProvider;
@@ -22,7 +22,7 @@ public class RestoreActivity extends AppCompatActivity {
 
     public static final String JSON = "JSON";
 
-    private WRichEditorScrollView mWRichEditorScrollView;
+    private WRichEditor mWRichEditor;
 
     private String mHTML;
 
@@ -38,7 +38,7 @@ public class RestoreActivity extends AppCompatActivity {
         setContentView(R.layout.activity_restore);
 
         mTVTitle = findViewById(R.id.tv_title);
-        mWRichEditorScrollView = findViewById(R.id.wrich_editor_view);
+        mWRichEditor = findViewById(R.id.wrich_editor_view);
 
         mHTML = getIntent().getStringExtra(HTML);
         mJSON = getIntent().getStringExtra(JSON);
@@ -58,7 +58,7 @@ public class RestoreActivity extends AppCompatActivity {
         mTVTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WEditTextWrapperView wEditTextWrapperView = (WEditTextWrapperView) mWRichEditorScrollView.getContainerView().getChildAt(0);
+                WEditTextWrapperView wEditTextWrapperView = (WEditTextWrapperView) mWRichEditor.getContainerView().getChildAt(0);
                 Editable editable = wEditTextWrapperView.getWRichEditor().getEditableText();
                 mTVTest.setText(editable);
             }
@@ -66,7 +66,7 @@ public class RestoreActivity extends AppCompatActivity {
     }
 
     private void inflateByHtml() {
-        ParserUtil.inflateFromHtml(this, mWRichEditorScrollView, mHTML, new CustomViewProvider() {
+        ParserUtil.inflateFromHtml(this, mWRichEditor, mHTML, new CustomViewProvider() {
             @Override
             public IRichCellView getCellViewByRichType(RichType richType) {
                 return null;
@@ -75,7 +75,7 @@ public class RestoreActivity extends AppCompatActivity {
     }
 
     private void inflateByJson() {
-        ParserUtil.inflateFromJson(this, mWRichEditorScrollView, mJSON, new CustomViewProvider() {
+        ParserUtil.inflateFromJson(this, mWRichEditor, mJSON, new CustomViewProvider() {
             @Override
             public IRichCellView getCellViewByRichType(RichType richType) {
 

@@ -13,7 +13,7 @@ import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import cn.carbs.wricheditor.library.WRichEditorScrollView;
+import cn.carbs.wricheditor.library.WRichEditor;
 import cn.carbs.wricheditor.library.WEditTextWrapperView;
 import cn.carbs.wricheditor.library.interfaces.BaseCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellData;
@@ -50,7 +50,7 @@ public class ParserUtil {
     public static final String PATTERN_DIV_RICH_TYPE_STR = "<div richType=\".*?\">";
     public static final Pattern PATTERN_DIV_RICH_TYPE = Pattern.compile(PATTERN_DIV_RICH_TYPE_STR);
 
-    public static StringBuilder parseToHtml(WRichEditorScrollView scrollView) {
+    public static StringBuilder parseToHtml(WRichEditor scrollView) {
 
         StringBuilder out = new StringBuilder();
 
@@ -80,7 +80,7 @@ public class ParserUtil {
         return out;
     }
 
-    public static StringBuilder parseToJson(WRichEditorScrollView scrollView) {
+    public static StringBuilder parseToJson(WRichEditor scrollView) {
 
         StringBuilder out = new StringBuilder();
 
@@ -117,7 +117,7 @@ public class ParserUtil {
     }
 
     // TODO 由html转换回富文本编辑器比较复杂，因此先使用json的方式
-    public static void inflateFromHtml(Context context, WRichEditorScrollView scrollView, String html, CustomViewProvider provider) {
+    public static void inflateFromHtml(Context context, WRichEditor scrollView, String html, CustomViewProvider provider) {
         if (html == null || html.trim().length() == 0 || scrollView == null) {
             return;
         }
@@ -152,7 +152,7 @@ public class ParserUtil {
     }
 
     // TODO 由html转换回富文本编辑器比较复杂，因此先使用json的方式
-    public static void inflateFromJson(Context context, WRichEditorScrollView scrollView, String json, CustomViewProvider provider) {
+    public static void inflateFromJson(Context context, WRichEditor scrollView, String json, CustomViewProvider provider) {
         if (json == null || json.trim().length() == 0 || scrollView == null) {
             return;
         }

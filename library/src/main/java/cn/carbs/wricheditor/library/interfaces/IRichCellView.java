@@ -2,7 +2,7 @@ package cn.carbs.wricheditor.library.interfaces;
 
 import android.view.View;
 
-import cn.carbs.wricheditor.library.WRichEditorScrollView;
+import cn.carbs.wricheditor.library.WRichEditor;
 import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
 import cn.carbs.wricheditor.library.types.RichType;
 
@@ -13,7 +13,7 @@ public interface IRichCellView <T extends IRichCellData> {
 
     View getView();
 
-    void setWRichEditorScrollView(WRichEditorScrollView wRichEditorScrollView);
+    void setWRichEditorScrollView(WRichEditor wRichEditor);
 
     void  setCellData(T cellData);
 

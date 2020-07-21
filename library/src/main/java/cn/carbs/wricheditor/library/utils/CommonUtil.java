@@ -15,7 +15,7 @@ import android.view.ViewConfiguration;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
-import cn.carbs.wricheditor.library.WRichEditorScrollView;
+import cn.carbs.wricheditor.library.WRichEditor;
 import cn.carbs.wricheditor.library.WEditTextWrapperView;
 
 public class CommonUtil {
@@ -47,10 +47,10 @@ public class CommonUtil {
         return imm.isActive();//isOpen若返回true，则表示输入法打开
     }
 
-    public static void removeAllEditorFocus(Context context, WRichEditorScrollView wRichEditorScrollView) {
-        if (wRichEditorScrollView != null) {
+    public static void removeAllEditorFocus(Context context, WRichEditor wRichEditor) {
+        if (wRichEditor != null) {
             int[] index = new int[1];
-            WEditTextWrapperView focusedWrapperView = wRichEditorScrollView.findCurrentOrRecentFocusedRichEditorWrapperView(index);
+            WEditTextWrapperView focusedWrapperView = wRichEditor.findCurrentOrRecentFocusedRichEditorWrapperView(index);
             if (focusedWrapperView != null && focusedWrapperView.getWRichEditor() != null) {
                 CommonUtil.hideSoftKeyboard(context, focusedWrapperView.getWRichEditor());
                 focusedWrapperView.getWRichEditor().clearFocus();

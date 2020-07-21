@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import cn.carbs.wricheditor.library.WRichEditorScrollView;
+import cn.carbs.wricheditor.library.WRichEditor;
 import cn.carbs.wricheditor.library.WEditTextWrapperView;
 import cn.carbs.wricheditor.library.configures.RichEditorConfig;
 import cn.carbs.wricheditor.library.constants.RichTypeConstants;
@@ -106,7 +106,7 @@ public class TypeUtil {
         return null;
     }
 
-    public static void selectOnlyOneResourceType(WRichEditorScrollView scrollView, View currentSelectedView) {
+    public static void selectOnlyOneResourceType(WRichEditor scrollView, View currentSelectedView) {
         if (scrollView == null) {
             return;
         }
@@ -127,7 +127,7 @@ public class TypeUtil {
         }
     }
 
-    public static void selectOnlyOneResourceType(WRichEditorScrollView scrollView, int currentSelectedIndex) {
+    public static void selectOnlyOneResourceType(WRichEditor scrollView, int currentSelectedIndex) {
         if (scrollView == null) {
             return;
         }
@@ -152,7 +152,7 @@ public class TypeUtil {
         }
     }
 
-    public static void removeAllResourceTypeFocus(WRichEditorScrollView scrollView) {
+    public static void removeAllResourceTypeFocus(WRichEditor scrollView) {
         if (scrollView == null) {
             return;
         }

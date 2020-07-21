@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 import androidx.annotation.Nullable;
 
 import cn.carbs.wricheditor.library.R;
-import cn.carbs.wricheditor.library.WRichEditorScrollView;
+import cn.carbs.wricheditor.library.WRichEditor;
 import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.models.cell.VideoCellData;
@@ -25,7 +25,7 @@ public class RichVideoView extends RelativeLayout implements IRichCellView<Video
 
     protected boolean mSelectMode;
 
-    protected WRichEditorScrollView mWRichEditorScrollView;
+    protected WRichEditor mWRichEditor;
 
     protected View mVContainer;
 
@@ -75,10 +75,10 @@ public class RichVideoView extends RelativeLayout implements IRichCellView<Video
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.wricheditor_rich_video_view_container) {
-            TypeUtil.selectOnlyOneResourceType(mWRichEditorScrollView, this);
-            CommonUtil.removeAllEditorFocus(getContext(), mWRichEditorScrollView);
+            TypeUtil.selectOnlyOneResourceType(mWRichEditor, this);
+            CommonUtil.removeAllEditorFocus(getContext(), mWRichEditor);
         } else if (id == R.id.iv_delete) {
-            if (mWRichEditorScrollView != null) {
+            if (mWRichEditor != null) {
                 ViewParent parent = getParent();
                 if (parent != null && parent instanceof ViewGroup) {
                     Log.d("clearfocus", "clearFocus() 6");
@@ -87,8 +87,8 @@ public class RichVideoView extends RelativeLayout implements IRichCellView<Video
                 }
             }
         } else if (v == this) {
-            TypeUtil.selectOnlyOneResourceType(mWRichEditorScrollView, this);
-            CommonUtil.removeAllEditorFocus(getContext(), mWRichEditorScrollView);
+            TypeUtil.selectOnlyOneResourceType(mWRichEditor, this);
+            CommonUtil.removeAllEditorFocus(getContext(), mWRichEditor);
         }
     }
 
@@ -105,8 +105,8 @@ public class RichVideoView extends RelativeLayout implements IRichCellView<Video
     }
 
     @Override
-    public void setWRichEditorScrollView(WRichEditorScrollView wRichEditorScrollView) {
-        mWRichEditorScrollView = wRichEditorScrollView;
+    public void setWRichEditorScrollView(WRichEditor wRichEditor) {
+        mWRichEditor = wRichEditor;
     }
 
     @Override

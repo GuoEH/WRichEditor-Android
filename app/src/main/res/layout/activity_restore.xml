@@ -23,7 +23,7 @@
 
     </RelativeLayout>
 
-    <cn.carbs.wricheditor.library.WRichEditorScrollView
+    <cn.carbs.wricheditor.library.WRichEditor
         android:id="@+id/wrich_editor_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
