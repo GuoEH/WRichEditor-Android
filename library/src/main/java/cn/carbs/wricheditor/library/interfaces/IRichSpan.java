@@ -8,8 +8,4 @@ public interface IRichSpan {
 
     int getMask();
 
-    String getHtmlTagStart();
-
-    String getHtmlTagEnd();
-
 }

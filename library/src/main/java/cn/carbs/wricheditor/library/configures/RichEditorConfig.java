@@ -12,4 +12,6 @@ public class RichEditorConfig {
 
     public static int sScrollBottomDeltaY = 0;
 
+    public static boolean sStrongSet = false;
+
 }

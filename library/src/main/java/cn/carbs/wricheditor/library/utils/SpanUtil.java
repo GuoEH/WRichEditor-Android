@@ -2,7 +2,6 @@ package cn.carbs.wricheditor.library.utils;
 
 import android.text.Editable;
 import android.text.Spanned;
-import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -26,6 +25,7 @@ import cn.carbs.wricheditor.library.types.RichType;
 public class SpanUtil {
 
     public static final String TAG = SpanUtil.class.getSimpleName();
+
     // SPAN_INCLUSIVE_EXCLUSIVE
     public static void setSpan(RichType richType, boolean open, Object extra, Editable editable, Set<RichType> richTypes, int spanStart, int spanEnd) {
         if (editable == null || spanStart < 0 || spanEnd < 0 || spanStart > spanEnd) {
@@ -133,11 +133,6 @@ public class SpanUtil {
             }
         }
         return retRichTypes;
-    }
-
-    // 删除其中一个cell时，检查是否能够merge
-    public static void mergeTwoRichCellView() {
-
     }
 
     public static boolean checkIfTwoRichCellViewCanMerge(IRichCellView cellViewA, IRichCellView cellViewB) {

@@ -4,6 +4,7 @@ import cn.carbs.wricheditor.library.constants.RichTypeConstants;
 
 public enum RichType {
 
+    // wrapper 的默认状态,非quote orderList unorderedList
     NONE(true, RichTypeConstants.GROUP_CHAR_FORMAT),
 
     // 粗体

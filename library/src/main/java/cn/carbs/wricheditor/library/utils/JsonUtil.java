@@ -13,8 +13,6 @@ public class JsonUtil {
         if (wrapper == null || wrapper.getContentLength() == 0) {
             return "";
         }
-        // TODO
-
         String string = wrapper.contentBuilder.toString();
         string = string.replaceAll("\"", "\\\\\"");
 

@@ -31,7 +31,6 @@ public class CommonUtil {
     }
 
     public static void showSoftKeyboard(Context context, View view) {
-        Log.d("wangwang", "showSoftKeyboard");
         if (view == null) {
             return;
         }
@@ -82,11 +81,6 @@ public class CommonUtil {
         } else {
             return 0;
         }
-    }
-
-    public static int px2dp(Context context, float pxValue) {
-        float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (pxValue / scale + 0.5f);
     }
 
     // 获取整个手机的屏幕高度
@@ -219,9 +213,17 @@ public class CommonUtil {
         return height;
     }
 
-
     public static int getScreenHeight(Activity activity) {
         return activity.getWindowManager().getDefaultDisplay().getHeight() + getNavigationBarHeight(activity);
     }
 
+    public static int dp2px(Context context, float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
+
+    public static int px2dp(Context context, float pxValue) {
+        float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
+    }
 }

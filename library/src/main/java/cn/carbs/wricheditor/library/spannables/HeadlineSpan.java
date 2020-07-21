@@ -37,13 +37,4 @@ public class HeadlineSpan extends AbsoluteSizeSpan implements IRichSpan {
         return MASK;
     }
 
-    @Override
-    public String getHtmlTagStart() {
-        return HtmlUtil.getHtmlTagStartForHeadline();
-    }
-
-    @Override
-    public String getHtmlTagEnd() {
-        return HtmlUtil.getHtmlTagEndForHeadline();
-    }
 }

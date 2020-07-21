@@ -19,6 +19,7 @@ import java.util.Set;
 
 import cn.carbs.wricheditor.library.callbacks.OnEditorFocusChangedListener;
 import cn.carbs.wricheditor.library.callbacks.OnRichTypeChangedListener;
+import cn.carbs.wricheditor.library.configures.RichEditorConfig;
 import cn.carbs.wricheditor.library.constants.RichTypeConstants;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.interfaces.IRichSpan;
@@ -29,7 +30,6 @@ import cn.carbs.wricheditor.library.utils.LogUtil;
 import cn.carbs.wricheditor.library.utils.OrderListUtil;
 import cn.carbs.wricheditor.library.utils.CommonUtil;
 import cn.carbs.wricheditor.library.utils.SpanUtil;
-import cn.carbs.wricheditor.library.utils.StrategyUtil;
 import cn.carbs.wricheditor.library.utils.TypeUtil;
 
 // 注意，此方法是不会合并的
@@ -110,7 +110,7 @@ public class WRichEditor extends EditText {
                 // Rich Type 不变？
             } else {
                 // 强设置失效，格式改为顺应上下文
-                StrategyUtil.sStrongSet = false;
+                RichEditorConfig.sStrongSet = false;
             }
             if (hasFocus() && mWRichEditorScrollView != null) {
                 Log.d("www", "111");
@@ -165,7 +165,7 @@ public class WRichEditor extends EditText {
             prevRichTypes = new HashSet<>();
         }
         Set<RichType> currRichTypes = new HashSet<>(4);
-        if (StrategyUtil.sStrongSet) {
+        if (RichEditorConfig.sStrongSet) {
             currRichTypes.addAll(prevRichTypes);
         } else {
             IRichSpan[] currRichSpans = editableText.getSpans(start, start + 1, IRichSpan.class);
@@ -190,7 +190,7 @@ public class WRichEditor extends EditText {
     protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
         LogUtil.d(TAG, "WRichEditor onFocusChanged focused : " + focused + ", contentDescription : " + getContentDescription());
-        StrategyUtil.sStrongSet = false;
+        RichEditorConfig.sStrongSet = false;
         if (mOnEditorFocusChangedListener != null) {
             mOnEditorFocusChangedListener.onEditorFocusChanged(mWrapperView, focused);
         }

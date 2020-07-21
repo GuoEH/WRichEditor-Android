@@ -30,8 +30,6 @@ import cn.carbs.wricheditor.library.utils.CommonUtil;
 import cn.carbs.wricheditor.library.utils.LogUtil;
 import cn.carbs.wricheditor.library.utils.OrderListUtil;
 import cn.carbs.wricheditor.library.utils.SpanUtil;
-import cn.carbs.wricheditor.library.utils.StrategyUtil;
-import cn.carbs.wricheditor.library.utils.ViewUtil;
 import cn.carbs.wricheditor.library.views.RichImageView;
 import cn.carbs.wricheditor.library.views.RichLineView;
 import cn.carbs.wricheditor.library.views.RichNetDiskView;
@@ -72,7 +70,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
         setFillViewport(true);
         inflate(context, R.layout.wricheditor_layout_main_view, this);
         mLinearLayout = findViewById(R.id.wricheditor_main_view_container);
-        RichEditorConfig.sHeadlineTextSize = ViewUtil.dp2px(getContext(), 18);
+        RichEditorConfig.sHeadlineTextSize = CommonUtil.dp2px(getContext(), 18);
         mLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,7 +133,7 @@ public class WRichEditorScrollView extends ScrollView implements OnEditorFocusCh
      */
     public void updateTextByRichTypeChanged(RichType richType, boolean open, Object extra) {
         LogUtil.d(TAG, "updateTextByRichTypeChanged richType : " + richType.name() + ", open : " + open + ", extra : " + extra);
-        StrategyUtil.sStrongSet = true;
+        RichEditorConfig.sStrongSet = true;
         // 1. 找到焦点所在的EditView
         int[] focusedRichEditorWrapperViewIndex = new int[1];
         WRichEditorWrapperView focusedWRichEditorWrapperView = findCurrentFocusedRichEditorWrapperView(focusedRichEditorWrapperViewIndex);

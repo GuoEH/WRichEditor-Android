@@ -1,7 +1,6 @@
 package cn.carbs.wricheditor.library.utils;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -132,7 +131,6 @@ public class ParserUtil {
             bodyContent = html;
         }
 
-        Log.d("tttt", "======>  bodyContent : " + bodyContent);
         ArrayList<String> cellStringList = new ArrayList<>();
 
         Matcher matcherCellView = PATTERN_DIV_CELL_VIEW.matcher(bodyContent);
@@ -155,30 +153,24 @@ public class ParserUtil {
 
     // TODO 由html转换回富文本编辑器比较复杂，因此先使用json的方式
     public static void inflateFromJson(Context context, WRichEditorScrollView scrollView, String json, CustomViewProvider provider) {
-        Log.d("ggg", "inflateFromJson() 1");
         if (json == null || json.trim().length() == 0 || scrollView == null) {
-            Log.d("ggg", "inflateFromJson() 2");
             return;
         }
 
         LinkedList<BaseCellData> cellDataList = new LinkedList<>();
 
         try {
-            Log.d("ggg", "inflateFromJson() 3");
             JSONArray jsonArray = new JSONArray(json);
             int length = jsonArray.length();
             for (int i = 0; i < length; i++) {
-                Log.d("ggg", "inflateFromJson() 4");
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 BaseCellData cellData = getCellDataByJSONObject(jsonObject);
                 if (cellData != null) {
-                    Log.d("ggg", "inflateFromJson() 5");
                     cellDataList.add(cellData);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d("ggg", "inflateFromJson() exception : " + e.getMessage());
         }
 
         for (BaseCellData cellData : cellDataList) {
@@ -193,46 +185,33 @@ public class ParserUtil {
     private static BaseCellData getCellDataByJSONObject(JSONObject jsonObject) {
         BaseCellData cellData = null;
         try {
-            Log.d("ggg", "getCellDataByJSONObject() 1  jsonObject : " + jsonObject.toString());
             String type = jsonObject.getString(BaseCellData.JSON_KEY_TYPE);
             RichType richType = RichType.valueOf(type);
             if (richType == RichType.NONE) {
-                Log.d("ggg", "getCellDataByJSONObject() 2");
                 cellData = new RichCellData();
             } else if (richType == RichType.QUOTE) {
-                Log.d("ggg", "getCellDataByJSONObject() 3");
                 cellData = new RichCellData();
             } else if (richType == RichType.LIST_UNORDERED) {
-                Log.d("ggg", "getCellDataByJSONObject() 4");
                 cellData = new RichCellData();
             } else if (richType == RichType.LIST_ORDERED) {
-                Log.d("ggg", "getCellDataByJSONObject() 5");
                 cellData = new RichCellData();
             } else if (richType == RichType.IMAGE) {
-                Log.d("ggg", "getCellDataByJSONObject() 6");
                 cellData = new ImageCellData();
             } else if (richType == RichType.VIDEO) {
-                Log.d("ggg", "getCellDataByJSONObject() 7");
                 cellData = new VideoCellData();
             } else if (richType == RichType.AUDIO) {
-                Log.d("ggg", "getCellDataByJSONObject() 8");
                 cellData = new AudioCellData();
             } else if (richType == RichType.NETDISK) {
-                Log.d("ggg", "getCellDataByJSONObject() 9");
                 cellData = new NetDiskCellData();
             } else if (richType == RichType.LINE) {
-                Log.d("ggg", "getCellDataByJSONObject() 10");
                 cellData = new LineCellData();
             }
-            Log.d("ggg", "getCellDataByJSONObject() 11");
             if (cellData != null) {
                 // 数据填充
-                Log.d("ggg", "getCellDataByJSONObject() 12");
                 cellData.fromJson(jsonObject);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d("ggg", "getCellDataByJSONObject() exception : " + e.getMessage());
         }
         return cellData;
     }
@@ -301,12 +280,12 @@ public class ParserUtil {
                 iRichCellView = provider.getCellViewByRichType(richType);
             }
         }
-        // TODO 这里为View填充数据
+        // 这里为View填充数据
         iRichCellView.setCellData(cellData);
         return iRichCellView;
     }
 
-    // TODO 注册自定义 CellView
+    // 注册自定义 CellView
     private static IRichCellView inflateCellViewByRichTypeAndHtml(Context context, RichType richType, String cellHtml, int contentStart, CustomViewProvider provider) {
         if (richType == null || context == null) {
             return null;
@@ -365,10 +344,8 @@ public class ParserUtil {
             // <div richType="IMAGE"><picture><img src="https://xx.com/xx.jpg"></picture></div>
             String cellRichTypeDivStr = matcherRichType.group(0);
             start[0] = cellRichTypeDivStr.length();
-            Log.d("tttt", "cellRichTypeDivStr --> " + cellRichTypeDivStr);
             if (cellRichTypeDivStr != null) {
                 String richTypeStr = cellRichTypeDivStr.substring(15, cellRichTypeDivStr.length() - 2);
-                Log.d("tttt", "richTypeStr --> " + richTypeStr);
                 return RichType.valueOf(richTypeStr);
             }
         }

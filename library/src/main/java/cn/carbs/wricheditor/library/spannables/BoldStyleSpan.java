@@ -30,14 +30,4 @@ public class BoldStyleSpan extends StyleSpan implements IRichSpan {
         return MASK;
     }
 
-    @Override
-    public String getHtmlTagStart() {
-        return HtmlUtil.getHtmlTagStartForBold();
-    }
-
-    @Override
-    public String getHtmlTagEnd() {
-        return HtmlUtil.getHtmlTagEndForBold();
-    }
-
 }

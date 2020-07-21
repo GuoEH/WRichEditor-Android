@@ -29,13 +29,4 @@ public class UnderlineStyleSpan extends UnderlineSpan implements IRichSpan {
         return MASK;
     }
 
-    @Override
-    public String getHtmlTagStart() {
-        return HtmlUtil.getHtmlTagStartForUnderline();
-    }
-
-    @Override
-    public String getHtmlTagEnd() {
-        return HtmlUtil.getHtmlTagEndForUnderline();
-    }
 }

@@ -58,14 +58,4 @@ public class LinkStyleSpan extends URLSpan implements IRichSpan {
         return MASK;
     }
 
-    // <a href="http://www.baidu.com/" target="_blank">link</a>
-    @Override
-    public String getHtmlTagStart() {
-        return HtmlUtil.getHtmlTagStartForLink(url);
-    }
-
-    @Override
-    public String getHtmlTagEnd() {
-        return HtmlUtil.getHtmlTagEndForLink();
-    }
 }

@@ -29,14 +29,4 @@ public class StrikeThroughStyleSpan extends StrikethroughSpan implements IRichSp
         return MASK;
     }
 
-    @Override
-    public String getHtmlTagStart() {
-        return HtmlUtil.getHtmlTagStartForStrikeThrough();
-    }
-
-    @Override
-    public String getHtmlTagEnd() {
-        return HtmlUtil.getHtmlTagEndForStrikeThrough();
-    }
-
 }

@@ -30,13 +30,4 @@ public class ItalicStyleSpan extends StyleSpan implements IRichSpan {
         return MASK;
     }
 
-    @Override
-    public String getHtmlTagStart() {
-        return HtmlUtil.getHtmlTagStartForItalic();
-    }
-
-    @Override
-    public String getHtmlTagEnd() {
-        return HtmlUtil.getHtmlTagEndForItalic();
-    }
 }
