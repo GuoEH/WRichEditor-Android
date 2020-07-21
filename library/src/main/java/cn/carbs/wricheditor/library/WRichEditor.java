@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.Editable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +47,8 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
     private OnRichTypeChangedListener mOnRichTypeChangedListener;
 
     private IRichCellView mLastFocusedRichCellView;
+
+    private ViewTreeObserver.OnGlobalLayoutListener mOnGlobalLayoutListener;
 
     public WRichEditor(Context context) {
         super(context);
@@ -148,16 +149,13 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
         if (richType == RichType.QUOTE) {
             LogUtil.d(TAG, "richType == RichType.QUOTE");
             // 如果是 "QUOTE" 类型，则：
-
             Editable editable = focusedWEditText.getEditableText();
             String editableStr = editable.toString();
             if (open) {
                 LogUtil.d(TAG, "QUOTE open");
                 if (focusedWEditTextWrapperView.getRichType() == RichType.QUOTE) {
-                    // 如果已经处于
                     return;
                 }
-
                 // 如果是 "开启" QUOTE 动作
                 if (!editableStr.contains(CharConstant.ENTER_STR)) {
                     // 1. 判断当前RichEditor中有几个换行符，如果有0个，则不"分裂"，直接将这个Editor的左侧drawable做变换
@@ -194,10 +192,6 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
                     }
 
                     int currentEditableLength = editableStr.length();
-
-                    LogUtil.d(TAG, "cursorStart : " + cursorStart + ", cursorEnd : " + cursorEnd);
-                    LogUtil.d(TAG, "quoteStart : " + quoteStart + ", quoteEnd : " + quoteEnd);
-                    LogUtil.d(TAG, "currentEditableLength : " + currentEditableLength);
 
                     if (quoteStart == currentEditableLength && quoteEnd == currentEditableLength) {
                         LogUtil.d(TAG, "QUOTE open 0");
@@ -346,8 +340,6 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
                     // 没有选中任何文字：
                     String cursorLeftStr = editableStr.substring(0, cursorStart);
                     String cursorRightStr = editableStr.substring(cursorEnd);
-                    LogUtil.d(TAG, "cursorLeftStr -->" + cursorLeftStr + "<--");
-                    LogUtil.d(TAG, "cursorRightStr -->" + cursorRightStr + "<--");
                     // 找到从光标位置到前面的换行符（没有换行符则到位置0）
                     int lastIndexOfEnterAmongLeftStr = cursorLeftStr.lastIndexOf(CharConstant.ENTER_CHAR);
                     // 这几个位置需要测试一下
@@ -365,10 +357,6 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
                     }
 
                     int currentEditableLength = editableStr.length();
-
-                    LogUtil.d(TAG, "cursorStart : " + cursorStart + "  cursorEnd : " + cursorEnd);
-                    LogUtil.d(TAG, "quoteStart : " + quoteStart + "  quoteEnd : " + quoteEnd);
-                    LogUtil.d(TAG, "currentEditableLength : " + currentEditableLength);
 
                     if (quoteStart == currentEditableLength && quoteEnd == currentEditableLength) {
                         // 如果在最后
@@ -399,7 +387,7 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
                             } else {
                                 LogUtil.d(TAG, "QUOTE close 112");
                                 focusedWEditTextWrapperView.toggleQuoteMode(false, false);
-                                // TODO needMerge? 是否需要和后面一个merge，如果需要merge，则merge后，将后面一个remove掉
+                                // TODO 如果merge，则merge后，将后面一个remove掉
                             }
                         } else {
                             LogUtil.d(TAG, "QUOTE close 12");
@@ -450,13 +438,13 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
                                 // 添加一个WRichEditorWrapperView
                                 WEditTextWrapperView insertedWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 1, RichType.NONE, true);
                                 SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView.getWRichEditor(), textWithoutFormat1, spanPartsOutput1, -quoteStart);
-                                // todo 是否需要合并，如果需要合并，应该在上面生成 insertedWrapperView 前，判断是否动态合并，如果时，则不生成insertedWrapperView
+                                // TODO 如果merge，则merge后，将后面一个remove掉
                             } else {
                                 LogUtil.d(TAG, "QUOTE close 212");
                                 String textWithoutFormat1 = SpanUtil.getSpannableStringInclusiveExclusive(editableText, quoteStart, editableText.length(), spanPartsOutput1);
                                 WEditTextWrapperView insertedWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 1, RichType.NONE, true);
                                 SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView.getWRichEditor(), textWithoutFormat1, spanPartsOutput1, -quoteStart);
-                                // todo 是否需要合并，如果需要合并，应该在上面生成 insertedWrapperView 前，判断是否动态合并，如果时，则不生成insertedWrapperView
+                                // TODO 如果merge，则merge后，将后面一个remove掉
                             }
                         } else {
                             LogUtil.d(TAG, "QUOTE close 22");
@@ -517,8 +505,6 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
                     // 没有选中任何文字：
                     String cursorLeftStr = editableStr.substring(0, cursorStart);
                     String cursorRightStr = editableStr.substring(cursorEnd);
-                    LogUtil.d(TAG, "cursorLeftStr -->" + cursorLeftStr + "<--");
-                    LogUtil.d(TAG, "cursorRightStr -->" + cursorRightStr + "<--");
                     // 找到从光标位置到前面的换行符（没有换行符则到位置0）
                     int lastIndexOfEnterAmongLeftStr = cursorLeftStr.lastIndexOf(CharConstant.ENTER_CHAR);
                     // 这几个位置需要测试一下
@@ -536,10 +522,6 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
                     }
 
                     int currentEditableLength = editableStr.length();
-
-                    LogUtil.d(TAG, "cursorStart : " + cursorStart + "  cursorEnd : " + cursorEnd);
-                    LogUtil.d(TAG, "unorderedStart : " + unorderedStart + "  unorderedEnd : " + unorderedEnd);
-                    LogUtil.d(TAG, "currentEditableLength : " + currentEditableLength);
 
                     if (unorderedStart == currentEditableLength && unorderedEnd == currentEditableLength) {
                         // 如果在最后
@@ -667,7 +649,6 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
                             String textWithoutFormat = SpanUtil.getSpannableStringInclusiveExclusive(editable, 0, unorderedStart - 1, spanPartsOutput);
 
                             SpanUtil.setSpannableInclusiveExclusive(focusedWEditText, textWithoutFormat, spanPartsOutput, 0);
-                            // TODO 别的地方还没有添加
                             focusedWEditTextWrapperView.toggleUnOrderListMode(false, false);
 
                             String[] splitStringByEnter = selectedStr.split(CharConstant.ENTER_STR);
@@ -730,10 +711,6 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
                             for (int i = 0; i < splitLength; i++) {
                                 SplitPart itemSplit = splitParts.get(i);
                                 spanPartsOutput.clear();
-                                LogUtil.d(TAG, "LIST_UNORDERED  i : " + i + " splitLength : " + splitLength
-                                        + " itemSplit text : " + itemSplit.getText()
-                                        + " itemSplit.start() : " + itemSplit.getStart()
-                                        + " itemSplit.end() : " + itemSplit.getEnd());
                                 String textWithoutFormatItem = SpanUtil.getSpannableStringInclusiveExclusive(editable, itemSplit.getStart(), itemSplit.getEnd(), spanPartsOutput);
                                 WEditTextWrapperView wEditTextWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + i + 1, RichType.LIST_UNORDERED, false);
                                 SpanUtil.setSpannableInclusiveExclusive(wEditTextWrapperView.getWRichEditor(), textWithoutFormatItem, spanPartsOutput, -itemSplit.getStart());
@@ -787,8 +764,6 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
                     // 没有选中任何文字：
                     String cursorLeftStr = editableStr.substring(0, cursorStart);
                     String cursorRightStr = editableStr.substring(cursorEnd);
-                    LogUtil.d(TAG, "cursorLeftStr -->" + cursorLeftStr + "<--");
-                    LogUtil.d(TAG, "cursorRightStr -->" + cursorRightStr + "<--");
                     // 找到从光标位置到前面的换行符（没有换行符则到位置0）
                     int lastIndexOfEnterAmongLeftStr = cursorLeftStr.lastIndexOf(CharConstant.ENTER_CHAR);
                     // 这几个位置需要测试一下
@@ -806,10 +781,6 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
                     }
 
                     int currentEditableLength = editableStr.length();
-
-                    LogUtil.d(TAG, "cursorStart : " + cursorStart + "  cursorEnd : " + cursorEnd);
-                    LogUtil.d(TAG, "orderedStart : " + orderedStart + "  orderedEnd : " + orderedEnd);
-                    LogUtil.d(TAG, "currentEditableLength : " + currentEditableLength);
 
                     if (orderedStart == currentEditableLength && orderedEnd == currentEditableLength) {
                         // 如果在最后
@@ -1024,7 +995,6 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
         } else {
             focusedWEditText.updateTextByRichTypeChanged(richType, open, extra);
         }
-
     }
 
     /**
@@ -1049,7 +1019,6 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
         if (currentIndex == childCount - 1) {
             return true;
         }
-        // TODO 待检测
         IRichCellView tailRichCellView = getTailCellView();
         if (tailRichCellView != null && tailRichCellView.getRichType() == RichType.NONE) {
             return false;
@@ -1103,40 +1072,6 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
         return true;
     }
 
-    /**
-     * 当前Editor处于none状态，同时下一个也处于none状态
-     *
-     * @param currentIndex
-     * @return
-     */
-    private boolean needMergeWRichEditor(int currentIndex) {
-        if (mLinearLayout == null) {
-            return false;
-        }
-        if (currentIndex < 0) {
-            return false;
-        }
-        int childCount = mLinearLayout.getChildCount();
-        if (currentIndex >= childCount) {
-            // 无效index值
-            return false;
-        }
-        // 当前为最后一个，或者当前的下一个的类型不为 NONE
-        if (currentIndex == childCount - 1) {
-            return false;
-        }
-        IRichCellView nextRichCellView = (IRichCellView) mLinearLayout.getChildAt(currentIndex + 1);
-        if (nextRichCellView == null) {
-            return false;
-        }
-
-        RichType richType = nextRichCellView.getRichType();
-        if (richType == RichType.NONE) {
-            return true;
-        }
-        return false;
-    }
-
     public WEditTextWrapperView findCurrentFocusedRichEditorWrapperView(int[] indexInCellViewList) {
         indexInCellViewList[0] = -1;
         WEditTextWrapperView focusedWEditTextWrapperView = null;
@@ -1176,24 +1111,8 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
         return null;
     }
 
-    public void setRichTypes(Set<RichType> currRichTypes) {
-        mRichTypes.clear();
-        mRichTypes.addAll(currRichTypes);
-    }
-
     public Set<RichType> getRichTypes() {
         return mRichTypes;
-    }
-
-    // TODO 考虑此API的设计
-    public boolean toggleCertainRichType(RichType richType) {
-        if (mRichTypes.contains(richType)) {
-            mRichTypes.remove(richType);
-            return false;
-        } else {
-            mRichTypes.add(richType);
-            return true;
-        }
     }
 
     @Override
@@ -1325,8 +1244,6 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
         }
     }
 
-    private ViewTreeObserver.OnGlobalLayoutListener mOnGlobalLayoutListener;
-
     private void initInputKeyboardListener() {
 
         final Context context = getContext();
@@ -1337,16 +1254,9 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
         mOnGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                Log.d("wangwang", "onGlobalLayout()");
                 int fullScreenHeight = CommonUtil.getFullScreenHeight((Activity) context);
                 int currScreenHeight = CommonUtil.getScreenHeightExcludeKeyboard((Activity) context);
                 int naviHeight = CommonUtil.getNavigationBarHeight((Activity) context);
-
-
-                Log.d("wangwang", "fullScreenHeight : " + fullScreenHeight);
-                Log.d("wangwang", "currScreenHeight : " + currScreenHeight);
-                Log.d("wangwang", "naviHeight : " + naviHeight);
-
                 if (currScreenHeight + naviHeight >= fullScreenHeight) {
                     // 全屏状态
                     onKeyboardHidden();
@@ -1358,42 +1268,26 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
         };
 
         this.getViewTreeObserver().addOnGlobalLayoutListener(mOnGlobalLayoutListener);
-
     }
 
-    // TODO
     private void onKeyboardHidden() {
-        Log.d("wangwang", "onGlobalLayout() onKeyboardHidden getScrollY() : " + getScrollY());
     }
 
-    // TODO
     private void onKeyboardShown(final int currScreenHeight) {
-        Log.d("wangwang", "onGlobalLayout() onKeyboardShown getScrollY() : " + getScrollY());
-
         int[] focusedIndex = new int[1];
         final WEditTextWrapperView focusedWEditTextWrapperView = findCurrentOrRecentFocusedRichEditorWrapperView(focusedIndex);
         if (focusedWEditTextWrapperView == null) {
             return;
         }
-        Log.d("wangwang", "onGlobalLayout() onKeyboardShown focusedWRichEditorWrapperView.getY() : " + focusedWEditTextWrapperView.getY());
-
         post(new Runnable() {
             @Override
             public void run() {
                 float deltaY = focusedWEditTextWrapperView.getY() - getScrollY();
-                Log.d("wangwang", "post deltaY : " + deltaY
-                        + ", focusedWRichEditorWrapperView.getY() : " + focusedWEditTextWrapperView.getY()
-                        + ", getScrollY() : " + getScrollY()
-                        + ", currScreenHeight : " + currScreenHeight
-                        + ", getScrollViewYInWindow() : " + getScrollViewYInWindow()
-                        + ", RichEditorConfig.sScrollBottomDeltaY : " + RichEditorConfig.sScrollBottomDeltaY);
                 // currScreenHeight - scrollView的top的Y值
-                // TODO
                 getScrollViewYInWindow();
                 int needTansY = (int) (deltaY - (currScreenHeight - getScrollViewYInWindow() - RichEditorConfig.sScrollBottomDeltaY));
                 if (needTansY > 0) {
                     // 说明被隐藏
-                    Log.d("wangwang", "!!!遮挡了 needTansY : " + needTansY);
                     WRichEditor.this.smoothScrollBy(0, needTansY);
                 }
             }
@@ -1404,6 +1298,40 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
         int[] out = new int[2];
         getLocationInWindow(out);
         return out[1];
+    }
+
+    /**
+     * 当前Editor处于none状态，同时下一个也处于none状态
+     *
+     * @param currentIndex
+     * @return
+     */
+    private boolean needMergeWRichEditor(int currentIndex) {
+        if (mLinearLayout == null) {
+            return false;
+        }
+        if (currentIndex < 0) {
+            return false;
+        }
+        int childCount = mLinearLayout.getChildCount();
+        if (currentIndex >= childCount) {
+            // 无效index值
+            return false;
+        }
+        // 当前为最后一个，或者当前的下一个的类型不为 NONE
+        if (currentIndex == childCount - 1) {
+            return false;
+        }
+        IRichCellView nextRichCellView = (IRichCellView) mLinearLayout.getChildAt(currentIndex + 1);
+        if (nextRichCellView == null) {
+            return false;
+        }
+
+        RichType richType = nextRichCellView.getRichType();
+        if (richType == RichType.NONE) {
+            return true;
+        }
+        return false;
     }
 
 }
