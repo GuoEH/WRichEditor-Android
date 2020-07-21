@@ -78,7 +78,7 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
             public void onClick(View v) {
                 IRichCellView cellView = addNoneTypeTailOptionally();
                 if (cellView instanceof WEditTextWrapperView) {
-                    WEditText wEditText = ((WEditTextWrapperView) cellView).getWRichEditor();
+                    WEditText wEditText = ((WEditTextWrapperView) cellView).getWEditText();
                     if (wEditText != null) {
                         wEditText.requestFocus();
                         // 调起软键盘
@@ -142,7 +142,7 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
         if (focusedWEditTextWrapperView == null) {
             return;
         }
-        WEditText focusedWEditText = focusedWEditTextWrapperView.getWRichEditor();
+        WEditText focusedWEditText = focusedWEditTextWrapperView.getWEditText();
         if (focusedWEditText == null) {
             return;
         }
@@ -249,7 +249,7 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
 
                             // 添加一个WRichEditorWrapperView
                             WEditTextWrapperView insertedWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 1, RichType.NONE, false);
-                            SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView.getWRichEditor(), textWithoutFormat1, spanPartsOutput1, -quoteEnd);
+                            SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView.getWEditText(), textWithoutFormat1, spanPartsOutput1, -quoteEnd);
                         }
                     } else {
                         if (quoteEnd == editableStr.length()) {
@@ -275,7 +275,7 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
                                 String textWithoutFormat1 = SpanUtil.getSpannableStringInclusiveExclusive(editableText, quoteStart, editableText.length() - 1, spanPartsOutput1);
                                 // 添加一个WRichEditorWrapperView
                                 WEditTextWrapperView insertedWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 1, RichType.QUOTE, true);
-                                SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView.getWRichEditor(), textWithoutFormat1, spanPartsOutput1, -quoteStart);
+                                SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView.getWEditText(), textWithoutFormat1, spanPartsOutput1, -quoteStart);
                                 if (needAddWRichEditor(focusedRichEditorWrapperViewIndex[0] + 1)) {
                                     insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 2, RichType.NONE, false);
                                 }
@@ -284,7 +284,7 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
                                 String textWithoutFormat1 = SpanUtil.getSpannableStringInclusiveExclusive(editableText, quoteStart, editableText.length(), spanPartsOutput1);
                                 // 添加一个WRichEditorWrapperView
                                 WEditTextWrapperView insertedWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 1, RichType.QUOTE, true);
-                                SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView.getWRichEditor(), textWithoutFormat1, spanPartsOutput1, -quoteStart);
+                                SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView.getWEditText(), textWithoutFormat1, spanPartsOutput1, -quoteStart);
                                 if (needAddWRichEditor(focusedRichEditorWrapperViewIndex[0] + 1)) {
                                     insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 2, RichType.NONE, false);
                                 }
@@ -311,10 +311,10 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
                             SpanUtil.setSpannableInclusiveExclusive(focusedWEditText, textWithoutFormat0, spanPartsOutput0, 0);
 
                             WEditTextWrapperView insertedWrapperView1 = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 1, RichType.QUOTE, true);
-                            SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView1.getWRichEditor(), textWithoutFormat1, spanPartsOutput1, -quoteStart);
+                            SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView1.getWEditText(), textWithoutFormat1, spanPartsOutput1, -quoteStart);
 
                             WEditTextWrapperView insertedWrapperView2 = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 2, RichType.NONE, false);
-                            SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView2.getWRichEditor(), textWithoutFormat2, spanPartsOutput2, -quoteEnd);
+                            SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView2.getWEditText(), textWithoutFormat2, spanPartsOutput2, -quoteEnd);
                         }
                     }
                 }
@@ -410,7 +410,7 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
                             SpanUtil.setSpannableInclusiveExclusive(focusedWEditText, textWithoutFormat0, spanPartsOutput0, 0);
                             focusedWEditTextWrapperView.toggleQuoteMode(false, false);
                             WEditTextWrapperView insertedWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 1, RichType.NONE, false);
-                            SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView.getWRichEditor(), textWithoutFormat1, spanPartsOutput1, -quoteEnd);
+                            SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView.getWEditText(), textWithoutFormat1, spanPartsOutput1, -quoteEnd);
                             insertedWrapperView.toggleQuoteMode(true, false);
                         }
                     } else {
@@ -438,13 +438,13 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
                                 String textWithoutFormat1 = SpanUtil.getSpannableStringInclusiveExclusive(editableText, quoteStart, editableText.length() - 1, spanPartsOutput1);
                                 // 添加一个WRichEditorWrapperView
                                 WEditTextWrapperView insertedWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 1, RichType.NONE, true);
-                                SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView.getWRichEditor(), textWithoutFormat1, spanPartsOutput1, -quoteStart);
+                                SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView.getWEditText(), textWithoutFormat1, spanPartsOutput1, -quoteStart);
                                 // TODO 如果merge，则merge后，将后面一个remove掉
                             } else {
                                 LogUtil.d(TAG, "QUOTE close 212");
                                 String textWithoutFormat1 = SpanUtil.getSpannableStringInclusiveExclusive(editableText, quoteStart, editableText.length(), spanPartsOutput1);
                                 WEditTextWrapperView insertedWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 1, RichType.NONE, true);
-                                SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView.getWRichEditor(), textWithoutFormat1, spanPartsOutput1, -quoteStart);
+                                SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView.getWEditText(), textWithoutFormat1, spanPartsOutput1, -quoteStart);
                                 // TODO 如果merge，则merge后，将后面一个remove掉
                             }
                         } else {
@@ -469,10 +469,10 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
                             SpanUtil.setSpannableInclusiveExclusive(focusedWEditText, textWithoutFormat0, spanPartsOutput0, 0);
 
                             WEditTextWrapperView insertedWrapperView1 = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 1, RichType.NONE, true);
-                            SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView1.getWRichEditor(), textWithoutFormat1, spanPartsOutput1, -quoteStart);
+                            SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView1.getWEditText(), textWithoutFormat1, spanPartsOutput1, -quoteStart);
 
                             WEditTextWrapperView insertedWrapperView2 = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + 2, RichType.QUOTE, false);
-                            SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView2.getWRichEditor(), textWithoutFormat2, spanPartsOutput2, -quoteEnd);
+                            SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView2.getWEditText(), textWithoutFormat2, spanPartsOutput2, -quoteEnd);
                         }
                     }
                 }
@@ -572,7 +572,7 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
                                     focusedWEditTextWrapperView.toggleUnOrderListMode(true, false);
                                 } else {
                                     WEditTextWrapperView wEditTextWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + i, RichType.LIST_UNORDERED, false);
-                                    SpanUtil.setSpannableInclusiveExclusive(wEditTextWrapperView.getWRichEditor(), textWithoutFormat, spanPartsOutput, -itemSplit.getStart());
+                                    SpanUtil.setSpannableInclusiveExclusive(wEditTextWrapperView.getWEditText(), textWithoutFormat, spanPartsOutput, -itemSplit.getStart());
                                 }
                             }
 
@@ -617,14 +617,14 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
                                     focusedWEditTextWrapperView.toggleUnOrderListMode(true, false);
                                 } else {
                                     WEditTextWrapperView wEditTextWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + i, RichType.LIST_UNORDERED, false);
-                                    SpanUtil.setSpannableInclusiveExclusive(wEditTextWrapperView.getWRichEditor(), textWithoutFormat, spanPartsOutput, -itemSplit.getStart());
+                                    SpanUtil.setSpannableInclusiveExclusive(wEditTextWrapperView.getWEditText(), textWithoutFormat, spanPartsOutput, -itemSplit.getStart());
                                 }
                             }
 
                             spanPartsOutput.clear();
                             String textWithoutFormat = SpanUtil.getSpannableStringInclusiveExclusive(editable, unorderedEnd, editable.length(), spanPartsOutput);
                             WEditTextWrapperView insertedWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + splitLength, RichType.NONE, false);
-                            SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView.getWRichEditor(), textWithoutFormat, spanPartsOutput, -unorderedEnd);
+                            SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView.getWEditText(), textWithoutFormat, spanPartsOutput, -unorderedEnd);
                         }
                     } else {
                         if (unorderedEnd == editableStr.length()) {
@@ -667,7 +667,7 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
                                 spanPartsOutput.clear();
                                 String textWithoutFormatItem = SpanUtil.getSpannableStringInclusiveExclusive(editable, itemSplit.getStart(), itemSplit.getEnd(), spanPartsOutput);
                                 WEditTextWrapperView wEditTextWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + i + 1, RichType.LIST_UNORDERED, false);
-                                SpanUtil.setSpannableInclusiveExclusive(wEditTextWrapperView.getWRichEditor(), textWithoutFormatItem, spanPartsOutput, -itemSplit.getStart());
+                                SpanUtil.setSpannableInclusiveExclusive(wEditTextWrapperView.getWEditText(), textWithoutFormatItem, spanPartsOutput, -itemSplit.getStart());
                             }
 
                             if (editableStr.endsWith(CharConstant.ENTER_STR)) {
@@ -714,14 +714,14 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
                                 spanPartsOutput.clear();
                                 String textWithoutFormatItem = SpanUtil.getSpannableStringInclusiveExclusive(editable, itemSplit.getStart(), itemSplit.getEnd(), spanPartsOutput);
                                 WEditTextWrapperView wEditTextWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + i + 1, RichType.LIST_UNORDERED, false);
-                                SpanUtil.setSpannableInclusiveExclusive(wEditTextWrapperView.getWRichEditor(), textWithoutFormatItem, spanPartsOutput, -itemSplit.getStart());
+                                SpanUtil.setSpannableInclusiveExclusive(wEditTextWrapperView.getWEditText(), textWithoutFormatItem, spanPartsOutput, -itemSplit.getStart());
                             }
 
                             // 第三部分
                             spanPartsOutput.clear();
                             String textWithoutFormat = SpanUtil.getSpannableStringInclusiveExclusive(editable, unorderedEnd, editableStr.length(), spanPartsOutput);
                             WEditTextWrapperView insertedWrapperViewForThirdPart = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + splitLength + 1, RichType.NONE, false);
-                            SpanUtil.setSpannableInclusiveExclusive(insertedWrapperViewForThirdPart.getWRichEditor(), textWithoutFormat, spanPartsOutput, -unorderedEnd);
+                            SpanUtil.setSpannableInclusiveExclusive(insertedWrapperViewForThirdPart.getWEditText(), textWithoutFormat, spanPartsOutput, -unorderedEnd);
                         }
                     }
                 }
@@ -831,7 +831,7 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
                                     focusedWEditTextWrapperView.toggleOrderListMode(true, false);
                                 } else {
                                     WEditTextWrapperView wEditTextWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + i, RichType.LIST_ORDERED, false);
-                                    SpanUtil.setSpannableInclusiveExclusive(wEditTextWrapperView.getWRichEditor(), textWithoutFormat, spanPartsOutput, -itemSplit.getStart());
+                                    SpanUtil.setSpannableInclusiveExclusive(wEditTextWrapperView.getWEditText(), textWithoutFormat, spanPartsOutput, -itemSplit.getStart());
                                 }
                             }
 
@@ -876,13 +876,13 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
                                     focusedWEditTextWrapperView.toggleOrderListMode(true, false);
                                 } else {
                                     WEditTextWrapperView wEditTextWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + i, RichType.LIST_ORDERED, false);
-                                    SpanUtil.setSpannableInclusiveExclusive(wEditTextWrapperView.getWRichEditor(), textWithoutFormat, spanPartsOutput, -itemSplit.getStart());
+                                    SpanUtil.setSpannableInclusiveExclusive(wEditTextWrapperView.getWEditText(), textWithoutFormat, spanPartsOutput, -itemSplit.getStart());
                                 }
                             }
                             spanPartsOutput.clear();
                             String textWithoutFormat = SpanUtil.getSpannableStringInclusiveExclusive(editable, orderedEnd, editable.length(), spanPartsOutput);
                             WEditTextWrapperView insertedWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + splitLength, RichType.NONE, false);
-                            SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView.getWRichEditor(), textWithoutFormat, spanPartsOutput, -orderedEnd);
+                            SpanUtil.setSpannableInclusiveExclusive(insertedWrapperView.getWEditText(), textWithoutFormat, spanPartsOutput, -orderedEnd);
                             OrderListUtil.updateOrderListNumbersAfterViewsChanged(mLinearLayout);
                         }
                     } else {
@@ -923,7 +923,7 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
                                 spanPartsOutput.clear();
                                 String textWithoutFormatItem = SpanUtil.getSpannableStringInclusiveExclusive(editable, itemSplit.getStart(), itemSplit.getEnd(), spanPartsOutput);
                                 WEditTextWrapperView wEditTextWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + i + 1, RichType.LIST_ORDERED, false);
-                                SpanUtil.setSpannableInclusiveExclusive(wEditTextWrapperView.getWRichEditor(), textWithoutFormatItem, spanPartsOutput, -itemSplit.getStart());
+                                SpanUtil.setSpannableInclusiveExclusive(wEditTextWrapperView.getWEditText(), textWithoutFormatItem, spanPartsOutput, -itemSplit.getStart());
                             }
 
                             if (editableStr.endsWith(CharConstant.ENTER_STR)) {
@@ -971,14 +971,14 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
                                 spanPartsOutput.clear();
                                 String textWithoutFormatItem = SpanUtil.getSpannableStringInclusiveExclusive(editable, itemSplit.getStart(), itemSplit.getEnd(), spanPartsOutput);
                                 WEditTextWrapperView wEditTextWrapperView = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + i + 1, RichType.LIST_ORDERED, false);
-                                SpanUtil.setSpannableInclusiveExclusive(wEditTextWrapperView.getWRichEditor(), textWithoutFormatItem, spanPartsOutput, -itemSplit.getStart());
+                                SpanUtil.setSpannableInclusiveExclusive(wEditTextWrapperView.getWEditText(), textWithoutFormatItem, spanPartsOutput, -itemSplit.getStart());
                             }
 
                             // 第三部分
                             spanPartsOutput.clear();
                             String textWithoutFormat = SpanUtil.getSpannableStringInclusiveExclusive(editable, orderedEnd, editableStr.length(), spanPartsOutput);
                             WEditTextWrapperView insertedWrapperViewForThirdPart = insertAWRichEditorWrapperWithRichType(focusedRichEditorWrapperViewIndex[0] + splitLength + 1, RichType.NONE, false);
-                            SpanUtil.setSpannableInclusiveExclusive(insertedWrapperViewForThirdPart.getWRichEditor(), textWithoutFormat, spanPartsOutput, -orderedEnd);
+                            SpanUtil.setSpannableInclusiveExclusive(insertedWrapperViewForThirdPart.getWEditText(), textWithoutFormat, spanPartsOutput, -orderedEnd);
 
                             OrderListUtil.updateOrderListNumbersAfterViewsChanged(mLinearLayout);
                         }
@@ -1085,8 +1085,8 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
             if (cellView != null && cellView.getView() != null) {
                 if (cellView.getRichType().getHasEditor()) {
                     WEditTextWrapperView wEditTextWrapperView = ((WEditTextWrapperView) cellView.getView());
-                    if (wEditTextWrapperView != null && wEditTextWrapperView.getWRichEditor() != null) {
-                        if (wEditTextWrapperView.getWRichEditor().hasFocus()) {
+                    if (wEditTextWrapperView != null && wEditTextWrapperView.getWEditText() != null) {
+                        if (wEditTextWrapperView.getWEditText().hasFocus()) {
                             focusedWEditTextWrapperView = wEditTextWrapperView;
                             indexInCellViewList[0] = i;
                             break;
@@ -1131,11 +1131,18 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
         return mOnRichTypeChangedListener;
     }
 
+    public IRichCellView insertAWRichEditorWrapperWithCellView(int index, IRichCellView richCellView, boolean needRequestFocusWhenAdded) {
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        // 插入到中间某个位置或者队尾（index == -1）
+        addRichCell(richCellView, lp, index);
+        return richCellView;
+    }
+
     public WEditTextWrapperView insertAWRichEditorWrapperWithRichType(int index, RichType richType, boolean needRequestFocusWhenAdded) {
         WEditTextWrapperView editTextWrapperView = new WEditTextWrapperView(getContext(), richType, needRequestFocusWhenAdded);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         if (DebugUtil.DEBUG) {
-            editTextWrapperView.getWRichEditor().setHint("CELL new ");
+            editTextWrapperView.getWEditText().setHint("CELL new ");
             editTextWrapperView.setBackgroundColor(0x10222222);
         }
         // 插入到中间某个位置或者队尾（index == -1）
@@ -1149,6 +1156,29 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
             index = getCellViewIndex(wrapperView) + 1;
         }
         return insertAWRichEditorWrapperWithRichType(index, richType, needRequestFocusWhenAdded);
+    }
+
+    public WEditTextWrapperView insertACellViewWithRichType(IRichCellView cellView, RichType richType, boolean needRequestFocusWhenAdded) {
+        int index = -1;
+        if (cellView != null) {
+            index = getCellViewIndex(cellView) + 1;
+        }
+        return insertAWRichEditorWrapperWithRichType(index, richType, needRequestFocusWhenAdded);
+    }
+
+    /**
+     * 为列表添加一个自定义的ICellView
+     * @param wrapperView 锚点，在此view的下面添加
+     * @param richCellView
+     * @param needRequestFocusWhenAdded
+     * @return
+     */
+    public IRichCellView insertACellView(WEditTextWrapperView wrapperView, IRichCellView richCellView, boolean needRequestFocusWhenAdded) {
+        int index = -1;
+        if (wrapperView != null) {
+            index = getCellViewIndex(wrapperView) + 1;
+        }
+        return insertAWRichEditorWrapperWithCellView(index, richCellView, needRequestFocusWhenAdded);
     }
 
     public ViewGroup getContainerView() {
@@ -1205,45 +1235,63 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
     }
 
     public void insertLine() {
-
         RichLineView richLineView = new RichLineView(getContext());
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER_HORIZONTAL;
+        insertResourceTypeView(richLineView, lp);
+    }
+
+    public void insertImage(RichImageView richImageView) {
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.gravity = Gravity.CENTER_HORIZONTAL;
+        insertResourceTypeView(richImageView, lp);
+    }
+
+    public void insertNetDisk(RichNetDiskView richNetDiskView) {
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.gravity = Gravity.CENTER_HORIZONTAL;
+        insertResourceTypeView(richNetDiskView, lp);
+    }
+
+    private void insertResourceTypeView(IRichCellView richCellView, LinearLayout.LayoutParams lp) {
 
         int[] focusedIndex = new int[1];
         WEditTextWrapperView focusedWrapperView = findCurrentOrRecentFocusedRichEditorWrapperView(focusedIndex);
         if (focusedWrapperView != null
-                && focusedWrapperView.getWRichEditor() != null
-                && focusedWrapperView.getWRichEditor().hasFocus()
-                && focusedWrapperView.getWRichEditor().getEditableText().length() == 0) {
-            addRichCell(richLineView, lp, focusedIndex[0]);
+                && focusedWrapperView.getWEditText() != null
+                && focusedWrapperView.getWEditText().hasFocus()) {
+
+            WEditText wFocusedEditText = focusedWrapperView.getWEditText();
+            if (wFocusedEditText.getEditableText().length() == 0) {
+                addRichCell(richCellView, lp, focusedIndex[0]);
+            } else {
+                RichType richType = focusedWrapperView.getRichType();
+                int textLength = wFocusedEditText.getEditableText().length();
+                int cursorStart = wFocusedEditText.getSelectionStart();
+                int cursorEnd = wFocusedEditText.getSelectionEnd();
+
+                if (cursorStart >= 0 && cursorEnd >= 0) {
+                    Editable editable = wFocusedEditText.getEditableText();
+                    ArrayList<SpanPart> spanPartsOutput = new ArrayList<>(32);
+
+                    String textWithoutFormatItemStartLeft = SpanUtil.getSpannableStringInclusiveExclusive(editable, 0, cursorStart, spanPartsOutput);
+                    SpanUtil.setSpannableInclusiveExclusive(wFocusedEditText, textWithoutFormatItemStartLeft, spanPartsOutput, 0);
+                    spanPartsOutput.clear();
+
+                    String textWithoutFormatItemEndRight = SpanUtil.getSpannableStringInclusiveExclusive(editable, cursorEnd, editable.length(), spanPartsOutput);
+                    IRichCellView addedRichCellView = insertACellView(focusedWrapperView, richCellView, true);
+
+                    if (cursorEnd < textLength) {
+                        WEditTextWrapperView wEditTextWrapperView  = insertACellViewWithRichType(addedRichCellView, richType, false);
+                        SpanUtil.setSpannableInclusiveExclusive(wEditTextWrapperView.getWEditText(), textWithoutFormatItemEndRight, spanPartsOutput, -cursorEnd);
+                    }
+                }
+            }
         } else {
-            addRichCell(richLineView, lp, focusedIndex[0] + 1);
+            addRichCell(richCellView, lp, focusedIndex[0] + 1);
             if (needAddWRichEditor(focusedIndex[0] + 1)) {
                 insertAWRichEditorWrapperWithRichType(focusedIndex[0] + 2, RichType.NONE, true);
             }
-        }
-    }
-
-    public void insertImage(RichImageView richImageView) {
-        int[] focusedIndex = new int[1];
-        findCurrentOrRecentFocusedRichEditorWrapperView(focusedIndex);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.gravity = Gravity.CENTER_HORIZONTAL;
-        addRichCell(richImageView, lp, focusedIndex[0] + 1);
-        if (needAddWRichEditor(focusedIndex[0] + 1)) {
-            insertAWRichEditorWrapperWithRichType(focusedIndex[0] + 2, RichType.NONE, true);
-        }
-    }
-
-    public void insertNetDisk(RichNetDiskView richNetDiskView) {
-        int[] focusedIndex = new int[1];
-        findCurrentOrRecentFocusedRichEditorWrapperView(focusedIndex);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.gravity = Gravity.CENTER_HORIZONTAL;
-        addRichCell(richNetDiskView, lp, focusedIndex[0] + 1);
-        if (needAddWRichEditor(focusedIndex[0] + 1)) {
-            insertAWRichEditorWrapperWithRichType(focusedIndex[0] + 2, RichType.NONE, true);
         }
     }
 

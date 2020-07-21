@@ -59,7 +59,7 @@ public class RestoreActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 WEditTextWrapperView wEditTextWrapperView = (WEditTextWrapperView) mWRichEditor.getContainerView().getChildAt(0);
-                Editable editable = wEditTextWrapperView.getWRichEditor().getEditableText();
+                Editable editable = wEditTextWrapperView.getWEditText().getEditableText();
                 mTVTest.setText(editable);
             }
         });

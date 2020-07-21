@@ -51,9 +51,9 @@ public class CommonUtil {
         if (wRichEditor != null) {
             int[] index = new int[1];
             WEditTextWrapperView focusedWrapperView = wRichEditor.findCurrentOrRecentFocusedRichEditorWrapperView(index);
-            if (focusedWrapperView != null && focusedWrapperView.getWRichEditor() != null) {
-                CommonUtil.hideSoftKeyboard(context, focusedWrapperView.getWRichEditor());
-                focusedWrapperView.getWRichEditor().clearFocus();
+            if (focusedWrapperView != null && focusedWrapperView.getWEditText() != null) {
+                CommonUtil.hideSoftKeyboard(context, focusedWrapperView.getWEditText());
+                focusedWrapperView.getWEditText().clearFocus();
             }
         }
     }

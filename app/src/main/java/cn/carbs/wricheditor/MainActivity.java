@@ -125,8 +125,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
         WEditTextWrapperView wrapperView = addEditText();
-        if (wrapperView != null && wrapperView.getWRichEditor() != null) {
-            wrapperView.getWRichEditor().requestFocus();
+        if (wrapperView != null && wrapperView.getWEditText() != null) {
+            wrapperView.getWEditText().requestFocus();
         }
         mHasAddFirstEditor = true;
     }
@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (wEditTextWrapperView == null) {
             return;
         }
-        WEditText wEditText = wEditTextWrapperView.getWRichEditor();
+        WEditText wEditText = wEditTextWrapperView.getWEditText();
         if (wEditText == null) {
             return;
         }
@@ -282,7 +282,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         int size = mWRichEditor.getCellViewCount();
         if (DebugUtil.DEBUG) {
-            editTextWrapperView.getWRichEditor().setHint("CELL : " + size);
+            editTextWrapperView.getWEditText().setHint("CELL : " + size);
             if (size % 2 == 0) {
                 editTextWrapperView.setBackgroundColor(0x10222222);
             } else {

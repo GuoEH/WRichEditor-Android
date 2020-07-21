@@ -212,7 +212,7 @@ public class WEditText extends EditText {
                         spanPartsOutput.clear();
                         String textWithoutFormatItemEndRight = SpanUtil.getSpannableStringInclusiveExclusive(editable, cursorEnd, editable.length(), spanPartsOutput);
                         WEditTextWrapperView richEditorWrapperView = mWRichEditor.insertAWRichEditorWrapperWithRichType(mWrapperView, RichType.LIST_UNORDERED, true);
-                        SpanUtil.setSpannableInclusiveExclusive(richEditorWrapperView.getWRichEditor(), textWithoutFormatItemEndRight, spanPartsOutput, -cursorEnd);
+                        SpanUtil.setSpannableInclusiveExclusive(richEditorWrapperView.getWEditText(), textWithoutFormatItemEndRight, spanPartsOutput, -cursorEnd);
                     } else {
                         mWRichEditor.insertAWRichEditorWrapperWithRichType(mWrapperView, RichType.LIST_UNORDERED, true);
                     }
@@ -232,7 +232,7 @@ public class WEditText extends EditText {
                         spanPartsOutput.clear();
                         String textWithoutFormatItemEndRight = SpanUtil.getSpannableStringInclusiveExclusive(editable, cursorEnd, editable.length(), spanPartsOutput);
                         WEditTextWrapperView richEditorWrapperView = mWRichEditor.insertAWRichEditorWrapperWithRichType(mWrapperView, RichType.LIST_ORDERED, true);
-                        SpanUtil.setSpannableInclusiveExclusive(richEditorWrapperView.getWRichEditor(), textWithoutFormatItemEndRight, spanPartsOutput, -cursorEnd);
+                        SpanUtil.setSpannableInclusiveExclusive(richEditorWrapperView.getWEditText(), textWithoutFormatItemEndRight, spanPartsOutput, -cursorEnd);
                     } else {
                         mWRichEditor.insertAWRichEditorWrapperWithRichType(mWrapperView, RichType.LIST_ORDERED, true);
                     }

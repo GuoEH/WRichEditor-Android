@@ -262,7 +262,7 @@ public class WEditTextWrapperView extends RelativeLayout implements IRichCellVie
         }
     }
 
-    public WEditText getWRichEditor() {
+    public WEditText getWEditText() {
         return mWEditText;
     }
 
