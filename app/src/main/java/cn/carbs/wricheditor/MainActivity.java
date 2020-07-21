@@ -121,7 +121,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-        test();
         if (mHasAddFirstEditor) {
             return;
         }
@@ -229,12 +228,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mWRichEditor.insertLine();
     }
 
+    int image = 0;
+
     private void onInsertImageClicked() {
         MyRichImageView richImageView = new MyRichImageView(MainActivity.this);
         ImageCellData imageCellData = new ImageCellData();
-        imageCellData.imageNetUrl = "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1284023848,585277846&fm=11&gp=0.jpg";
+        if (image == 0) {
+            imageCellData.imageNetUrl = "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1284023848,585277846&fm=11&gp=0.jpg";
+        } else {
+            imageCellData.imageNetUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1595310058840&di=d073bc91842acbb27136fd4ffcf60e3e&imgtype=0&src=http%3A%2F%2Fimg.pconline.com.cn%2Fimages%2Fupload%2Fupc%2Ftx%2Fwallpaper%2F1209%2F17%2Fc0%2F13901631_1347858735837.jpg";
+        }
         richImageView.setCellData(imageCellData);
         mWRichEditor.insertImage(richImageView);
+        image++;
     }
 
     private void onInsertAudioClicked() {
@@ -373,14 +379,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 setButtonTextColor(entry.getValue(), false);
             }
         }
-    }
-
-    public void test() {
-
-    }
-
-    public static class Data {
-        public String url;
     }
 
 }

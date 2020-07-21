@@ -26,6 +26,7 @@ import cn.carbs.wricheditor.library.models.SpanPart;
 import cn.carbs.wricheditor.library.models.SplitPart;
 import cn.carbs.wricheditor.library.types.RichType;
 import cn.carbs.wricheditor.library.utils.CommonUtil;
+import cn.carbs.wricheditor.library.utils.DebugUtil;
 import cn.carbs.wricheditor.library.utils.LogUtil;
 import cn.carbs.wricheditor.library.utils.OrderListUtil;
 import cn.carbs.wricheditor.library.utils.SpanUtil;
@@ -1133,8 +1134,10 @@ public class WRichEditor extends ScrollView implements OnEditorFocusChangedListe
     public WEditTextWrapperView insertAWRichEditorWrapperWithRichType(int index, RichType richType, boolean needRequestFocusWhenAdded) {
         WEditTextWrapperView editTextWrapperView = new WEditTextWrapperView(getContext(), richType, needRequestFocusWhenAdded);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        editTextWrapperView.getWRichEditor().setHint("CELL new ");
-        editTextWrapperView.setBackgroundColor(0x10222222);
+        if (DebugUtil.DEBUG) {
+            editTextWrapperView.getWRichEditor().setHint("CELL new ");
+            editTextWrapperView.setBackgroundColor(0x10222222);
+        }
         // 插入到中间某个位置或者队尾（index == -1）
         addRichCell(editTextWrapperView, lp, index);
         return editTextWrapperView;

@@ -1,6 +1,4 @@
 ------------- QUOTE --------------
-
-
 ============== open ==============
 
 1.  A   B   C | D   E   F                       带格式通过
@@ -60,12 +58,8 @@ a.  A   B   C   D   E | F   G   '/n'            带格式通过
 b.  A   B   C | D   E | F   G   '/n'            带格式通过          
     H   I   J   K   L   M   N   ('/n')
     
-    
-    
-    
+
 ------------- LIST_UNORDERED --------------
-
-
 ============== open ==============
 
 1.  A   B   C | D   E   F                       带格式通过
@@ -125,11 +119,8 @@ a.  A   B   C   D   E | F   G   '/n'            不存在
 b.  A   B   C | D   E | F   G   '/n'            不存在       
     H   I   J   K   L   M   N   ('/n')    
     
-    
-    
-    
-------------- LIST_ORDERED --------------
 
+------------- LIST_ORDERED --------------
 ============== open ==============
 
 1.  A   B   C | D   E   F                       带格式通过
@@ -198,8 +189,4 @@ e.  A   B   C   D   E   F   G   '/n'
 a.  A   B   C   D   E | F   G   '/n'            
     H   I   J   K   L   M   N   ('/n')    
     
-b.  A   B   C | D   E | F   G   '/n'                   
-    
-    
-    
-    
+b.  A   B   C | D   E | F   G   '/n'

@@ -15,7 +15,6 @@
             android:layout_width="@dimen/wrich_editor_text_size"
             android:layout_height="@dimen/wrich_editor_text_size"
             android:layout_marginTop="2dp"
-            android:background="#ff009900"
             android:scaleType="centerInside"
             android:visibility="gone" />
 

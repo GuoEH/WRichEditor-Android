@@ -27,9 +27,9 @@ public class RichCellData extends BaseCellData {
     // NONE, QUOTE, LIST_ORDERED, LIST_UNORDERED
     private RichType richType = RichType.NONE;
 
-    public Editable editable;
+    private LinkedList<ContentStyleWrapper> wrappersList;
 
-    public LinkedList<ContentStyleWrapper> wrappersList;
+    private Editable editable;
 
     @Override
     public RichType getRichType() {
@@ -71,11 +71,14 @@ public class RichCellData extends BaseCellData {
             for (int i = 0; i < wrappersList.size(); i++) {
                 Log.d("json", "wrappersList item i : " + i + "  mask : " + wrappersList.get(i).mask + "  text : " + wrappersList.get(i).contentBuilder);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public LinkedList<ContentStyleWrapper> getWrappersList() {
+        return wrappersList;
     }
 
     private String getHtmlContentStringByEditable(Editable editable) {

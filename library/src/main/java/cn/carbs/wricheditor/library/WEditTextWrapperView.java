@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.Editable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -116,7 +117,8 @@ public class WEditTextWrapperView extends RelativeLayout implements IRichCellVie
             mCellData.setIRichCellView(this);
         }
         if (mCellData != null && mWEditText != null) {
-            setTextForEditor(mCellData.wrappersList);
+            setTextForEditor(mCellData.getWrappersList());
+            setTypeForEditor(mCellData.getRichType());
         }
     }
 
@@ -138,7 +140,8 @@ public class WEditTextWrapperView extends RelativeLayout implements IRichCellVie
             mCellData = new RichCellData();
         }
         if (mWEditText != null) {
-            mCellData.editable = mWEditText.getEditableText();
+            mCellData.setEditable(mWEditText.getEditableText());
+            mCellData.setRichType(getRichType());
         }
         return mCellData;
     }
@@ -180,6 +183,14 @@ public class WEditTextWrapperView extends RelativeLayout implements IRichCellVie
         if (mWEditText != null) {
             mWEditText.requestFocusAndPutCursorToTail();
         }
+    }
+
+    public void setNoneMode() {
+        mRichType = RichType.NONE;
+        updateQuoteModeUI(false);
+        updateUnOrderListModeUI(false);
+        updateOrderListModeUI(false);
+        onResourceRichTypeChanged(RichType.NONE);
     }
 
     public void toggleQuoteMode(boolean open, boolean mayRepeat) {
@@ -255,11 +266,22 @@ public class WEditTextWrapperView extends RelativeLayout implements IRichCellVie
         return mWEditText;
     }
 
+    private void setTypeForEditor(RichType richType) {
+        if (richType == RichType.NONE) {
+            setNoneMode();
+        } else if (richType == RichType.QUOTE) {
+            toggleQuoteMode(true, true);
+        } else if (richType == RichType.LIST_UNORDERED) {
+            toggleOrderListMode(true, true);
+        } else if (richType == RichType.LIST_ORDERED) {
+            toggleUnOrderListMode(true, true);
+        }
+    }
+
     private void setTextForEditor(LinkedList<ContentStyleWrapper> wrappers) {
         if (wrappers == null) {
             return;
         }
-
         if (mWEditText == null) {
             return;
         }
@@ -268,7 +290,6 @@ public class WEditTextWrapperView extends RelativeLayout implements IRichCellVie
             sb.append(wrapper.contentBuilder.toString());
         }
         mWEditText.setText(sb.toString());
-
         ArrayList<IRichSpan> spans = new ArrayList<>(8);
         int start = 0;
         int end = 0;

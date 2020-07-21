@@ -23,29 +23,10 @@ headline失效
 // TODO
 cursor delete 时，如果当前行有文字，是否需要合并？
 
-// TODO
-ScrollView中的第0位置，添加自定义的HeaderView
-
-// TODO
-如果editor是第一个，删除时，应该将 LineFormat 删除掉
-
-// TODO
-editor中none数据暂时没有
-
-// TODO
-editor中在image后面添加横线有空行
-
-// TODO
-添加line、image等 需要进一步封装
-
-// TODO
-选中image后，添加image会添加到image的前面
-
-
-
 // ========== TODO ===========
 1. 使用HTML还原富文本
-2. 方法注释、方法的排序
+2. 如果editor是第一个，删除时，应该将 LineFormat 删除掉
+3. ScrollView中的第0位置，添加自定义的HeaderView
 
 // ========== EXPERIENCE ===========
 1. 锤子便签：在quote时，会自动将所有的字符进行一次缩小，颜色变浅
