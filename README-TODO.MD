@@ -1,33 +1,11 @@
-
-// 待测试
-系统默认实现了：当光标至于某一段统一的格式文字中间时，自动按照当时的格式来进行输入，并且是按照紧接着后面的格式为标准。
-此时的问题：如何根据光标位置，获取此位置后面的文字的样式呢？
-
-=================
-
-// TODO 
-
-line 等view 在删除时，需要merge一下，同时在别的editor获取焦点时，取消自定义的焦点
-
-
-// bug 点击 H 后，变成粗体，再点击H后变成非粗体
-
-// TODO WRichEditor  设置lineHeight
-
-// TODO 
-headline失效
-
-// TODO
-换行后cursor问题
-
-// TODO
-cursor delete 时，如果当前行有文字，是否需要合并？
-
 // ========== TODO ===========
 1. 使用HTML还原富文本
 2. 如果editor是第一个，删除时，应该将 LineFormat 删除掉
 3. ScrollView中的第0位置，添加自定义的HeaderView
 4. 有序无序列表间距与普通文字的行间距不同
+5. headline偶现失效
+6. 换行后cursor问题
+7. 相同格式的wrappermerge一下
 
 // ========== EXPERIENCE ===========
 1. 锤子便签：在quote时，会自动将所有的字符进行一次缩小，颜色变浅

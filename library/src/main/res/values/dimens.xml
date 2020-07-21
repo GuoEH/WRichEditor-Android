@@ -7,6 +7,9 @@
 
     <dimen name="wrich_editor_text_size">16dp</dimen>
 
+    <dimen name="wrich_editor_line_height_for_list">24dp</dimen>
+
+    <!--  暂时没有用到  -->
     <dimen name="wrich_editor_padding_top">18dp</dimen>
 
     <dimen name="wrich_editor_padding_bottom">18dp</dimen>
