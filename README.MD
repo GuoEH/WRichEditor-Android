@@ -47,7 +47,7 @@
 5. 点击ScrollView的空白处，将焦点至于最后一个Editor中
 6. 点击某个Editor时，被软键盘遮挡后自动调整位置
 
-
+## Contact
 wechat: AutoReleasePool
 
 ## License
