@@ -3,7 +3,7 @@ package cn.carbs.wricheditor.library.utils;
 import android.view.View;
 import android.view.ViewGroup;
 
-import cn.carbs.wricheditor.library.WRichEditorWrapperView;
+import cn.carbs.wricheditor.library.WEditTextWrapperView;
 import cn.carbs.wricheditor.library.types.RichType;
 
 public class OrderListUtil {
@@ -17,8 +17,8 @@ public class OrderListUtil {
         int orderCurr = 0;
         for (int i = 0; i < childCount; i++) {
             View view = cellViewContainer.getChildAt(i);
-            if (view instanceof WRichEditorWrapperView) {
-                WRichEditorWrapperView wrapperView = (WRichEditorWrapperView) view;
+            if (view instanceof WEditTextWrapperView) {
+                WEditTextWrapperView wrapperView = (WEditTextWrapperView) view;
                 RichType richType = wrapperView.getRichType();
                 if (richType == RichType.LIST_ORDERED) {
                     orderCurr = orderCurr + 1;

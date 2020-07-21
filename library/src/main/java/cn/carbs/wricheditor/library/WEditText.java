@@ -37,27 +37,27 @@ import cn.carbs.wricheditor.library.utils.TypeUtil;
 // 因此最后导出的时候，是否需要合并？如何转换数据是个问题
 
 @SuppressLint("AppCompatCustomView")
-public class WRichEditor extends EditText {
+public class WEditText extends EditText {
 
-    public static final String TAG = WRichEditor.class.getSimpleName();
+    public static final String TAG = WEditText.class.getSimpleName();
 
     private WRichEditorScrollView mWRichEditorScrollView;
 
     private OnEditorFocusChangedListener mOnEditorFocusChangedListener;
 
-    private WRichEditorWrapperView mWrapperView;
+    private WEditTextWrapperView mWrapperView;
 
     private boolean mTextChangeValid = true;
 
-    public WRichEditor(Context context) {
+    public WEditText(Context context) {
         super(context);
     }
 
-    public WRichEditor(Context context, AttributeSet attrs) {
+    public WEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public WRichEditor(Context context, AttributeSet attrs, int defStyleAttr) {
+    public WEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -278,7 +278,7 @@ public class WRichEditor extends EditText {
 
                         spanPartsOutput.clear();
                         String textWithoutFormatItemEndRight = SpanUtil.getSpannableStringInclusiveExclusive(editable, cursorEnd, editable.length(), spanPartsOutput);
-                        WRichEditorWrapperView richEditorWrapperView = mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(mWrapperView, RichType.LIST_UNORDERED, true);
+                        WEditTextWrapperView richEditorWrapperView = mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(mWrapperView, RichType.LIST_UNORDERED, true);
                         SpanUtil.setSpannableInclusiveExclusive(richEditorWrapperView.getWRichEditor(), textWithoutFormatItemEndRight, spanPartsOutput, -cursorEnd);
                     } else {
                         mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(mWrapperView, RichType.LIST_UNORDERED, true);
@@ -298,7 +298,7 @@ public class WRichEditor extends EditText {
 
                         spanPartsOutput.clear();
                         String textWithoutFormatItemEndRight = SpanUtil.getSpannableStringInclusiveExclusive(editable, cursorEnd, editable.length(), spanPartsOutput);
-                        WRichEditorWrapperView richEditorWrapperView = mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(mWrapperView, RichType.LIST_ORDERED, true);
+                        WEditTextWrapperView richEditorWrapperView = mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(mWrapperView, RichType.LIST_ORDERED, true);
                         SpanUtil.setSpannableInclusiveExclusive(richEditorWrapperView.getWRichEditor(), textWithoutFormatItemEndRight, spanPartsOutput, -cursorEnd);
                     } else {
                         mWRichEditorScrollView.insertAWRichEditorWrapperWithRichType(mWrapperView, RichType.LIST_ORDERED, true);
@@ -331,8 +331,8 @@ public class WRichEditor extends EditText {
                             if (richTypeGroup == RichTypeConstants.GROUP_CHAR_FORMAT) {
                                 // 1. 如果是，则将光标调整到上一个WRichEditor的最后，同时将此WRichEditor删除
                                 // 将此WRichEditor remove
-                                ((WRichEditorWrapperView) iRichCellView).addExtraEditable(editable);
-                                ((WRichEditorWrapperView) iRichCellView).requestFocusAndPutCursorToTail();
+                                ((WEditTextWrapperView) iRichCellView).addExtraEditable(editable);
+                                ((WEditTextWrapperView) iRichCellView).requestFocusAndPutCursorToTail();
 
                                 ViewParent parent = mWrapperView.getParent();
                                 if (parent != null && parent instanceof ViewGroup) {
@@ -427,7 +427,7 @@ public class WRichEditor extends EditText {
         }
     }
 
-    public void setWRichEditorWrapperView(WRichEditorWrapperView wrapperView) {
+    public void setWRichEditorWrapperView(WEditTextWrapperView wrapperView) {
         mWrapperView = wrapperView;
     }
 

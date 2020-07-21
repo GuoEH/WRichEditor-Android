@@ -20,9 +20,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import cn.carbs.wricheditor.library.WRichEditor;
+import cn.carbs.wricheditor.library.WEditText;
 import cn.carbs.wricheditor.library.WRichEditorScrollView;
-import cn.carbs.wricheditor.library.WRichEditorWrapperView;
+import cn.carbs.wricheditor.library.WEditTextWrapperView;
 import cn.carbs.wricheditor.library.callbacks.OnRichTypeChangedListener;
 import cn.carbs.wricheditor.library.models.cell.ImageCellData;
 import cn.carbs.wricheditor.library.models.cell.NetDiskCellData;
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (mHasAddFirstEditor) {
             return;
         }
-        WRichEditorWrapperView wrapperView = addEditText();
+        WEditTextWrapperView wrapperView = addEditText();
         if (wrapperView != null && wrapperView.getWRichEditor() != null) {
             wrapperView.getWRichEditor().requestFocus();
         }
@@ -177,16 +177,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void onInsertLinkClicked() {
         setButtonTextColor(mBtnLink, true);
         int[] focusedRichEditorWrapperView = new int[1];
-        WRichEditorWrapperView wRichEditorWrapperView = mWRichEditorScrollView.findCurrentOrRecentFocusedRichEditorWrapperView(focusedRichEditorWrapperView);
-        if (wRichEditorWrapperView == null) {
+        WEditTextWrapperView wEditTextWrapperView = mWRichEditorScrollView.findCurrentOrRecentFocusedRichEditorWrapperView(focusedRichEditorWrapperView);
+        if (wEditTextWrapperView == null) {
             return;
         }
-        WRichEditor wRichEditor = wRichEditorWrapperView.getWRichEditor();
-        if (wRichEditor == null) {
+        WEditText wEditText = wEditTextWrapperView.getWRichEditor();
+        if (wEditText == null) {
             return;
         }
-        final int start = wRichEditor.getSelectionStart();
-        final int end = wRichEditor.getSelectionEnd();
+        final int start = wEditText.getSelectionStart();
+        final int end = wEditText.getSelectionEnd();
         if (start == end) {
             Toast.makeText(this, "请先选择要添加链接的文字", Toast.LENGTH_LONG).show();
             setButtonTextColor(mBtnLink, false);
@@ -272,7 +272,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void onAddEditorTextClicked() {
-        WRichEditorWrapperView editTextWrapperView = new WRichEditorWrapperView(MainActivity.this);
+        WEditTextWrapperView editTextWrapperView = new WEditTextWrapperView(MainActivity.this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         int size = mWRichEditorScrollView.getCellViewCount();
         if (DebugUtil.DEBUG) {
@@ -286,8 +286,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mWRichEditorScrollView.addRichCell(editTextWrapperView, lp, -1);
     }
 
-    private WRichEditorWrapperView addEditText() {
-        WRichEditorWrapperView editTextWrapperView = new WRichEditorWrapperView(MainActivity.this);
+    private WEditTextWrapperView addEditText() {
+        WEditTextWrapperView editTextWrapperView = new WEditTextWrapperView(MainActivity.this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         mWRichEditorScrollView.addRichCell(editTextWrapperView, lp, -1);
         if (DebugUtil.DEBUG) {

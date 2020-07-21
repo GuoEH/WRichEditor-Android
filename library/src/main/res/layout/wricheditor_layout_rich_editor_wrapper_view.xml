@@ -31,7 +31,7 @@
             android:visibility="gone" />
     </FrameLayout>
 
-    <cn.carbs.wricheditor.library.WRichEditor
+    <cn.carbs.wricheditor.library.WEditText
         android:id="@+id/w_rich_editor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

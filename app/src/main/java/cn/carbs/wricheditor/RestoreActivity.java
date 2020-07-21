@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import cn.carbs.wricheditor.library.WRichEditorScrollView;
-import cn.carbs.wricheditor.library.WRichEditorWrapperView;
+import cn.carbs.wricheditor.library.WEditTextWrapperView;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
 import cn.carbs.wricheditor.library.providers.CustomViewProvider;
 import cn.carbs.wricheditor.library.types.RichType;
@@ -58,8 +58,8 @@ public class RestoreActivity extends AppCompatActivity {
         mTVTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WRichEditorWrapperView wRichEditorWrapperView = (WRichEditorWrapperView) mWRichEditorScrollView.getContainerView().getChildAt(0);
-                Editable editable = wRichEditorWrapperView.getWRichEditor().getEditableText();
+                WEditTextWrapperView wEditTextWrapperView = (WEditTextWrapperView) mWRichEditorScrollView.getContainerView().getChildAt(0);
+                Editable editable = wEditTextWrapperView.getWRichEditor().getEditableText();
                 mTVTest.setText(editable);
             }
         });

@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import cn.carbs.wricheditor.library.WRichEditorScrollView;
-import cn.carbs.wricheditor.library.WRichEditorWrapperView;
+import cn.carbs.wricheditor.library.WEditTextWrapperView;
 import cn.carbs.wricheditor.library.configures.RichEditorConfig;
 import cn.carbs.wricheditor.library.constants.RichTypeConstants;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
@@ -70,7 +70,7 @@ public class TypeUtil {
         return ret;
     }
 
-    public static void correctLineFormatGroupType(Set<RichType> currRichTypes, WRichEditorWrapperView wrapperView) {
+    public static void correctLineFormatGroupType(Set<RichType> currRichTypes, WEditTextWrapperView wrapperView) {
         if (wrapperView != null && currRichTypes != null) {
             RichType richType = wrapperView.getRichType();
             ArrayList<RichType> toBeRemovedList = new ArrayList<>();

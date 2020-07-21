@@ -14,7 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import cn.carbs.wricheditor.library.WRichEditorScrollView;
-import cn.carbs.wricheditor.library.WRichEditorWrapperView;
+import cn.carbs.wricheditor.library.WEditTextWrapperView;
 import cn.carbs.wricheditor.library.interfaces.BaseCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
@@ -242,13 +242,13 @@ public class ParserUtil {
         IRichCellView iRichCellView = null;
         if (richType == RichType.NONE) {
             // 普通的富文本
-            iRichCellView = new WRichEditorWrapperView(context);
+            iRichCellView = new WEditTextWrapperView(context);
         } else if (richType == RichType.QUOTE) {
-            iRichCellView = new WRichEditorWrapperView(context);
+            iRichCellView = new WEditTextWrapperView(context);
         } else if (richType == RichType.LIST_UNORDERED) {
-            iRichCellView = new WRichEditorWrapperView(context);
+            iRichCellView = new WEditTextWrapperView(context);
         } else if (richType == RichType.LIST_ORDERED) {
-            iRichCellView = new WRichEditorWrapperView(context);
+            iRichCellView = new WEditTextWrapperView(context);
         } else if (richType == RichType.IMAGE) {
             if (provider == null || provider.getCellViewByRichType(richType) == null) {
                 iRichCellView = new RichImageView(context);
@@ -293,13 +293,13 @@ public class ParserUtil {
         IRichCellView iRichCellView = null;
         if (richType == RichType.NONE) {
             // 普通的富文本
-            iRichCellView = new WRichEditorWrapperView(context);
+            iRichCellView = new WEditTextWrapperView(context);
         } else if (richType == RichType.QUOTE) {
-            iRichCellView = new WRichEditorWrapperView(context);
+            iRichCellView = new WEditTextWrapperView(context);
         } else if (richType == RichType.LIST_UNORDERED) {
-            iRichCellView = new WRichEditorWrapperView(context);
+            iRichCellView = new WEditTextWrapperView(context);
         } else if (richType == RichType.LIST_ORDERED) {
-            iRichCellView = new WRichEditorWrapperView(context);
+            iRichCellView = new WEditTextWrapperView(context);
         } else if (richType == RichType.IMAGE) {
             if (provider == null || provider.getCellViewByRichType(richType) == null) {
                 iRichCellView = new RichImageView(context);

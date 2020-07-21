@@ -6,7 +6,7 @@ import cn.carbs.wricheditor.library.interfaces.BaseCellData;
 import cn.carbs.wricheditor.library.interfaces.IRichCellData;
 import cn.carbs.wricheditor.library.types.RichType;
 
-// TODO 添加封面
+// TODO 未完成，添加封面
 public class VideoCellData extends BaseCellData {
 
     public String videoLocalUrl;

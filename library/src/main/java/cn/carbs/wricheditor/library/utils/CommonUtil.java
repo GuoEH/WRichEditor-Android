@@ -7,7 +7,6 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Build;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
@@ -17,8 +16,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import cn.carbs.wricheditor.library.WRichEditorScrollView;
-import cn.carbs.wricheditor.library.WRichEditorWrapperView;
-import cn.carbs.wricheditor.library.types.RichType;
+import cn.carbs.wricheditor.library.WEditTextWrapperView;
 
 public class CommonUtil {
 
@@ -52,7 +50,7 @@ public class CommonUtil {
     public static void removeAllEditorFocus(Context context, WRichEditorScrollView wRichEditorScrollView) {
         if (wRichEditorScrollView != null) {
             int[] index = new int[1];
-            WRichEditorWrapperView focusedWrapperView = wRichEditorScrollView.findCurrentOrRecentFocusedRichEditorWrapperView(index);
+            WEditTextWrapperView focusedWrapperView = wRichEditorScrollView.findCurrentOrRecentFocusedRichEditorWrapperView(index);
             if (focusedWrapperView != null && focusedWrapperView.getWRichEditor() != null) {
                 CommonUtil.hideSoftKeyboard(context, focusedWrapperView.getWRichEditor());
                 focusedWrapperView.getWRichEditor().clearFocus();

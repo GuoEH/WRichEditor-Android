@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import cn.carbs.wricheditor.library.WRichEditor;
+import cn.carbs.wricheditor.library.WEditText;
 import cn.carbs.wricheditor.library.configures.RichEditorConfig;
 import cn.carbs.wricheditor.library.constants.CharConstant;
 import cn.carbs.wricheditor.library.interfaces.IRichCellView;
@@ -154,15 +154,15 @@ public class SpanUtil {
         return editable.subSequence(start, end).toString();
     }
 
-    public static void setSpannableInclusiveExclusive(WRichEditor wRichEditor, String textWithoutFormat, List<SpanPart> spanParts, int offset) {
-        if (wRichEditor == null) {
+    public static void setSpannableInclusiveExclusive(WEditText wEditText, String textWithoutFormat, List<SpanPart> spanParts, int offset) {
+        if (wEditText == null) {
             return;
         }
-        wRichEditor.setTextChangeValid(false);
-        wRichEditor.setText(textWithoutFormat);
-        wRichEditor.setTextChangeValid(true);
+        wEditText.setTextChangeValid(false);
+        wEditText.setText(textWithoutFormat);
+        wEditText.setTextChangeValid(true);
         // 循环将格式赋给添加的这一段
-        Editable editableText = wRichEditor.getEditableText();
+        Editable editableText = wEditText.getEditableText();
         int editableLength = editableText.length();
         for (SpanPart part : spanParts) {
             if (part.isValid()) {

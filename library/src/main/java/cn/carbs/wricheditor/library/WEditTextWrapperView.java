@@ -31,7 +31,7 @@ import cn.carbs.wricheditor.library.utils.TypeUtil;
 // getEditableText().getSpans(0, getEditableText().toString().length(), richSpan.getClass());
 // 因此最后导出的时候，是否需要合并？如何转换数据是个问题
 @SuppressLint("AppCompatCustomView")
-public class WRichEditorWrapperView extends RelativeLayout implements IRichCellView<RichCellData> {
+public class WEditTextWrapperView extends RelativeLayout implements IRichCellView<RichCellData> {
 
     private WRichEditorScrollView mWRichEditorScrollView;
 
@@ -41,31 +41,31 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
 
     private TextView mTVForOrderList;
 
-    private WRichEditor mWRichEditor;
+    private WEditText mWEditText;
 
     private RichType mRichType = RichType.NONE;
 
     private boolean mNeedRequestFocusWhenAdded;
 
 
-    public WRichEditorWrapperView(Context context) {
+    public WEditTextWrapperView(Context context) {
         super(context);
         init(context);
     }
 
-    public WRichEditorWrapperView(Context context, RichType richType, boolean needRequestFocusWhenAdded) {
+    public WEditTextWrapperView(Context context, RichType richType, boolean needRequestFocusWhenAdded) {
         super(context);
         mRichType = richType;
         mNeedRequestFocusWhenAdded = needRequestFocusWhenAdded;
         init(context);
     }
 
-    public WRichEditorWrapperView(Context context, AttributeSet attrs) {
+    public WEditTextWrapperView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public WRichEditorWrapperView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public WEditTextWrapperView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
@@ -74,14 +74,14 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
         inflate(context, R.layout.wricheditor_layout_rich_editor_wrapper_view, this);
         mIVForQuoteOrUnorderList = findViewById(R.id.iv_in_wrapper);
         mTVForOrderList = findViewById(R.id.tv_in_wrapper);
-        mWRichEditor = findViewById(R.id.w_rich_editor);
-        mWRichEditor.setWRichEditorWrapperView(this);
-        mWRichEditor.setContentDescription(CursorUtil.getNewContentDescriptionForWRichEditor());
+        mWEditText = findViewById(R.id.w_rich_editor);
+        mWEditText.setWRichEditorWrapperView(this);
+        mWEditText.setContentDescription(CursorUtil.getNewContentDescriptionForWRichEditor());
         if (mWRichEditorScrollView != null) {
-            mWRichEditor.setWRichEditorScrollView(mWRichEditorScrollView);
+            mWEditText.setWRichEditorScrollView(mWRichEditorScrollView);
         }
         Log.d("wangaa", "RichEditorConfig.sEditorColor : " + Integer.toHexString(RichEditorConfig.sEditorColor));
-        mWRichEditor.setTextColor(RichEditorConfig.sEditorColor);
+        mWEditText.setTextColor(RichEditorConfig.sEditorColor);
         if (mRichType != RichType.NONE) {
             // 如果不是无状态的，即，可能为 QUOTE ORDERED_LIST UNORDERED_LIST
             if (mRichType == RichType.QUOTE) {
@@ -97,8 +97,8 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        if (mNeedRequestFocusWhenAdded && mWRichEditor != null) {
-            mWRichEditor.requestFocus();
+        if (mNeedRequestFocusWhenAdded && mWEditText != null) {
+            mWEditText.requestFocus();
         }
     }
 
@@ -106,8 +106,8 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
     public void setWRichEditorScrollView(WRichEditorScrollView wRichEditorScrollView) {
         mWRichEditorScrollView = wRichEditorScrollView;
         Log.d("ppp", "editor setWRichEditorView mWRichEditorView == null ? " + (mWRichEditorScrollView == null));
-        if (mWRichEditor != null) {
-            mWRichEditor.setWRichEditorScrollView(mWRichEditorScrollView);
+        if (mWEditText != null) {
+            mWEditText.setWRichEditorScrollView(mWRichEditorScrollView);
         }
     }
 
@@ -122,7 +122,7 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
         if (mCellData != null) {
             mCellData.setIRichCellView(this);
         }
-        if (mCellData != null && mWRichEditor != null) {
+        if (mCellData != null && mWEditText != null) {
             setTextForEditor(mCellData.wrappersList);
         }
     }
@@ -132,19 +132,19 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
             return;
         }
 
-        if (mWRichEditor == null) {
+        if (mWEditText == null) {
             return;
         }
         StringBuilder sb = new StringBuilder();
         for (ContentStyleWrapper wrapper : wrappers) {
             sb.append(wrapper.contentBuilder.toString());
         }
-        mWRichEditor.setText(sb.toString());
+        mWEditText.setText(sb.toString());
 
         ArrayList<IRichSpan> spans = new ArrayList<>(8);
         int start = 0;
         int end = 0;
-        Editable editable = mWRichEditor.getEditableText();
+        Editable editable = mWEditText.getEditableText();
         for (ContentStyleWrapper wrapper : wrappers) {
             end = end + wrapper.contentBuilder.length();
             SpanUtil.getSpanByMask(spans, wrapper.mask, wrapper.extra);
@@ -160,8 +160,8 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
 
     @Override
     public void setEditorFocusChangedListener(OnEditorFocusChangedListener listener) {
-        if (mWRichEditor != null) {
-            mWRichEditor.setEditorFocusChangedListener(listener);
+        if (mWEditText != null) {
+            mWEditText.setEditorFocusChangedListener(listener);
         }
     }
 
@@ -170,8 +170,8 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
         if (mCellData == null) {
             mCellData = new RichCellData();
         }
-        if (mWRichEditor != null) {
-            mCellData.editable = mWRichEditor.getEditableText();
+        if (mWEditText != null) {
+            mCellData.editable = mWEditText.getEditableText();
         }
         return mCellData;
     }
@@ -184,40 +184,40 @@ public class WRichEditorWrapperView extends RelativeLayout implements IRichCellV
     @Override
     public void setSelectMode(boolean selectMode) {
         if (selectMode) {
-            if (mWRichEditor != null) {
-                mWRichEditor.requestFocus();
+            if (mWEditText != null) {
+                mWEditText.requestFocus();
             }
         } else {
-            if (mWRichEditor != null) {
+            if (mWEditText != null) {
                 Log.d("clearfocus", "clearFocus() 5");
-                mWRichEditor.clearFocus();
+                mWEditText.clearFocus();
             }
         }
     }
 
     @Override
     public boolean getSelectMode() {
-        if (mWRichEditor != null) {
-            return mWRichEditor.getSelectMode();
+        if (mWEditText != null) {
+            return mWEditText.getSelectMode();
         }
         return false;
     }
 
     // SpannableStringBuilder
     public void addExtraEditable(Editable extraEditable) {
-        if (mWRichEditor != null) {
-            mWRichEditor.addExtraEditable(extraEditable);
+        if (mWEditText != null) {
+            mWEditText.addExtraEditable(extraEditable);
         }
     }
 
     public void requestFocusAndPutCursorToTail() {
-        if (mWRichEditor != null) {
-            mWRichEditor.requestFocusAndPutCursorToTail();
+        if (mWEditText != null) {
+            mWEditText.requestFocusAndPutCursorToTail();
         }
     }
 
-    public WRichEditor getWRichEditor() {
-        return mWRichEditor;
+    public WEditText getWRichEditor() {
+        return mWEditText;
     }
 
 

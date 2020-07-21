@@ -7,5 +7,4 @@ public interface CustomViewProvider {
 
     IRichCellView getCellViewByRichType(RichType richType);
 
-
 }
