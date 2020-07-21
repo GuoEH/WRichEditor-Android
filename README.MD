@@ -12,6 +12,13 @@
 目前具有加粗、斜体、中划线、下划线、标题、引用、有序列表、无序列表、链接、分隔线，并可以插入图片、视频、音频、云盘等任意类型资源，接口设计遵循用户友好的原则，可自定义插入任意类型的资源。整个项目遵循高内聚低耦合原则，用户可自定义数据格式转换adapter。
 目前项目实现了约20种编辑功能，100+项编辑规则。
 
+### 效果
+
+<img src="https://github.com/Carbs0126/Screenshot/blob/master/wricheditor_0.jpeg" width="350" height="780"/><br>
+
+<img src="https://github.com/Carbs0126/Screenshot/blob/master/wricheditor_1.jpeg" width="350" height="780"/><br>
+
+
 ### TODO
 1. 使用HTML还原富文本
 2. 如果editor是第一个，删除时，应该将 LineFormat 删除掉
@@ -39,3 +46,22 @@
 4. ordered list 的体验增强，修改 needAddWRichEditor 方法
 5. 点击ScrollView的空白处，将焦点至于最后一个Editor中
 6. 点击某个Editor时，被软键盘遮挡后自动调整位置
+
+
+wechat: AutoReleasePool
+
+## License
+
+    Copyright 2016 Carbs.Wang (WRichEditor-Android)
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
